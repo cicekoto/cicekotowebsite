@@ -1,7 +1,7 @@
 {
   "name": "Çiçek Otomotiv",
   "short_name": "Çiçek Oto",
-  "description": "Her marka ve modelde uzman oto servis. Başakşehir, İstanbul.",
+  "description": "Volkswagen, Audi, Škoda, SEAT ve CUPRA araçlar için VAG uzman servisi. Başakşehir, İstanbul.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000105",
