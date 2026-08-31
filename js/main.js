@@ -24,15 +24,26 @@ function initLoader() {
   if (!loader) return;
   if (prefersReducedMotion) { loader.classList.add('done'); return; }
   let value = 0;
-  const timer = setInterval(() => {
+  let timer;
+  let safety;
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    value = 100;
+    count.textContent = value;
+    bar.style.width = '100%';
+    clearInterval(timer);
+    clearTimeout(safety);
+    setTimeout(() => loader.classList.add('done'), 180);
+  };
+  timer = setInterval(() => {
     value = Math.min(100, value + Math.ceil(Math.random() * 14));
     count.textContent = value;
     bar.style.width = `${value}%`;
-    if (value === 100) {
-      clearInterval(timer);
-      setTimeout(() => loader.classList.add('done'), 180);
-    }
+    if (value === 100) finish();
   }, 55);
+  safety = setTimeout(finish, 1400);
 }
 
 function initNavigation() {
