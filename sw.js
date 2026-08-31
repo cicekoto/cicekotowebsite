@@ -1,4 +1,4 @@
-const CACHE = 'cicekoto-neon-v17';
+const CACHE = 'cicekoto-neon-v18';
 const ASSETS = [
   '/',
   '/index.html',

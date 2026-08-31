@@ -61,7 +61,7 @@ const EN_TEXT = {
   'Birden fazla işlem seçebilir miyim?': 'Can I select multiple services?', 'Evet. Randevu formunda bakım, DSG, motor-elektronik, fren, kaporta ve genel kontrol seçeneklerinden birden fazlasını birlikte seçebilirsiniz.': 'Yes. You can select several maintenance, DSG, engine-electronics, brake, bodywork and inspection services in one booking.',
   'Fiyat onayı olmadan işlem yapılır mı?': 'Will work begin without price approval?', 'Hayır. Teşhis sonrası işlem ve fiyat bilgisi iletilir; onayınız olmadan ek işleme başlanmaz.': 'No. Work and pricing are shared after diagnosis, and nothing additional begins without your approval.',
   'İşçilik garantisi var mı?': 'Is workmanship guaranteed?', 'Evet. Yapılan işlemin kapsamına göre garanti koşulları işleme başlamadan önce yazılı olarak paylaşılır.': 'Yes. Warranty terms are shared in writing before work begins, according to the scope of the job.',
-  'Atölyeye': 'Visit our', 'bekleriz.': 'workshop.', 'Yol Tarifi →': 'Directions →', 'Hemen Ara': 'Call now', 'Mesaj Gönder →': 'Send a message →',
+  'Bize': 'Get in', 'ulaşın.': 'touch.', 'Yol Tarifi →': 'Directions →', 'Hemen Ara': 'Call now', 'Mesaj Gönder →': 'Send a message →', 'Çiçek Otomotiv Google Haritası': 'Çiçek Otomotiv on Google Maps',
   "2001'den beri Başakşehir'de doğru teşhis, şeffaf fiyat ve garantili işçilik.": 'Accurate diagnostics, transparent pricing and guaranteed workmanship in Başakşehir since 2001.',
   'SSS': 'FAQ', 'Yönetim': 'Admin', 'Çalışma saatleri': 'Opening hours', 'Pazartesi–Cumartesi': 'Monday–Saturday', 'Ara': 'Call',
   'KVKK · Gizlilik · Kullanım Koşulları': 'Privacy · Data Protection · Terms', 'RANDEVU TALEBİ': 'BOOKING REQUEST', 'Talebin alındı.': 'Request received.',
