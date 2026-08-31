@@ -370,8 +370,8 @@ function initAppointmentForm() {
       const result = await response.json();
       const available = result.available || [];
       const availabilityLabel = currentLanguage === 'en'
-        ? (available.length ? `Select time · capacity for ${result.remaining} vehicles remains` : 'Daily capacity of 5 vehicles is full')
-        : (available.length ? `Saat seçin · ${result.remaining} araçlık kapasite kaldı` : 'Bu gün için 5 araçlık kapasite dolu');
+        ? (available.length ? 'Select time' : 'No suitable time remains for this date')
+        : (available.length ? 'Saat seçin' : 'Bu tarih için uygun saat kalmadı');
       time.innerHTML = `<option value="">${availabilityLabel}</option>${available.map(value => `<option>${value}</option>`).join('')}`;
       time.disabled = !available.length;
     } catch (availabilityError) {

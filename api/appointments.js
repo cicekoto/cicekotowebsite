@@ -29,7 +29,6 @@ module.exports = async function handler(req, res) {
     const insert = await fetch(`${supabaseUrl}/rest/v1/rpc/create_website_appointment`, { method:'POST', headers:{ apikey:serviceKey, Authorization:`Bearer ${serviceKey}`, 'Content-Type':'application/json' }, body:JSON.stringify({ p_record:record }) });
     if (!insert.ok) {
       const failure = await insert.json().catch(() => ({}));
-      if (String(failure.message || '').includes('DAY_FULL')) return res.status(409).json({ error:'Bu gün için 5 araçlık randevu kapasitemiz doldu. Lütfen başka bir gün seçin.', code:'DAY_FULL' });
       if (String(failure.message || '').includes('SLOT_UNAVAILABLE')) return res.status(409).json({ error:'Bu saat az önce doldu. Lütfen başka bir saat seçin.', code:'SLOT_UNAVAILABLE' });
       throw new Error(`Supabase appointment RPC failed: ${insert.status}`);
     }
@@ -53,9 +52,8 @@ async function getAvailability(req,res,supabaseUrl,serviceKey){
     const response=await fetch(`${supabaseUrl}/rest/v1/appointments?${query}`,{headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`}});
     if(!response.ok)throw new Error(`Supabase availability failed: ${response.status}`);
     const existing=await response.json();
-    const remaining=Math.max(0,5-existing.length);
-    const available=remaining===0?[]:allowedTimes(durationMinutes).filter(time=>!existing.some(item=>overlaps(time,durationMinutes,String(item.requested_time).slice(0,5),Number(item.duration_minutes)||120)));
-    return res.status(200).json({available,duration_minutes:durationMinutes,remaining,day_full:remaining===0});
+    const available=allowedTimes(durationMinutes).filter(time=>!existing.some(item=>overlaps(time,durationMinutes,String(item.requested_time).slice(0,5),Number(item.duration_minutes)||120)));
+    return res.status(200).json({available,duration_minutes:durationMinutes});
   }catch(error){console.error('appointment_availability_failed',error.message);return res.status(500).json({error:'Uygun saatler şu anda alınamadı.'})}
 }
 
