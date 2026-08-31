@@ -1,0 +1,8 @@
+.git
+.vercel
+designs
+docs
+forged-clone
+scripts
+supabase
+*.log
