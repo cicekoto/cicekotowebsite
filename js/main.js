@@ -166,8 +166,11 @@ function initServices() {
 }
 
 function selectService(service) {
-  const radio = $(`input[name="service"][value="${CSS.escape(service)}"]`);
-  if (radio) radio.checked = true;
+  const checkbox = $(`input[name="services"][value="${CSS.escape(service)}"]`);
+  if (checkbox) {
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+  }
   $('#randevu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -182,19 +185,26 @@ function initAppointmentForm() {
   const submit = $('#formSubmit');
   const error = $('#formError');
   const date = $('#appointmentDate');
+  const time = form.elements.time;
+  const serviceInputs = $$('input[name="services"]', form);
+  const serviceCount = $('#serviceSelectionCount');
   let step = 0;
   $('#formStartedAt').value = String(Date.now());
-  $$('.service-options label', form).forEach(label => label.addEventListener('click', () => {
-    const radio = $('input[type="radio"]', label);
-    if (radio) setTimeout(() => { radio.checked = true; }, 0);
-  }));
+  const updateServiceCount = () => {
+    const count = serviceInputs.filter(input => input.checked).length;
+    if (serviceCount) serviceCount.textContent = count ? `${count} hizmet seçildi` : 'En az 1 hizmet seçin';
+    if (date?.value) loadAvailability();
+  };
+  serviceInputs.forEach(input => input.addEventListener('change', updateServiceCount));
+  resetTime('Önce tarih seçin');
   if (date) {
     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
     date.min = localDate(tomorrow);
     const max = new Date(); max.setMonth(max.getMonth() + 3);
     date.max = localDate(max);
     date.addEventListener('change', () => {
-      if (new Date(`${date.value}T12:00:00`).getDay() === 0) { date.value = ''; showError('Pazar günleri servisimiz kapalıdır. Lütfen başka bir gün seçin.'); }
+      if (new Date(`${date.value}T12:00:00`).getDay() === 0) { date.value = ''; resetTime('Önce tarih seçin'); showError('Pazar günleri servisimiz kapalıdır. Lütfen başka bir gün seçin.'); return; }
+      loadAvailability();
     });
   }
   const phone = form.elements.phone;
@@ -210,11 +220,44 @@ function initAppointmentForm() {
     next.hidden = step === steps.length - 1;
     submit.hidden = step !== steps.length - 1;
     clearError();
+    if (step === 2 && date.value) loadAvailability();
+  }
+  function resetTime(label) {
+    time.innerHTML = `<option value="">${label}</option>`;
+    time.disabled = true;
+  }
+  async function loadAvailability() {
+    const services = serviceInputs.filter(input => input.checked).map(input => input.value);
+    if (!date.value || !services.length) { resetTime('Önce tarih ve hizmet seçin'); return; }
+    resetTime('Uygun saatler yükleniyor…');
+    const duration = services.length === 1 && services[0] === 'Periyodik Bakım' ? 60 : 120;
+    const fallback = duration === 60 ? ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'] : ['09:00','11:00','13:00','15:00','17:00'];
+    try {
+      const response = await fetch(`/api/appointments?date=${encodeURIComponent(date.value)}&services=${encodeURIComponent(JSON.stringify(services))}`);
+      if (!response.ok) throw new Error('Uygun saatler alınamadı.');
+      const result = await response.json();
+      const available = result.available || [];
+      time.innerHTML = `<option value="">${available.length ? `Saat seçin · ${result.remaining} araçlık kapasite kaldı` : 'Bu gün için 5 araçlık kapasite dolu'}</option>${available.map(value => `<option>${value}</option>`).join('')}`;
+      time.disabled = !available.length;
+    } catch (availabilityError) {
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        time.innerHTML = `<option value="">Saat seçin · yerel önizleme</option>${fallback.map(value => `<option>${value}</option>`).join('')}`;
+        time.disabled = false;
+      } else {
+        resetTime('Saatler şu anda alınamıyor');
+        showError('Uygun saatler alınamadı. Lütfen kısa süre sonra tekrar deneyin.');
+      }
+    }
   }
   function validateCurrent() {
     const current = steps[step];
     const required = $$('[required]', current);
     let valid = true;
+    if (step === 0) {
+      const hasService = serviceInputs.some(input => input.checked);
+      serviceInputs.forEach(input => input.classList.toggle('invalid', !hasService));
+      if (!hasService) valid = false;
+    }
     required.forEach(field => {
       const empty = field.type === 'radio' ? !$(`[name="${field.name}"]:checked`, current) : field.type === 'checkbox' ? !field.checked : !String(field.value).trim();
       field.classList.toggle('invalid', empty);
@@ -232,7 +275,10 @@ function initAppointmentForm() {
     event.preventDefault();
     if (!validateCurrent()) return;
     const panel = $('.appointment-panel');
-    const data = Object.fromEntries(new FormData(form).entries());
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    data.services = formData.getAll('services');
+    data.service = data.services.join(', ');
     data.whatsapp_consent = form.elements.whatsapp_consent.checked;
     data.kvkk = form.elements.kvkk.checked;
     panel.classList.add('loading');
@@ -241,6 +287,7 @@ function initAppointmentForm() {
       const result = await createAppointment(data);
       showSuccess(data, result);
       form.reset();
+      updateServiceCount();
       step = 0;
       $('#formStartedAt').value = String(Date.now());
       render();
@@ -251,6 +298,7 @@ function initAppointmentForm() {
       submit.disabled = false;
     }
   });
+  updateServiceCount();
   render();
 }
 
@@ -275,7 +323,8 @@ function showSuccess(data, result) {
   const reference = result.reference || makeReference();
   $('#referenceCode').textContent = reference;
   $('#successText').textContent = result.storage === 'local-demo' ? 'Yerel önizleme kaydı oluşturuldu. Canlı sitede talebiniz doğrudan servise iletilecek.' : 'Randevunuzu kontrol edip en kısa sürede telefon veya WhatsApp üzerinden dönüş yapacağız.';
-  const message = `Merhaba, ${reference} takip kodlu randevu talebimi oluşturdum.\nHizmet: ${data.service}\nAraç: ${data.brand} ${data.model}\nTarih: ${data.date} ${data.time}`;
+  const serviceSummary = Array.isArray(data.services) ? data.services.join(' · ') : data.service;
+  const message = `Merhaba, ${reference} takip kodlu randevu talebimi oluşturdum.\nHizmetler: ${serviceSummary}\nAraç: ${data.brand} ${data.model}\nTarih: ${data.date} ${data.time}`;
   $('#successWhatsapp').href = `https://wa.me/902125491763?text=${encodeURIComponent(message)}`;
   dialog.showModal();
 }
