@@ -1,8 +1,8 @@
-const CACHE = 'cicekoto-neon-v22';
+const CACHE = 'cicekoto-neon-v23';
 const ASSETS = [
   '/',
   '/index.html',
-  '/css/style.css?v=19',
+  '/css/style.css?v=20',
   '/js/main.js?v=21',
   '/img/favicon.svg',
   '/img/cicek-oto-logo.png',

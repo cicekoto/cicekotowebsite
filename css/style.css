@@ -113,3 +113,13 @@ html[data-theme="light"] .scene.scene-dsg,html[data-theme="light"] .scene.scene-
 @media(max-width:1020px){.scene-car{width:103%;left:-2%;top:18%}.scene-track .scene-car{width:82%;left:30%;top:27%}.telemetry-engine{left:8%}.track-panel{width:48%}}
 @media(max-width:620px){.scene.scene-dsg,.scene.scene-track{height:340px}.scene-index{width:54px;height:54px;left:16px;top:16px}.scene-car{width:118%;left:-11%;top:28%}.diagnostic-orbit{width:106px;right:5%;top:10%}.orbit-b{width:164px;right:-3%;top:2%}.diagnostic-orbit b{font-size:.82rem}.telemetry{min-width:116px;padding:9px 10px}.telemetry b{font-size:.57rem}.telemetry span,.telemetry small{font-size:.39rem}.telemetry-engine{left:5%;bottom:9%}.telemetry-dsg{right:5%;bottom:8%}.scene-track .scene-car{width:100%;left:21%;top:38%}.track-panel{left:6%;top:12%;width:65%;padding:14px}.track-status{padding:12px 0 14px}.track-status strong{font-size:.86rem}.signal-rings{width:88px;right:3%;bottom:6%}}
 @media(prefers-reduced-motion:reduce){.scene-car,.scene-scan,.diagnostic-orbit,.diagnostic-orbit::before,.diagnostic-orbit::after,.diagnostic-orbit i,.telemetry,.target-point,.track-panel,.track-panel-head i,.track-route b,.signal-rings i{animation:none!important}}
+
+/* Light theme footer */
+html[data-theme="light"] footer{color:#102328;border-top-color:rgba(0,128,144,.2);background:radial-gradient(circle at 18% 0,rgba(48,192,208,.13),transparent 31%),linear-gradient(180deg,#dfeeee 0,#edf5f5 56%,#f3f8f8 100%)}
+html[data-theme="light"] .footer-main p{color:#5d7176}
+html[data-theme="light"] .footer-main nav{color:#456167}
+html[data-theme="light"] .footer-main nav a:hover{color:#008090}
+html[data-theme="light"] .footer-main>div:last-child b{color:#17383e}
+html[data-theme="light"] .footer-main>div:last-child span{color:#63777c}
+html[data-theme="light"] .footer-main>div:last-child strong{color:#102328}
+html[data-theme="light"] .footer-bottom{color:#65797e;border-top-color:rgba(0,93,104,.14)}
