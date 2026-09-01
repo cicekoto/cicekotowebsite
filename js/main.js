@@ -54,6 +54,9 @@ const EN_TEXT = {
   '“Turan Usta çok yardımcı oldu. Bir saat içinde aracımın bakımını yaptılar.”': '“Turan Usta was very helpful. They completed my vehicle maintenance within an hour.”',
   '“Çiçek Otomotive uğradım ve çok memnun kaldım. Turan Usta ve ekibine teşekkürlerimi sunarım.”': '“I visited Çiçek Otomotiv and was very satisfied. My thanks to Turan Usta and his team.”',
   '“Çok ilgiliydiler ve yardımcı oldular; aracımı işlemleri yapılmış hâlde teslim aldım.”': '“They were attentive and helpful; I received my vehicle with the requested work completed.”',
+  '“Turan Usta çok yardımcı oldu. Fiyat olarak da gayet uygundu.”': '“Turan Usta was very helpful. The price was also quite reasonable.”',
+  '“Çiçek Otomotive uğradım ve çok memnun kaldım. Gönül rahatlığı ile aracınızda işlem yaptırabilirsiniz.”': '“I visited Çiçek Otomotiv and was very satisfied. You can confidently have your vehicle serviced here.”',
+  'Google yorumu · 5/5 · Ağustos 2026': 'Google review · 5/5 · August 2026', 'Google yorumu · 5/5 · Mayıs 2026': 'Google review · 5/5 · May 2026', 'Google’da doğrula ↗': 'Verify on Google ↗',
   'Google yorumu · 5/5': 'Google review · 5/5', 'Sık sorulanlar': 'Frequently asked', 'Aklındaki': 'Your questions,', 'sorular.': 'answered.',
   "Bulamadığın bir cevap varsa bizi arayabilir veya WhatsApp'tan yazabilirsin.": 'If you cannot find an answer, call us or message us on WhatsApp.',
   'Randevu almadan gelebilir miyim?': 'Can I visit without an appointment?', 'Gelebilirsiniz; ancak yoğunlukta beklememek için online randevu oluşturmanızı öneririz.': 'Yes, but we recommend booking online to avoid waiting during busy periods.',
@@ -88,9 +91,10 @@ const AR_TEXT = {
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
 Object.assign(AR_TEXT, {
-  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية',
+  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','168 Google yorumu':'168 تقييماً على Google',
   'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'نحن متخصصون في سيارات VAG، ويمكنك أيضاً طلب الصيانة والإصلاح للعلامات الأخرى. اختر كل الخدمات التي تحتاجها وسيصل الطلب مباشرة إلى نظام الحجز.',
   'Google işletme profili':'ملف النشاط على Google','Canlı Google bağlantısı bekleniyor':'بانتظار اتصال Google المباشر','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'لا نعرض تقييمات مختلقة. يمكنك مشاهدة جميع التقييمات الحقيقية في ملف نشاطنا على Google.','Tüm gerçek yorumları Google’da gör →':'شاهد كل التقييمات الحقيقية على Google ←',
+  '“Turan Usta çok yardımcı oldu. Fiyat olarak da gayet uygundu.”':'“كان توران أوسطا متعاوناً جداً، وكان السعر مناسباً للغاية.”','“Çiçek Otomotive uğradım ve çok memnun kaldım. Gönül rahatlığı ile aracınızda işlem yaptırabilirsiniz.”':'“زرت Çiçek Otomotiv وكنت راضياً جداً. يمكنكم صيانة سيارتكم هنا بكل ثقة.”','Google yorumu · 5/5 · Ağustos 2026':'تقييم Google · 5/5 · أغسطس 2026','Google yorumu · 5/5 · Mayıs 2026':'تقييم Google · 5/5 · مايو 2026','Google’da doğrula ↗':'تحقق على Google ↗',
   'Örn. Golf 7, A3, Octavia':'مثال: Golf 7 أو A3 أو Octavia','Örn. BMW, Mercedes-Benz, Renault':'مثال: BMW أو Mercedes-Benz أو Renault','Randevu talebimin işlenmesi için kişisel verilerimin':'أوافق على استخدام بياناتي الشخصية لمعالجة طلب الموعد وفق','KVKK aydınlatma metni':'بيان الخصوصية','kapsamında kullanılmasını kabul ediyorum.':'.','Randevu onayı ve servis güncellemelerinin WhatsApp üzerinden iletilmesini istiyorum.':'أرغب في تلقي تأكيد الموعد وتحديثات الصيانة عبر واتساب.',
   'Bulamadığın bir cevap varsa bizi arayabilir veya WhatsApp\'tan yazabilirsin.':'إذا لم تجد الإجابة، اتصل بنا أو راسلنا عبر واتساب.','Randevu almadan gelebilir miyim?':'هل يمكنني الحضور دون موعد؟','Gelebilirsiniz; ancak yoğunlukta beklememek için online randevu oluşturmanızı öneririz.':'يمكنك الحضور، لكن ننصح بالحجز الإلكتروني لتجنب الانتظار.','Hangi markalara servis veriyorsunuz?':'ما العلامات التي تخدمونها؟','Volkswagen, Audi, Škoda, SEAT ve CUPRA araçlara; VAG motor, DSG, elektronik ve platform teknolojilerinde uzman servis veriyoruz.':'نقدم خدمة متخصصة لمحركات VAG وناقل DSG والإلكترونيات والمنصات لسيارات Volkswagen وAudi وŠkoda وSEAT وCUPRA، ونقبل طلبات العلامات الأخرى أيضاً.','Birden fazla işlem seçebilir miyim?':'هل يمكن اختيار أكثر من خدمة؟','Evet. Randevu formunda bakım, DSG, motor-elektronik, fren, kaporta ve genel kontrol seçeneklerinden birden fazlasını birlikte seçebilirsiniz.':'نعم، يمكنك اختيار عدة خدمات معاً في طلب واحد.','Fiyat onayı olmadan işlem yapılır mı?':'هل يبدأ العمل دون موافقة على السعر؟','Hayır. Teşhis sonrası işlem ve fiyat bilgisi iletilir; onayınız olmadan ek işleme başlanmaz.':'لا. نرسل تفاصيل العمل والسعر بعد التشخيص ولا نبدأ عملاً إضافياً دون موافقتك.','İşçilik garantisi var mı?':'هل توجد كفالة على العمل؟','Evet. Yapılan işlemin kapsamına göre garanti koşulları işleme başlamadan önce yazılı olarak paylaşılır.':'نعم، تُشارك شروط الكفالة كتابياً قبل بدء العمل حسب نطاقه.',
   "2001'den beri Başakşehir'de doğru teşhis, şeffaf fiyat ve garantili işçilik.":'تشخيص دقيق وأسعار واضحة وخدمة موثوقة في باشاك شهير منذ 2001.','KVKK · Gizlilik · Kullanım Koşulları':'الخصوصية · حماية البيانات · شروط الاستخدام','RANDEVU TALEBİ':'طلب موعد','Talebin alındı.':'تم استلام طلبك.','Randevunu kontrol edip en kısa sürede sana dönüş yapacağız.':'سنراجع موعدك ونتواصل معك في أقرب وقت.','WhatsApp\'ta Aç':'افتح في واتساب','Kapat':'إغلاق'
@@ -242,6 +246,13 @@ function initNavigation() {
     navLinks.forEach(link => link.classList.toggle('active', link.hash === `#${entry.target.id}`));
   }), { rootMargin: '-35% 0px -55%', threshold: 0 });
   $$('main section[id]').forEach(section => sectionObserver.observe(section));
+  const bookingSection = $('#randevu');
+  if (bookingSection) {
+    const bookingObserver = new IntersectionObserver(([entry]) => {
+      document.body.classList.toggle('booking-in-view', entry.isIntersecting);
+    }, { threshold: .05 });
+    bookingObserver.observe(bookingSection);
+  }
 }
 
 function initScrollEffects() {
@@ -391,16 +402,24 @@ function initAppointmentForm() {
   const error = $('#formError');
   const date = $('#appointmentDate');
   const time = form.elements.time;
-  const serviceInputs = $$('input[name="services"]', form);
+  const getServiceInputs = () => $$('input[name="services"]', form);
+  const selectedServices = () => getServiceInputs().filter(input => input.checked);
   const serviceCount = $('#serviceSelectionCount');
   let step = 0;
   $('#formStartedAt').value = String(Date.now());
   const updateServiceCount = () => {
-    const count = serviceInputs.filter(input => input.checked).length;
+    const count = selectedServices().length;
     if (serviceCount) serviceCount.textContent = count ? languageText(`${count} hizmet seçildi`, `${count} services selected`, `${count} خدمات مختارة`) : localized('En az 1 hizmet seçin');
+    if (step === 0) next.disabled = count === 0;
+    if (count) {
+      getServiceInputs().forEach(input => input.classList.remove('invalid'));
+      clearError();
+    }
     if (date?.value) loadAvailability();
   };
-  serviceInputs.forEach(input => input.addEventListener('change', updateServiceCount));
+  form.addEventListener('change', event => {
+    if (event.target.matches('input[name="services"]')) updateServiceCount();
+  });
   resetTime(localized('Önce tarih seçin'));
   if (date) {
     const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
@@ -423,6 +442,7 @@ function initAppointmentForm() {
     progressBar.style.width = `${((step + 1) / steps.length) * 100}%`;
     prev.hidden = step === 0;
     next.hidden = step === steps.length - 1;
+    next.disabled = step === 0 && selectedServices().length === 0;
     submit.hidden = step !== steps.length - 1;
     clearError();
     if (step === 2 && date.value) loadAvailability();
@@ -432,7 +452,7 @@ function initAppointmentForm() {
     time.disabled = true;
   }
   async function loadAvailability() {
-    const services = serviceInputs.filter(input => input.checked).map(input => input.value);
+    const services = selectedServices().map(input => input.value);
     if (!date.value || !services.length) { resetTime(languageText('Önce tarih ve hizmet seçin','Select a date and service first','اختر التاريخ والخدمة أولاً')); return; }
     resetTime(languageText('Uygun saatler yükleniyor…','Loading available times…','جارٍ تحميل الأوقات المتاحة…'));
     const duration = services.length === 1 && services[0] === 'Periyodik Bakım' ? 60 : 120;
@@ -460,8 +480,9 @@ function initAppointmentForm() {
     const required = $$('[required]', current);
     let valid = true;
     if (step === 0) {
-      const hasService = serviceInputs.some(input => input.checked);
-      serviceInputs.forEach(input => input.classList.toggle('invalid', !hasService));
+      const inputs = getServiceInputs();
+      const hasService = inputs.some(input => input.checked);
+      inputs.forEach(input => input.classList.toggle('invalid', !hasService));
       if (!hasService) valid = false;
     }
     required.forEach(field => {
@@ -544,22 +565,22 @@ function showSuccess(data, result) {
 function initReviews() {
   const track = $('#reviewTrack');
   if (!track) return;
-  const sourceUrl = 'https://share.google/Ku7rt8w8gclaphIJl';
-  const pending = document.createElement('article');
-  pending.className = 'review review-source-state';
-  pending.innerHTML = `<div class="stars" aria-hidden="true">G</div><blockquote>${localized('Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.')}</blockquote><div><b>${localized('Canlı Google bağlantısı bekleniyor')}</b><a href="${sourceUrl}" target="_blank" rel="noopener">${localized('Tüm gerçek yorumları Google’da gör →')}</a></div>`;
-  track.replaceChildren(pending);
   let index = 0;
   let cards = $$('.review', track);
+  const previousButton = $('#reviewPrev');
+  const nextButton = $('#reviewNext');
   const update = () => {
     const visible = innerWidth <= 620 ? 1 : innerWidth <= 1020 ? 2 : 3;
-    index = Math.min(index, Math.max(0, cards.length - visible));
+    const maximum = Math.max(0, cards.length - visible);
+    index = Math.max(0, Math.min(index, maximum));
     const gap = 18;
     const width = (track.parentElement.clientWidth - gap * (visible - 1)) / visible;
     track.style.transform = `translateX(-${index * (width + gap)}px)`;
+    if (previousButton) previousButton.disabled = index === 0;
+    if (nextButton) nextButton.disabled = index === maximum;
   };
-  $('#reviewNext')?.addEventListener('click', () => { index = Math.min(cards.length - 1, index + 1); update(); });
-  $('#reviewPrev')?.addEventListener('click', () => { index = Math.max(0, index - 1); update(); });
+  nextButton?.addEventListener('click', () => { index++; update(); });
+  previousButton?.addEventListener('click', () => { index--; update(); });
   addEventListener('resize', update, { passive: true });
   update();
   if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;

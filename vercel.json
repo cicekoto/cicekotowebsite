@@ -1,10 +1,6 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/404.html", "status": 404 }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -18,7 +14,7 @@
         { "key": "Cross-Origin-Resource-Policy", "value": "same-site" },
         { "key": "Origin-Agent-Cluster", "value": "?1" },
         { "key": "X-DNS-Prefetch-Control", "value": "off" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-Z8ppZoOIynVvx/1ahSqHc2Dzmtz3gnVGgwwBKAdSb60=' 'sha256-+l7FpZ7wXygwTsDQQP5pgzObu8eZPy8xkNoKzJM8iO4=' 'sha256-EoPNDWhUzBICPW3DlIr7vYliDRWJ/wDY8VXV2cmFQNQ='; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-elem 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-Z8ppZoOIynVvx/1ahSqHc2Dzmtz3gnVGgwwBKAdSb60=' 'sha256-2Z1HS2Vhl2XzsrxCozBgO9LgpMK4OsjDvXYpa0zsc7M=' 'sha256-GqssdNzdAG/xb6g+yQOyiAEEIRw7CvEe3Ydwtx49oiw='; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-elem 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content" }
       ]
     },
     {

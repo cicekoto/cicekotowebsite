@@ -231,3 +231,62 @@ html[lang="ar"] .wide-link b,html[lang="ar"] .button span{transform:scaleX(-1)}
   .contact-panel{height:460px}
   .contact-cards{left:12px;right:12px;bottom:12px}
 }
+
+/* September 2026: continuous service visual, reliable booking controls and sourced reviews */
+.service-slices{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  min-height:430px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(90deg,rgba(0,12,16,.9),rgba(0,14,18,.65) 48%,rgba(0,10,14,.9)),url('../img/real-service-workshop.jpg') center 56%/cover no-repeat;
+}
+.service-slice,.service-slice.active{
+  min-width:0;
+  min-height:430px;
+  display:flex;
+  flex-direction:column;
+  background:rgba(0,11,15,.64);
+  transition:background .3s ease,box-shadow .3s ease,transform .3s ease;
+}
+.service-slice::before,.service-slice:nth-child(odd)::before,.service-slice:nth-child(even)::before{
+  background-image:none;
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+.service-slice::after{background:linear-gradient(180deg,rgba(1,15,19,.2),rgba(1,12,16,.82))}
+.service-slice.active,.service-slice:hover,.service-slice:focus-visible{
+  background:linear-gradient(155deg,rgba(0,130,145,.28),rgba(0,10,14,.68));
+  box-shadow:inset 0 3px var(--brand-teal),inset 0 -1px rgba(48,192,208,.32);
+}
+.service-slice.active::before,.service-slice:hover::before{opacity:1;transform:none}
+.service-slice p,.service-slice small{opacity:1;transform:none}
+.service-slice p{max-width:240px;color:#b5c5c7}
+.service-slice small{margin-top:auto;padding-bottom:44px;color:#83a1a5}
+.service-slice>i{z-index:2}
+.service-slice>b{z-index:1;opacity:.16}
+.service-slice.active>b,.service-slice:hover>b{opacity:.62}
+.review-manual{position:relative}
+.review-manual::before{content:"GOOGLE";position:absolute;right:24px;top:24px;color:rgba(255,255,255,.24);font:700 .6rem Space Grotesk;letter-spacing:.16em}
+.review-manual>div:last-child a{display:inline-block;margin-top:13px;color:var(--brand-teal);font-size:.72rem;border-bottom:1px solid currentColor}
+.slider-controls button:disabled{opacity:.32;cursor:not-allowed}
+.form-actions .button:disabled{cursor:not-allowed;opacity:.42;filter:saturate(.35);transform:none;box-shadow:none}
+.mobile-dock{transition:transform .28s ease,opacity .28s ease}
+html[data-theme="light"] .service-slices{color:#f5fbfc;border-color:rgba(0,112,124,.34)}
+html[data-theme="light"] .service-slice,html[data-theme="light"] .service-slice.active{background:rgba(2,21,25,.67)}
+html[data-theme="light"] .service-slice.active,html[data-theme="light"] .service-slice:hover,html[data-theme="light"] .service-slice:focus-visible{background:linear-gradient(155deg,rgba(0,130,145,.38),rgba(2,21,25,.64))}
+
+@media(max-width:1020px){
+  .service-slices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .service-slice,.service-slice.active{min-height:320px}
+}
+
+@media(max-width:620px){
+  .service-slices{display:flex;min-height:350px;background-position:58% center}
+  .service-slice,.service-slice.active{flex:0 0 86%;min-height:350px;background:rgba(0,11,15,.7)}
+  .service-slice p{max-width:90%}
+  .appointment-panel .form-actions{margin-bottom:84px}
+  body.booking-in-view .mobile-dock{transform:translateY(calc(100% + 24px));opacity:0;pointer-events:none}
+  .review-manual::before{right:18px;top:20px}
+}
