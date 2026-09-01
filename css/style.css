@@ -140,6 +140,9 @@ footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background
 .footer-main nav a:hover{color:#9ce9ef}
 .footer-main>div:last-child span{color:#72898d}
 .footer-bottom{color:#5f777b;border-top-color:rgba(48,192,208,.1)}
+.contact-actions{flex-wrap:wrap}
+.button-instagram{border-color:rgba(225,48,108,.45);background:linear-gradient(135deg,#6f2dbd 0%,#d92f68 52%,#f58529 100%);color:#fff;box-shadow:0 10px 28px rgba(217,47,104,.16)}
+.button-instagram:hover{transform:translateY(-2px);filter:saturate(1.1) brightness(1.05);box-shadow:0 14px 34px rgba(217,47,104,.25)}
 
 /* September 2026 interface pass: real imagery, seamless motion, RTL and mobile */
 .hero-stats{grid-template-columns:repeat(3,1fr)}
