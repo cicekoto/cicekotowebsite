@@ -3,7 +3,7 @@
 ## Requested change
 
 - Apply the official logo palette consistently to the public site and admin surface.
-- Replace the informal “Atölyeye bekleriz.” contact heading.
+- Replace the informal previous contact heading.
 - Replace the decorative map illustration with the real Google Maps location.
 
 ## Palette sampled from the official transparent logo

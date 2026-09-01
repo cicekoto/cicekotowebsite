@@ -17,7 +17,7 @@
     <div class="login-visual" aria-hidden="true"><div class="login-grid"></div><div class="login-orbit"><span></span></div><p>VAG servis operasyon merkezi</p></div>
     <form class="login-card" id="loginForm">
       <a class="brand" href="/" aria-label="Çiçek Oto ana sayfa"><img src="img/cicek-oto-logo.png" alt="Çiçek Oto"></a>
-      <div class="eyebrow">YETKİLİ ERİŞİM</div><h1 id="loginTitle">Atölye yönetimi</h1><p>Randevuları, günlük servis akışını ve müşteri iletişimini tek ekrandan yönetin.</p>
+      <div class="eyebrow">YETKİLİ ERİŞİM</div><h1 id="loginTitle">Çiçek Otomotiv yönetimi</h1><p>Randevuları, günlük servis akışını ve müşteri iletişimini tek ekrandan yönetin.</p>
       <label class="field"><span>Kullanıcı adı</span><input name="username" autocomplete="username" required></label>
       <label class="field"><span>Şifre</span><input type="password" name="password" autocomplete="current-password" required></label>
       <div class="form-error" id="loginError" role="alert"></div>
@@ -48,7 +48,7 @@
       <div class="setup-alert" id="setup" hidden><strong>Yönetim servisi yapılandırılmadı.</strong><span>Vercel ortam değişkenlerine Supabase ve yönetici bilgileri eklenmelidir.</span></div>
 
       <section class="view active" id="view-overview" data-view-panel="overview">
-        <div class="page-heading"><div><div class="eyebrow">OPERASYON MERKEZİ</div><h1>Genel bakış</h1><p>Atölyenin bugünkü akışını ve bekleyen işleri hızlıca takip edin.</p></div><button class="button primary" data-go="appointments" type="button">Randevuları yönet <span>→</span></button></div>
+        <div class="page-heading"><div><div class="eyebrow">OPERASYON MERKEZİ</div><h1>Genel bakış</h1><p>Servisin bugünkü akışını ve bekleyen işleri hızlıca takip edin.</p></div><button class="button primary" data-go="appointments" type="button">Randevuları yönet <span>→</span></button></div>
         <div class="metric-grid">
           <article class="metric accent"><div><span>Bugünkü randevu</span><strong id="metricToday">0</strong></div><i>▦</i><small id="metricTodayText">Planlanmış iş yok</small></article>
           <article class="metric warning"><div><span>Yanıt bekleyen</span><strong id="metricPending">0</strong></div><i>!</i><small id="metricPendingText">Yeni talep yok</small></article>
@@ -57,7 +57,7 @@
           <article class="metric"><div><span>Toplam kayıt</span><strong id="metricTotal">0</strong></div><i>Σ</i><small id="metricTotalText">Tüm zamanlar</small></article>
         </div>
         <div class="overview-grid">
-          <article class="panel today-panel"><div class="panel-head"><div><span class="panel-kicker">BUGÜN</span><h2>Atölye akışı</h2></div><button class="text-button" data-go="schedule" type="button">Tam planı aç →</button></div><div class="compact-schedule" id="overviewSchedule"></div></article>
+          <article class="panel today-panel"><div class="panel-head"><div><span class="panel-kicker">BUGÜN</span><h2>Servis akışı</h2></div><button class="text-button" data-go="schedule" type="button">Tam planı aç →</button></div><div class="compact-schedule" id="overviewSchedule"></div></article>
           <article class="panel pending-panel"><div class="panel-head"><div><span class="panel-kicker">AKSİYON GEREKİYOR</span><h2>Yeni talepler</h2></div><span class="count-badge" id="pendingBadge">0</span></div><div class="request-list" id="pendingList"></div></article>
           <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">DAĞILIM</span><h2>Randevu durumları</h2></div></div><div class="status-analytics"><div class="donut" id="statusDonut"><div><strong id="donutTotal">0</strong><span>randevu</span></div></div><div class="legend" id="statusLegend"></div></div></article>
           <article class="panel services-panel"><div class="panel-head"><div><span class="panel-kicker">HİZMET YOĞUNLUĞU</span><h2>En çok talep edilenler</h2></div></div><div class="service-bars" id="serviceBars"></div></article>
@@ -65,7 +65,7 @@
       </section>
 
       <section class="view" id="view-schedule" data-view-panel="schedule">
-        <div class="page-heading compact"><div><div class="eyebrow">ATÖLYE TAKVİMİ</div><h1>Günlük plan</h1><p>Randevuları saate göre görüntüleyin ve hızlıca yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="printSchedule" type="button">Yazdır</button><button class="button primary" data-go="appointments" type="button">Tüm randevular <span>→</span></button></div></div>
+        <div class="page-heading compact"><div><div class="eyebrow">SERVİS TAKVİMİ</div><h1>Günlük plan</h1><p>Randevuları saate göre görüntüleyin ve hızlıca yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="printSchedule" type="button">Yazdır</button><button class="button primary" data-go="appointments" type="button">Tüm randevular <span>→</span></button></div></div>
         <div class="date-control panel"><button class="icon-button" id="prevDay" aria-label="Önceki gün" type="button">←</button><button class="date-display" id="todayShortcut" type="button"><span id="scheduleDateLong"></span><small>Bugüne dön</small></button><label class="date-picker"><span>Tarih seç</span><input id="scheduleDate" type="date"></label><button class="icon-button" id="nextDay" aria-label="Sonraki gün" type="button">→</button></div>
         <div class="schedule-summary" id="scheduleSummary"></div><div class="timeline panel" id="timeline"></div>
       </section>
@@ -81,6 +81,6 @@
 
   <div class="drawer-layer" id="drawerLayer" hidden><button class="drawer-backdrop" id="drawerBackdrop" aria-label="Ayrıntıları kapat" type="button"></button><aside class="detail-drawer" id="detailDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><header><div><span class="eyebrow">RANDEVU AYRINTISI</span><h2 id="drawerTitle">—</h2></div><button class="icon-button" id="closeDrawer" aria-label="Kapat" type="button">×</button></header><div class="drawer-content" id="drawerContent"></div></aside></div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
-  <script src="js/admin.js?v=1" defer></script>
+  <script src="js/admin.js?v=2" defer></script>
 </body>
 </html>
