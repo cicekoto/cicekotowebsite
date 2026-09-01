@@ -123,3 +123,11 @@ html[data-theme="light"] .footer-main>div:last-child b{color:#17383e}
 html[data-theme="light"] .footer-main>div:last-child span{color:#63777c}
 html[data-theme="light"] .footer-main>div:last-child strong{color:#102328}
 html[data-theme="light"] .footer-bottom{color:#65797e;border-top-color:rgba(0,93,104,.14)}
+
+/* Unified floating WhatsApp action */
+.floating-whatsapp{min-height:50px;padding:0 18px 0 14px;gap:9px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:linear-gradient(135deg,#24d778,#10ad5e);color:#fff;font-weight:800;letter-spacing:.01em;box-shadow:0 12px 34px rgba(12,151,79,.32);transition:transform .25s ease,box-shadow .25s ease,filter .25s ease}
+.floating-whatsapp b{width:24px;height:24px;border-radius:0;background:transparent;box-shadow:none;font-size:0}
+.floating-whatsapp b svg{display:block;width:22px;height:22px;fill:currentColor}
+.floating-whatsapp span{line-height:1}
+.floating-whatsapp:hover{transform:translateY(-3px);filter:saturate(1.08);box-shadow:0 16px 40px rgba(12,151,79,.42)}
+.floating-whatsapp:focus-visible{outline:3px solid rgba(36,215,120,.32);outline-offset:4px}
