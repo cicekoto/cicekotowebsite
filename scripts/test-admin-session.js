@@ -34,7 +34,7 @@ function response() {
   const listRes = response();
   await appointmentsHandler({ method: 'GET', headers: { cookie } }, listRes);
   assert.equal(listRes.statusCode, 200);
-  assert.deepEqual(listRes.body, { appointments: [] });
+  assert.deepEqual(listRes.body, { appointments: [], events: [] });
 
   const unauthorizedRes = response();
   await appointmentsHandler({ method: 'GET', headers: {} }, unauthorizedRes);
