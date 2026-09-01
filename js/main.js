@@ -97,7 +97,9 @@ function translateDocument(language) {
   }));
   $$('blockquote[lang]').forEach(quote => quote.lang = language);
   document.documentElement.lang = language;
-  document.title = language === 'en' ? 'Çiçek Otomotiv | VAG Specialist Service · Başakşehir' : 'Çiçek Otomotiv | Profesyonel Oto Servis · Başakşehir';
+  document.title = language === 'en'
+    ? (document.body.dataset.titleEn || 'Çiçek Otomotiv | VAG Specialist Service · Başakşehir')
+    : (document.body.dataset.titleTr || 'Çiçek Otomotiv | Profesyonel Oto Servis · Başakşehir');
 }
 
 function initPreferences() {
@@ -472,7 +474,7 @@ function initReviews() {
   const track = $('#reviewTrack');
   if (!track) return;
   let index = 0;
-  const cards = $$('.review', track);
+  let cards = $$('.review', track);
   const update = () => {
     const visible = innerWidth <= 620 ? 1 : innerWidth <= 1020 ? 2 : 3;
     index = Math.min(index, Math.max(0, cards.length - visible));
@@ -484,6 +486,39 @@ function initReviews() {
   $('#reviewPrev')?.addEventListener('click', () => { index = Math.max(0, index - 1); update(); });
   addEventListener('resize', update, { passive: true });
   update();
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
+  fetch('/api/google-reviews').then(response => response.ok ? response.json() : null).then(data => {
+    if (!data?.reviews?.length) return;
+    const rating = $('.google-rating b');
+    const count = $('.google-rating>span:not(.google-g)');
+    const link = $('.google-rating');
+    if (rating) rating.textContent = `${String(data.rating).replace('.', ',')} / 5`;
+    if (count) count.textContent = `${data.count} Google yorumu`;
+    if (link && data.url) link.href = data.url;
+    track.replaceChildren(...data.reviews.map(review => {
+      const article = document.createElement('article');
+      article.className = 'review';
+      const stars = document.createElement('div');
+      stars.className = 'stars';
+      stars.setAttribute('aria-label', `${review.rating} yıldız`);
+      stars.textContent = '★'.repeat(Math.max(1, Math.min(5, Math.round(review.rating))));
+      const quote = document.createElement('blockquote');
+      quote.lang = 'tr';
+      quote.textContent = `“${review.text}”`;
+      const attribution = document.createElement('div');
+      const author = document.createElement('b');
+      author.textContent = review.author;
+      const meta = document.createElement('span');
+      meta.textContent = `Google yorumu · ${review.rating}/5${review.published ? ` · ${review.published}` : ''}`;
+      attribution.append(author, meta);
+      article.append(stars, quote, attribution);
+      if (review.url) article.addEventListener('click', () => window.open(review.url, '_blank', 'noopener'));
+      return article;
+    }));
+    cards = $$('.review', track);
+    index = 0;
+    update();
+  }).catch(() => {});
 }
 
 function initFaq() {

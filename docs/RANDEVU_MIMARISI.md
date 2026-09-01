@@ -1,5 +1,35 @@
 # Çiçek Otomotiv randevu sistemi
 
+## Güncel production durumu — 1 Eylül 2026
+
+- Randevu formu Vercel Functions üzerinden Supabase `appointments` tablosuna yazıyor.
+- Günlük araç sayısı sınırı yok; aynı zaman aralığındaki çakışmalar işlem süresine göre engelleniyor.
+- Randevu başlangıç saatleri 09:00–17:00, pazar günü kapalı.
+- Admin paneli şifreyi tarayıcı depolamasında tutmuyor; `HttpOnly`, `Secure`, `SameSite=Strict` imzalı oturum çerezi kullanıyor.
+- CallMeBot işletme sahibine yeni talep alarmı için hazır; müşteri mesajları Meta WhatsApp Cloud API şablonları için hazır.
+- Google Places bağlantısı yapılandırıldığında puan ve en fazla beş gerçek yorum otomatik gösteriliyor; bağlantı yoksa doğrulanmış sabit yorumlar kalıyor.
+
+### Production environment variables
+
+| Değişken | Durum / amaç |
+| --- | --- |
+| `SUPABASE_URL` | Zorunlu, yapılandırıldı |
+| `SUPABASE_SERVICE_ROLE_KEY` | Zorunlu, yalnızca sunucuda |
+| `ADMIN_USERNAME` | Zorunlu, yapılandırıldı |
+| `ADMIN_PASSWORD` | Zorunlu; aynı zamanda admin oturum imzası |
+| `CALLMEBOT_PHONE` | İsteğe bağlı; yalnızca işletme sahibine bildirim |
+| `CALLMEBOT_API_KEY` | İsteğe bağlı; CallMeBot aktivasyonundan gelir |
+| `WHATSAPP_ACCESS_TOKEN` | Müşteri mesajları için Meta erişim anahtarı |
+| `WHATSAPP_PHONE_NUMBER_ID` | Meta WhatsApp gönderici numarası kimliği |
+| `WHATSAPP_GRAPH_API_VERSION` | Kullanılacak Graph API sürümü; açıkça yapılandırılmalı |
+| `WHATSAPP_TEMPLATE_LANGUAGE` | Varsayılan `tr` |
+| `WHATSAPP_TEMPLATE_RECEIVED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
+| `WHATSAPP_TEMPLATE_CONFIRMED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
+| `WHATSAPP_TEMPLATE_RESCHEDULED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
+| `WHATSAPP_TEMPLATE_CANCELLED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
+| `GOOGLE_PLACES_API_KEY` | Google Places API anahtarı |
+| `GOOGLE_PLACE_ID` | Çiçek Otomotiv Google işletme Place ID'si |
+
 ## Karar özeti
 
 Yeni arayüz statik bir form gibi davranmayacak. Form doğrudan veritabanına yazmak yerine bir Supabase Edge Function'a istek gönderecek. Function veriyi doğrulayacak, randevu talebini oluşturacak ve bildirim kuyruğuna ekleyecek. Yönetim ekranı Supabase Auth ile korunacak.

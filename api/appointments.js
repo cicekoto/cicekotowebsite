@@ -1,5 +1,6 @@
 const ALLOWED_SERVICES = new Set(['Periyodik Bakım','DSG Şanzıman','Motor & Elektronik','Fren Sistemi','Kaporta & Boya','Genel Kontrol','Klima Bakımı','Süspansiyon','Elektrik Arızası']);
 const ALLOWED_BRANDS = new Set(['Volkswagen','Audi','Škoda','SEAT','CUPRA']);
+const { notifyCustomerWhatsApp, notifyOwnerCallMeBot } = require('../lib/notifications');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -32,7 +33,7 @@ module.exports = async function handler(req, res) {
       if (String(failure.message || '').includes('SLOT_UNAVAILABLE')) return res.status(409).json({ error:'Bu saat az önce doldu. Lütfen başka bir saat seçin.', code:'SLOT_UNAVAILABLE' });
       throw new Error(`Supabase appointment RPC failed: ${insert.status}`);
     }
-    notifyOwner(record).catch(() => {});
+    await Promise.allSettled([notifyOwnerCallMeBot(record), notifyCustomerWhatsApp(record, 'received')]);
     return res.status(201).json({ ok:true, reference, status:'pending' });
   } catch (error) {
     console.error('appointment_create_failed', error.message);
@@ -57,14 +58,6 @@ async function getAvailability(req,res,supabaseUrl,serviceKey){
   }catch(error){console.error('appointment_availability_failed',error.message);return res.status(500).json({error:'Uygun saatler şu anda alınamadı.'})}
 }
 
-async function notifyOwner(record) {
-  const phone = process.env.CALLMEBOT_PHONE;
-  const apikey = process.env.CALLMEBOT_API_KEY;
-  if (!phone || !apikey) return;
-  const text = `Yeni randevu talebi\nKod: ${record.reference}\n${record.customer_name} · ${record.customer_phone}\n${record.vehicle_brand} ${record.vehicle_model}\n${record.services.join(' · ')}\n${record.requested_date} ${record.requested_time}`;
-  const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}&text=${encodeURIComponent(text)}&apikey=${encodeURIComponent(apikey)}`;
-  await fetch(url, { signal:AbortSignal.timeout(7000) });
-}
 function clean(value,max){return String(value||'').trim().replace(/[<>]/g,'').slice(0,max)}
 function normalizeServices(value){const values=Array.isArray(value)?value:[value];return [...new Set(values.map(item=>clean(item,80)).filter(item=>ALLOWED_SERVICES.has(item)))]}
 function parseServicesQuery(value){try{return normalizeServices(JSON.parse(String(value||'[]')))}catch{return []}}
