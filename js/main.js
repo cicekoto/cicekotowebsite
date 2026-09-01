@@ -260,6 +260,12 @@ function initReveal() {
     observer.observe(item);
   });
   $$('.stat').forEach(stat => observer.observe(stat));
+  let revealTicking = false;
+  addEventListener('scroll', () => {
+    if (revealTicking) return;
+    revealTicking = true;
+    requestAnimationFrame(() => { revealVisible(); revealTicking = false; });
+  }, { passive: true });
   requestAnimationFrame(revealVisible);
   setTimeout(revealVisible, 650);
   addEventListener('hashchange', () => setTimeout(revealVisible, 120));
