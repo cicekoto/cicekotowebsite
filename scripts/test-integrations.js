@@ -37,13 +37,14 @@ function response() {
   assert.deepEqual(fallbackRes.body, { configured: false, reviews: [] });
 
   process.env.GOOGLE_PLACES_API_KEY = 'places-key';
-  process.env.GOOGLE_PLACE_ID = 'place-id';
+  process.env.GOOGLE_PLACE_ID = 'place-id-123';
   global.fetch = async () => ({ ok: true, json: async () => ({ rating: 4.9, userRatingCount: 168, googleMapsUri: 'https://maps.google.com/', reviews: [{ rating: 5, text: { text: 'Memnun kaldım.' }, authorAttribution: { displayName: 'Müşteri' }, relativePublishTimeDescription: 'bir ay önce' }] }) });
   const reviewsRes = response();
   await googleReviewsHandler({ method: 'GET' }, reviewsRes);
   assert.equal(reviewsRes.statusCode, 200);
   assert.equal(reviewsRes.body.reviews[0].author, 'Müşteri');
   assert.equal(reviewsRes.body.count, 168);
+  assert.equal(googleReviewsHandler._test.safeGoogleUrl('javascript:alert(1)'), '');
   console.log('integration tests passed');
 })().catch(error => {
   console.error(error);

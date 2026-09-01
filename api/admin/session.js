@@ -1,45 +1,54 @@
-const { clearSessionCookie, createSession, safeEqual, sessionCookie, verifySession } = require('../../lib/admin-auth');
-const attempts = new Map();
-const WINDOW_MS = 15 * 60 * 1000;
-const MAX_ATTEMPTS = 6;
+const { COOKIE_NAME, clearSessionCookies, createSession, csrfToken, isAdminRequest, safeEqual, sessionCookie, verifyCsrf, verifySession } = require('../../lib/admin-auth');
+const { applyRateLimit, clientIp, consumeRateLimit } = require('../../lib/rate-limit');
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Vary', 'Cookie');
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
-  if (!username || !password) return res.status(503).json({ error: 'Yönetim servisi yapılandırılmadı.' });
+  const secret = process.env.ADMIN_SESSION_SECRET || password;
+  const userAgent = String(req.headers['user-agent'] || '');
+  if (!username || !password || password.length < 14 || !secret || secret.length < 14) return res.status(503).json({ error: 'Yönetim güvenlik yapılandırması eksik.' });
 
   if (req.method === 'GET') {
-    return verifySession(req.headers.cookie, username, password)
-      ? res.status(200).json({ ok: true })
-      : res.status(401).json({ error: 'Oturum gerekli.' });
+    if (!verifySession(req.headers.cookie, username, secret, userAgent)) return res.status(401).json({ error: 'Oturum gerekli.' });
+    return res.status(200).json({ ok: true, csrfToken: csrfToken(req.headers.cookie, username, secret, userAgent) });
   }
 
   if (req.method === 'DELETE') {
-    res.setHeader('Set-Cookie', clearSessionCookie());
+    if (!isAdminRequest(req) || !verifySession(req.headers.cookie, username, secret, userAgent) || !verifyCsrf(req, username, secret)) return res.status(403).json({ error: 'Güvenlik doğrulaması başarısız.' });
+    res.setHeader('Set-Cookie', clearSessionCookies());
     return res.status(200).json({ ok: true });
   }
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Desteklenmeyen metod.' });
-  const client = String(req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim().slice(0, 80);
-  const now = Date.now();
-  const current = attempts.get(client);
-  if (current && current.resetAt > now && current.count >= MAX_ATTEMPTS) {
-    res.setHeader('Retry-After', String(Math.ceil((current.resetAt - now) / 1000)));
-    return res.status(429).json({ error: 'Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.' });
-  }
+  if (!isAdminRequest(req)) return res.status(403).json({ error: 'Güvenlik doğrulaması başarısız.' });
+  if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) return res.status(415).json({ error: 'JSON içerik türü gereklidir.' });
+  if (Number(req.headers['content-length'] || 0) > 4096) return res.status(413).json({ error: 'İstek çok büyük.' });
+
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch { return res.status(400).json({ error: 'Geçersiz istek.' }); }
+  if (!body || Array.isArray(body) || typeof body !== 'object' || typeof body.username !== 'string' || typeof body.password !== 'string' || body.username.length > 100 || body.password.length > 256) return res.status(400).json({ error: 'Geçersiz istek.' });
+
+  const rate = await consumeRateLimit({
+    supabaseUrl: process.env.SUPABASE_URL,
+    serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    bucket: 'admin-login',
+    subject: `${clientIp(req)}:${String(body.username).toLocaleLowerCase('tr-TR')}`,
+    limit: 5,
+    windowSeconds: 900
+  });
+  if (!applyRateLimit(res, rate)) return res.status(429).json({ error: 'Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin.' });
+
   if (!safeEqual(body.username, username) || !safeEqual(body.password, password)) {
-    const next = !current || current.resetAt <= now ? { count: 1, resetAt: now + WINDOW_MS } : { ...current, count: current.count + 1 };
-    attempts.set(client, next);
-    if (attempts.size > 1000) attempts.delete(attempts.keys().next().value);
-    await new Promise(resolve => setTimeout(resolve, 450));
+    await new Promise(resolve => setTimeout(resolve, 650));
     return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
   }
 
-  attempts.delete(client);
-  res.setHeader('Set-Cookie', sessionCookie(createSession(username, password)));
-  return res.status(200).json({ ok: true });
+  const token = createSession(username, secret, userAgent);
+  res.setHeader('Set-Cookie', [...clearSessionCookies(), sessionCookie(token)]);
+  const cookieHeader = `${COOKIE_NAME}=${encodeURIComponent(token)}`;
+  return res.status(200).json({ ok: true, csrfToken: csrfToken(cookieHeader, username, secret, userAgent) });
 };

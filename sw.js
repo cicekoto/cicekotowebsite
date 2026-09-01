@@ -1,4 +1,4 @@
-const CACHE = 'cicekoto-neon-v20';
+const CACHE = 'cicekoto-neon-v21';
 const ASSETS = [
   '/',
   '/index.html',
@@ -29,14 +29,16 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
-  if (new URL(e.request.url).pathname.startsWith('/api/')) return;
+  const requestUrl = new URL(e.request.url);
+  if (requestUrl.origin !== self.location.origin) return;
+  if (requestUrl.pathname.startsWith('/api/') || requestUrl.pathname === '/admin' || requestUrl.pathname === '/admin.html') return;
   e.respondWith(
     fetch(e.request).then(res => {
-      if (res.ok && new URL(e.request.url).origin === self.location.origin) {
+      if (res.ok && ['document','style','script','image','font','manifest'].includes(e.request.destination)) {
         const clone = res.clone();
         caches.open(CACHE).then(c => c.put(e.request, clone));
       }
       return res;
-    }).catch(() => caches.match(e.request).then(cached => cached || caches.match('/index.html')))
+    }).catch(() => caches.match(e.request).then(cached => cached || (requestUrl.pathname === '/' || requestUrl.pathname === '/index.html' ? caches.match('/index.html') : Response.error())))
   );
 });

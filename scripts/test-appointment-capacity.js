@@ -4,7 +4,10 @@ const handler = require('../api/appointments');
 process.env.SUPABASE_URL = 'https://example.supabase.co';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'test-key';
 
-global.fetch = async () => ({
+global.fetch = async url => String(url).includes('consume_api_rate_limit') ? ({
+  ok: true,
+  json: async () => ({ allowed: true, retry_after: 600 })
+}) : ({
   ok: true,
   json: async () => [
     { requested_time: '09:00', duration_minutes: 60 },
@@ -17,6 +20,7 @@ global.fetch = async () => ({
 
 const req = {
   method: 'GET',
+  headers: { 'x-forwarded-for': '203.0.113.20' },
   query: {
     date: '2026-09-02',
     services: JSON.stringify(['Periyodik Bakım'])

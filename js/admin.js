@@ -5,7 +5,7 @@ const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
 const STATUS_LABELS={pending:'Bekleyen',confirmed:'Onaylandı',rescheduled:'Saat değişti',completed:'Tamamlandı',cancelled:'İptal'};
 const STATUS_COLORS={pending:'#f0ab57',confirmed:'#32c5d4',rescheduled:'#6696ff',completed:'#38c990',cancelled:'#d24c5b'};
 const EVENT_LABELS={created:'Randevu talebi oluşturuldu',status_changed:'Durum değiştirildi',appointment_updated:'Randevu bilgileri güncellendi'};
-const state={rows:[],events:[],activeView:'overview',scheduleDate:todayYmd(),currentId:null,lastLoaded:null};
+const state={rows:[],events:[],activeView:'overview',scheduleDate:todayYmd(),currentId:null,lastLoaded:null,csrfToken:''};
 
 function todayYmd(offset=0){const d=new Date();d.setDate(d.getDate()+offset);return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(d)}
 function dateFromYmd(value){const [y,m,d]=String(value).split('-').map(Number);return new Date(y,m-1,d,12)}
@@ -24,7 +24,7 @@ function showToast(message,type='success'){const item=document.createElement('di
 
 $('#loginForm').addEventListener('submit',async event=>{
   event.preventDefault();const form=event.currentTarget;const data=new FormData(form);const button=$('button[type="submit"]',form);button.disabled=true;$('#loginError').textContent='';
-  try{const response=await fetch('/api/admin/session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:data.get('username'),password:data.get('password')})});const result=await response.json().catch(()=>({}));if(!response.ok){$('#loginError').textContent=result.error||(response.status===401?'Kullanıcı adı veya şifre hatalı.':'Yönetim servisine ulaşılamadı.');return}form.reset();if(await loadData())showDashboard()}catch{$('#loginError').textContent='Yönetim servisine ulaşılamadı.'}finally{button.disabled=false}
+  try{const response=await fetch('/api/admin/session',{method:'POST',headers:{'Content-Type':'application/json','X-Requested-With':'cicek-admin'},body:JSON.stringify({username:data.get('username'),password:data.get('password')})});const result=await response.json().catch(()=>({}));if(!response.ok){$('#loginError').textContent=result.error||(response.status===401?'Kullanıcı adı veya şifre hatalı.':'Yönetim servisine ulaşılamadı.');return}state.csrfToken=result.csrfToken||'';form.reset();if(await loadData())showDashboard()}catch{$('#loginError').textContent='Yönetim servisine ulaşılamadı.'}finally{button.disabled=false}
 });
 
 async function loadData(){
@@ -110,7 +110,7 @@ function renderEvents(row){const events=state.events.filter(event=>event.appoint
 
 async function updateAppointment(id,changes,button){
   const original=state.rows.find(row=>row.id===id);if(!original)return;button.disabled=true;
-  try{const response=await fetch('/api/admin/appointments',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,...changes})});const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.error||'Randevu güncellenemedi.');const index=state.rows.findIndex(row=>row.id===id);state.rows[index]=result.appointment;if(result.event)state.events.unshift(result.event);renderAll();showToast('Randevu başarıyla güncellendi.')}catch(error){showToast(error.message,'error')}finally{button.disabled=false}
+  try{const response=await fetch('/api/admin/appointments',{method:'PATCH',headers:{'Content-Type':'application/json','X-Requested-With':'cicek-admin','X-Cicek-CSRF':state.csrfToken},body:JSON.stringify({id,...changes})});const result=await response.json().catch(()=>({}));if(!response.ok)throw new Error(result.error||'Randevu güncellenemedi.');const index=state.rows.findIndex(row=>row.id===id);state.rows[index]=result.appointment;if(result.event)state.events.unshift(result.event);renderAll();showToast('Randevu başarıyla güncellendi.')}catch(error){showToast(error.message,'error')}finally{button.disabled=false}
 }
 
 function renderQuickSearch(){const value=$('#globalSearch').value;$('#tableSearch').value=value;switchView('appointments');renderTable();$('#tableSearch').focus()}
@@ -121,10 +121,11 @@ function relativeTime(value){const diff=Date.now()-new Date(value).getTime(),min
 function capitalize(value){return value.charAt(0).toLocaleUpperCase('tr-TR')+value.slice(1)}
 function allowedTimes(duration){return duration===60?['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00']:['09:00','11:00','13:00','15:00','17:00']}
 async function copySummary(row){const summary=`${row.reference} | ${row.customer_name} | ${row.customer_phone} | ${row.vehicle_brand} ${row.vehicle_model} ${row.plate||''} | ${servicesOf(row).join(', ')} | ${shortDate(row.requested_date)} ${timeOf(row)} | ${STATUS_LABELS[row.status]}`;try{await navigator.clipboard.writeText(summary);showToast('Randevu bilgileri kopyalandı.')}catch{showToast('Bilgiler kopyalanamadı.','error')}}
-function exportCsv(){const data=filteredRows(),head=['Kod','Ad Soyad','Telefon','E-posta','Araç','Model Yılı','Plaka','Hizmetler','Tarih','Saat','Süre','Durum','Not'];const values=data.map(row=>[row.reference,row.customer_name,row.customer_phone,row.customer_email,`${row.vehicle_brand} ${row.vehicle_model}`,row.vehicle_year,row.plate,servicesOf(row).join(' · '),row.requested_date,timeOf(row),row.duration_minutes,STATUS_LABELS[row.status],row.notes]);const csv='\ufeff'+[head,...values].map(cols=>cols.map(value=>`"${String(value||'').replace(/"/g,'""')}"`).join(',')).join('\n');const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));link.download=`cicek-oto-randevular-${todayYmd()}.csv`;link.click();URL.revokeObjectURL(link.href);showToast(`${data.length} kayıt CSV olarak hazırlandı.`)}
+function csvCell(value){let text=String(value||'').replace(/[\r\n]+/g,' ');if(/^\s*[=+\-@＝＋－＠]/.test(text)||/^[\t\r\n]/.test(text))text=`\t${text}`;return `"${text.replace(/"/g,'""')}"`}
+function exportCsv(){const data=filteredRows(),head=['Kod','Ad Soyad','Telefon','E-posta','Araç','Model Yılı','Plaka','Hizmetler','Tarih','Saat','Süre','Durum','Not'];const values=data.map(row=>[row.reference,row.customer_name,row.customer_phone,row.customer_email,`${row.vehicle_brand} ${row.vehicle_model}`,row.vehicle_year,row.plate,servicesOf(row).join(' · '),row.requested_date,timeOf(row),row.duration_minutes,STATUS_LABELS[row.status],row.notes]);const csv='\ufeff'+[head,...values].map(cols=>cols.map(csvCell).join(',')).join('\n');const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));link.download=`cicek-oto-randevular-${todayYmd()}.csv`;link.click();URL.revokeObjectURL(link.href);showToast(`${data.length} kayıt CSV olarak hazırlandı.`)}
 
 $$('[data-view]').forEach(button=>button.addEventListener('click',()=>switchView(button.dataset.view)));$$('[data-go]').forEach(button=>button.addEventListener('click',()=>switchView(button.dataset.go)));
-$('#refresh').addEventListener('click',loadData);$('#logout').addEventListener('click',async()=>{await fetch('/api/admin/session',{method:'DELETE'}).catch(()=>{});location.reload()});
+$('#refresh').addEventListener('click',loadData);$('#logout').addEventListener('click',async()=>{await fetch('/api/admin/session',{method:'DELETE',headers:{'X-Requested-With':'cicek-admin','X-Cicek-CSRF':state.csrfToken}}).catch(()=>{});location.reload()});
 $('#menuButton').addEventListener('click',()=>toggleMenu(!$('#sidebar').classList.contains('open')));$('#sidebarScrim').addEventListener('click',closeMenu);
 $('#themeToggle').addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;localStorage.setItem('cicek-admin-theme',next)});
 $('#globalSearch').addEventListener('keydown',event=>{if(event.key==='Enter')renderQuickSearch()});document.addEventListener('keydown',event=>{if(event.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){event.preventDefault();$('#globalSearch').focus()}if(event.key==='Escape'){if(!$('#drawerLayer').hidden)closeDrawer();else closeMenu()}});
@@ -134,4 +135,5 @@ $('#scheduleDate').addEventListener('change',event=>{state.scheduleDate=event.ta
 $('#drawerBackdrop').addEventListener('click',closeDrawer);$('#closeDrawer').addEventListener('click',closeDrawer);
 
 const savedTheme=localStorage.getItem('cicek-admin-theme');if(savedTheme)document.documentElement.dataset.theme=savedTheme;$('#todayLabel').textContent=capitalize(new Intl.DateTimeFormat('tr-TR',{weekday:'long',day:'numeric',month:'long'}).format(new Date())).toLocaleUpperCase('tr-TR');
-loadData().then(ok=>{if(ok)showDashboard()});
+async function bootstrap(){try{const response=await fetch('/api/admin/session');if(!response.ok)return;const result=await response.json();state.csrfToken=result.csrfToken||'';if(state.csrfToken&&await loadData())showDashboard()}catch{}}
+bootstrap();

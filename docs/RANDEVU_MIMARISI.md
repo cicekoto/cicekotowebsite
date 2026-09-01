@@ -6,6 +6,9 @@
 - Günlük araç sayısı sınırı yok; aynı zaman aralığındaki çakışmalar işlem süresine göre engelleniyor.
 - Randevu başlangıç saatleri 09:00–17:00, pazar günü kapalı.
 - Admin paneli şifreyi tarayıcı depolamasında tutmuyor; `HttpOnly`, `Secure`, `SameSite=Strict` imzalı oturum çerezi kullanıyor.
+- Admin yazma işlemleri aynı-kaynak, özel istek başlığı ve oturuma bağlı CSRF belirteciyle korunuyor; oturum kullanıcı aracısına bağlanıyor ve dört saatte sona eriyor.
+- Giriş, randevu oluşturma, telefon numarası ve müsaitlik sorguları Supabase üzerinde kalıcı hız sınırına tabi.
+- Supabase tablolarında RLS açık; `anon` ve `authenticated` rollerinin doğrudan tablo/fonksiyon erişimi kaldırıldı.
 - CallMeBot işletme sahibine yeni talep alarmı için hazır; müşteri mesajları Meta WhatsApp Cloud API şablonları için hazır.
 - Google Places bağlantısı yapılandırıldığında puan ve en fazla beş gerçek yorum otomatik gösteriliyor; bağlantı yoksa doğrulanmış sabit yorumlar kalıyor.
 
@@ -14,9 +17,11 @@
 | Değişken | Durum / amaç |
 | --- | --- |
 | `SUPABASE_URL` | Zorunlu, yapılandırıldı |
-| `SUPABASE_SERVICE_ROLE_KEY` | Zorunlu, yalnızca sunucuda |
+| `SUPABASE_SERVICE_ROLE_KEY` | Zorunlu, yalnızca Vercel Functions sunucusunda; tarayıcıya gönderilmez |
 | `ADMIN_USERNAME` | Zorunlu, yapılandırıldı |
-| `ADMIN_PASSWORD` | Zorunlu; aynı zamanda admin oturum imzası |
+| `ADMIN_PASSWORD` | Zorunlu; en az 14 karakter |
+| `ADMIN_SESSION_SECRET` | Önerilir; admin oturum imzası için paroladan ayrı ve yüksek entropili anahtar |
+| `RATE_LIMIT_SECRET` | Önerilir; IP/telefon gibi hız sınırı öznelerini veritabanına yazmadan önce HMAC ile anonimleştirir |
 | `CALLMEBOT_PHONE` | İsteğe bağlı; yalnızca işletme sahibine bildirim |
 | `CALLMEBOT_API_KEY` | İsteğe bağlı; CallMeBot aktivasyonundan gelir |
 | `WHATSAPP_ACCESS_TOKEN` | Müşteri mesajları için Meta erişim anahtarı |
@@ -30,9 +35,9 @@
 | `GOOGLE_PLACES_API_KEY` | Google Places API anahtarı |
 | `GOOGLE_PLACE_ID` | Çiçek Otomotiv Google işletme Place ID'si |
 
-## Karar özeti
+## Uygulanan mimari
 
-Yeni arayüz statik bir form gibi davranmayacak. Form doğrudan veritabanına yazmak yerine bir Supabase Edge Function'a istek gönderecek. Function veriyi doğrulayacak, randevu talebini oluşturacak ve bildirim kuyruğuna ekleyecek. Yönetim ekranı Supabase Auth ile korunacak.
+Form doğrudan veritabanına yazmaz. Vercel Function girdiyi, VAG markasını, hizmetleri, tarih/saat aralığını ve KVKK onayını doğrular; hız sınırlarını uygular ve yalnızca sunucuda tutulan service-role anahtarıyla güvenli RPC üzerinden kaydı oluşturur. Yönetim ekranı kısa ömürlü, imzalı ve `HttpOnly` oturumla korunur.
 
 CallMeBot yalnızca işletme sahibinin kendi WhatsApp numarasına yeni randevu uyarısı göndermek için kullanılabilir. Resmî sayfası ücretsiz API'nin kişisel kullanım için olduğunu ve başkalarına mesaj göndermediğini açıkça belirtiyor. Müşterilere otomatik onay ve hatırlatma göndermek için WhatsApp Business Platform (Cloud API) ya da Twilio gibi resmî bir sağlayıcı gerekir.
 
@@ -70,9 +75,11 @@ Kaynaklar:
 
 - `appointments`, `appointment_events` ve `notification_outbox` istemciden okunamaz.
 - Tarayıcıda Supabase secret/service-role anahtarı bulunmaz; bu anahtar yalnızca Edge Function secret'ı olur.
-- Yönetim ekranı sabit JavaScript şifresi kullanmaz; Supabase Auth ve rol kontrolü kullanır.
+- Yönetim ekranında parola veya service-role anahtarı JavaScript'e gömülmez; parola yalnızca sunucu tarafında karşılaştırılır.
 - Telefon, plaka ve müşteri notları kişisel veri kabul edilir. Loglara açık biçimde yazılmaz.
-- Formda hız sınırlama ve bot koruması bulunur. Aynı telefon/tarih için tekrarlı talepler engellenir.
+- Formda kalıcı IP/telefon hız sınırlaması, bal küpü alanı, minimum form doldurma süresi, gövde boyutu ve içerik türü denetimi bulunur.
+- Admin değişikliklerinde CSRF, aynı-kaynak ve özel istek başlığı denetimi; CSV çıktısında formül enjeksiyonu koruması bulunur.
+- CSP, clickjacking, MIME sniffing, referrer, izin politikası ve admin/API önbellek başlıkları Vercel katmanında zorlanır.
 - KVKK aydınlatma metni ve açık iletişim izni randevu onayından ayrı tutulur.
 
 ## Bildirim stratejisi
