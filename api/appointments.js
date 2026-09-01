@@ -25,13 +25,16 @@ module.exports = async function handler(req, res) {
     if (!started || Date.now() - started < 1800 || Date.now() - started > 86400000) return res.status(400).json({ error: 'Form oturumu geçersiz. Lütfen sayfayı yenileyin.' });
     const phone = normalizePhone(body.phone);
     const services = normalizeServices(body.services || body.service);
-    const brand = clean(body.brand, 60);
+    const selectedBrand = clean(body.brand, 60);
+    const customBrand = clean(body.custom_brand, 60);
+    const brand = selectedBrand === 'other' || selectedBrand === 'Diğer' ? customBrand : selectedBrand;
     const date = clean(body.date, 10);
     const time = clean(body.time, 5);
     const durationMinutes = appointmentDuration(services);
     const name=clean(body.name,90),model=clean(body.model,60),email=clean(body.email,120),year=clean(body.year,4),plate=clean(body.plate,12).toLocaleUpperCase('tr-TR');
-    if (!services.length || services.length > 6) return res.status(400).json({ error: 'En az bir, en fazla altı geçerli hizmet seçin.' });
-    if (name.length<2 || !phone || !ALLOWED_BRANDS.has(brand) || model.length<1 || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time) || body.kvkk !== true) return res.status(400).json({ error: 'Zorunlu alanları ve VAG marka seçimini kontrol edin.' });
+    if (!services.length || services.length > ALLOWED_SERVICES.size) return res.status(400).json({ error: 'En az bir geçerli hizmet seçin.' });
+    const validBrand = validVehicleBrand(brand, customBrand);
+    if (name.length<2 || !phone || !validBrand || model.length<1 || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time) || body.kvkk !== true) return res.status(400).json({ error: 'Zorunlu alanları ve araç marka seçimini kontrol edin.' });
     if(email&&!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/.test(email))return res.status(400).json({error:'Geçerli bir e-posta adresi girin.'});
     if(year&&(!/^\d{4}$/.test(year)||Number(year)<1950||Number(year)>new Date().getFullYear()+1))return res.status(400).json({error:'Geçerli bir model yılı girin.'});
     if(plate&&!/^[0-9A-ZÇĞİÖŞÜ ]{5,12}$/.test(plate))return res.status(400).json({error:'Geçerli bir plaka girin.'});
@@ -82,7 +85,8 @@ function appointmentDuration(services){return services.length===1&&services[0]==
 function allowedTimes(duration){return duration===60?['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00']:['09:00','11:00','13:00','15:00','17:00']}
 function overlaps(aStart,aDuration,bStart,bDuration){const toMinutes=value=>{const [h,m]=value.split(':').map(Number);return h*60+m};const a=toMinutes(aStart),b=toMinutes(bStart);return a<b+bDuration&&b<a+aDuration}
 function normalizePhone(value){const digits=String(value||'').replace(/\D/g,'').replace(/^90/,'').replace(/^0/,'');return digits.length===10?`+90${digits}`:''}
+function validVehicleBrand(brand,customBrand=''){return ALLOWED_BRANDS.has(brand)||(/^[\p{L}\p{N}][\p{L}\p{N} .&'’/-]{1,59}$/u.test(brand)&&customBrand===brand)}
 function makeReference(){return `CO-${new Date().getFullYear().toString().slice(-2)}${Math.random().toString(36).slice(2,7).toUpperCase()}`}
 function todayYmd(offset=0){const date=new Date();date.setDate(date.getDate()+offset);return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
 
-module.exports._test={allowedTimes,appointmentDuration,clean,normalizePhone,overlaps,todayYmd};
+module.exports._test={allowedTimes,appointmentDuration,clean,normalizePhone,overlaps,todayYmd,validVehicleBrand};

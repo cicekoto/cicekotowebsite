@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=1">
+  <link rel="stylesheet" href="css/admin.css?v=2">
 </head>
 <body>
   <section class="login-screen" id="login" aria-labelledby="loginTitle">
@@ -61,17 +61,18 @@
           <article class="panel pending-panel"><div class="panel-head"><div><span class="panel-kicker">AKSİYON GEREKİYOR</span><h2>Yeni talepler</h2></div><span class="count-badge" id="pendingBadge">0</span></div><div class="request-list" id="pendingList"></div></article>
           <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">DAĞILIM</span><h2>Randevu durumları</h2></div></div><div class="status-analytics"><div class="donut" id="statusDonut"><div><strong id="donutTotal">0</strong><span>randevu</span></div></div><div class="legend" id="statusLegend"></div></div></article>
           <article class="panel services-panel"><div class="panel-head"><div><span class="panel-kicker">HİZMET YOĞUNLUĞU</span><h2>En çok talep edilenler</h2></div></div><div class="service-bars" id="serviceBars"></div></article>
+          <article class="panel customer-panel"><div class="panel-head"><div><span class="panel-kicker">MÜŞTERİ & ARAÇ</span><h2>Operasyon içgörüleri</h2></div></div><div class="customer-insights"><div><span>Tekil müşteri</span><strong id="uniqueCustomers">0</strong><small>telefon numarasına göre</small></div><div><span>Tekrar gelen</span><strong id="returningCustomers">0</strong><small>birden fazla kaydı olan</small></div><div><span>WhatsApp izni</span><strong id="whatsappOptIn">0%</strong><small>bildirim alabilecek müşteri</small></div><div><span>Ortalama süre</span><strong id="averageDuration">0 dk</strong><small>randevu başına plan</small></div></div></article>
         </div>
       </section>
 
       <section class="view" id="view-schedule" data-view-panel="schedule">
-        <div class="page-heading compact"><div><div class="eyebrow">SERVİS TAKVİMİ</div><h1>Günlük plan</h1><p>Randevuları saate göre görüntüleyin ve hızlıca yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="printSchedule" type="button">Yazdır</button><button class="button primary" data-go="appointments" type="button">Tüm randevular <span>→</span></button></div></div>
+        <div class="page-heading compact"><div><div class="eyebrow">SERVİS TAKVİMİ</div><h1>Günlük plan</h1><p>Randevuları saate göre görüntüleyin ve hızlıca yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="copySchedule" type="button">Gün özetini kopyala</button><button class="button secondary" id="printSchedule" type="button">Yazdır</button><button class="button primary" data-go="appointments" type="button">Tüm randevular <span>→</span></button></div></div>
         <div class="date-control panel"><button class="icon-button" id="prevDay" aria-label="Önceki gün" type="button">←</button><button class="date-display" id="todayShortcut" type="button"><span id="scheduleDateLong"></span><small>Bugüne dön</small></button><label class="date-picker"><span>Tarih seç</span><input id="scheduleDate" type="date"></label><button class="icon-button" id="nextDay" aria-label="Sonraki gün" type="button">→</button></div>
         <div class="schedule-summary" id="scheduleSummary"></div><div class="timeline panel" id="timeline"></div>
       </section>
 
       <section class="view" id="view-appointments" data-view-panel="appointments">
-        <div class="page-heading compact"><div><div class="eyebrow">KAYIT MERKEZİ</div><h1>Tüm randevular</h1><p>Arayın, filtreleyin, dışa aktarın ve ayrıntıları yönetin.</p></div><button class="button secondary" id="exportCsv" type="button">CSV dışa aktar ↓</button></div>
+        <div class="page-heading compact"><div><div class="eyebrow">KAYIT MERKEZİ</div><h1>Tüm randevular</h1><p>Arayın, filtreleyin, dışa aktarın ve ayrıntıları yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="exportJson" type="button">JSON yedeği ↓</button><button class="button secondary" id="exportCsv" type="button">CSV dışa aktar ↓</button></div></div>
         <div class="filter-bar panel"><label class="table-search"><span>⌕</span><input id="tableSearch" type="search" placeholder="Ad, telefon, plaka, araç, hizmet veya kod"></label><label><span>Durum</span><select id="statusFilter"><option value="">Tüm durumlar</option><option value="pending">Bekleyen</option><option value="confirmed">Onaylandı</option><option value="rescheduled">Saat değişti</option><option value="completed">Tamamlandı</option><option value="cancelled">İptal</option></select></label><label><span>Tarih</span><select id="dateFilter"><option value="">Tüm tarihler</option><option value="today">Bugün</option><option value="tomorrow">Yarın</option><option value="week">Bu hafta</option><option value="past">Geçmiş</option></select></label><label><span>Sıralama</span><select id="sortFilter"><option value="appointmentAsc">Randevu tarihi</option><option value="newest">En yeni talep</option><option value="customer">Müşteri adı</option></select></label><button class="text-button clear-filters" id="clearFilters" type="button">Filtreleri temizle</button></div>
         <div class="table-meta"><span id="resultCount">0 kayıt</span><span id="lastUpdated"></span></div>
         <div class="appointment-table panel"><div class="loading-state" id="loader"><span></span><p>Randevular yükleniyor…</p></div><table id="appointmentsTable" hidden><thead><tr><th>Randevu</th><th>Müşteri</th><th>Araç</th><th>Hizmet</th><th>Tarih / Saat</th><th>Durum</th><th></th></tr></thead><tbody></tbody></table><div class="empty-state" id="tableEmpty" hidden><i>⌕</i><h3>Kayıt bulunamadı</h3><p>Arama veya filtreleri değiştirerek tekrar deneyin.</p></div></div>
@@ -81,6 +82,6 @@
 
   <div class="drawer-layer" id="drawerLayer" hidden><button class="drawer-backdrop" id="drawerBackdrop" aria-label="Ayrıntıları kapat" type="button"></button><aside class="detail-drawer" id="detailDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><header><div><span class="eyebrow">RANDEVU AYRINTISI</span><h2 id="drawerTitle">—</h2></div><button class="icon-button" id="closeDrawer" aria-label="Kapat" type="button">×</button></header><div class="drawer-content" id="drawerContent"></div></aside></div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
-  <script src="js/admin.js?v=2" defer></script>
+  <script src="js/admin.js?v=3" defer></script>
 </body>
 </html>

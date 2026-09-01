@@ -68,19 +68,49 @@ const EN_TEXT = {
   'Randevunu kontrol edip en kısa sürede sana dönüş yapacağız.': 'We will review your booking and contact you shortly.', 'Takip kodu': 'Reference code', "WhatsApp'ta Aç": 'Open in WhatsApp', 'Tamam': 'Done',
   'Menüyü aç': 'Open menu', 'Açık temaya geç': 'Switch to light theme', 'Önceki yorum': 'Previous review', 'Sonraki yorum': 'Next review', 'Sayfanın başına dön': 'Back to top', 'Mobil hızlı erişim': 'Mobile quick access'
 };
-const TR_TEXT = Object.fromEntries(Object.entries(EN_TEXT).map(([tr, en]) => [en, tr]));
+Object.assign(EN_TEXT, {
+  'Araç':'Vehicle','02 / Araç':'02 / Vehicle','Araç markası':'Vehicle brand','Diğer / Genel':'Other / General','Markayı yazın':'Enter the brand','Gerçek müşteri yorumları':'Real customer reviews',
+  'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'We specialise in VAG vehicles, and you can also request maintenance or repairs for other brands. Select every service you need; your request goes directly to our booking system.',
+  'Google işletme profili':'Google Business Profile','Canlı Google bağlantısı bekleniyor':'Live Google connection pending','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'We do not display fabricated reviews. You can view every real review on our Google Business Profile.','Tüm gerçek yorumları Google’da gör →':'View all real reviews on Google →'
+});
+
+const AR_TEXT = {
+  'İçeriğe geç':'انتقل إلى المحتوى','Ana menü':'القائمة الرئيسية','Hizmetler':'الخدمات','Süreç':'الخطوات','Neden Biz?':'لماذا نحن؟','Yorumlar':'التقييمات','İletişim':'اتصل بنا','Randevu Al':'احجز موعداً','Servis Süreci':'مراحل الصيانة',
+  'VAG araçlara':'خدمة متخصصة','uzman servis.':'لسيارات VAG.','VAG grubu araçlarda doğru teşhis, şeffaf fiyat ve garantili işçilik. Aracınızı teknolojiyle, işimizi marka uzmanlığıyla koruyoruz.':'تشخيص دقيق وأسعار واضحة وخدمة احترافية لسيارات مجموعة VAG. نحمي سيارتك بالتقنية والخبرة المتخصصة.','Online randevu':'حجز موعد','Hizmetleri keşfet':'اكتشف الخدمات',
+  'Google müşteri puanı':'تقييم العملاء على Google','Doğrulanmış Google yorumu':'تقييمات Google الموثقة','VAG markasında uzmanlık':'خبرة في علامات VAG','Doğru teşhis':'تشخيص دقيق','Gereksiz':'لا مصاريف','masraf yok.':'غير ضرورية.',
+  'Güncel OBD cihazları ve deneyimli teknisyen kadromuzla arızayı noktasal olarak buluyoruz. Tahmine dayalı parça değişimi yapmıyor, işlem başlamadan fiyatı netleştiriyoruz.':'نحدد العطل بدقة بأجهزة OBD الحديثة وفريق فني خبير. لا نبدّل القطع بالتخمين ونوضح السعر قبل بدء العمل.','Onaysız işlem yok':'لا عمل دون موافقة','Orijinal veya OEM parça':'قطع أصلية أو OEM','Yazılı fiyat bilgisi':'سعر مكتوب','Aracınız için randevu alın':'احجز موعداً لسيارتك',
+  'Süreç takibi':'متابعة الصيانة','Servis süreci':'مراحل الصيانة','cebinde.':'بين يديك.','Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri WhatsApp üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.':'تابع أهم التطورات عبر واتساب من تسليم السيارة حتى استلامها. نستأذنك أولاً عند الحاجة إلى عمل إضافي.','2 saat':'ساعتان','ortalama bakım kabulü':'متوسط استقبال الصيانة','Anlık':'فوري','WhatsApp bilgilendirme':'تحديثات واتساب','Sürecin nasıl işlediğini görün':'شاهد كيف تسير العملية',
+  'Tek noktada':'كل الخدمات','tam servis.':'في مكان واحد.','Bakım, mekanik, elektronik ve kaporta işlemleri tek ekip tarafından yönetilir.':'يدير فريق واحد أعمال الصيانة والميكانيك والإلكترونيات والهيكل.','Periyodik Bakım':'الصيانة الدورية','DSG Şanzıman':'ناقل DSG','Motor & Elektronik':'المحرك والإلكترونيات','Kaporta & Boya':'الهيكل والطلاء','Fren Sistemi':'نظام الفرامل','Klima Bakımı':'صيانة المكيّف','Süspansiyon':'نظام التعليق','Elektrik Arızası':'أعطال كهربائية','Genel Kontrol':'فحص عام',
+  'Yağ, filtre, sıvılar ve tüm kilometre bakımları fabrika reçetesiyle.':'الزيوت والفلاتر والسوائل وجميع صيانة الكيلومترات وفق مواصفات المصنع.','DQ200, DQ250, kavrama ve mekatronik sistemlerinde uzman onarım.':'إصلاح متخصص لأنظمة DQ200 وDQ250 والقابض والميكاترونيك.','Motor revizyonu, ECU işlemleri ve kapsamlı elektronik arıza tespiti.':'توضيب المحرك وأعمال ECU وتشخيص شامل للأعطال الإلكترونية.','Kaza onarımı, spot boya ve boyasız göçük düzeltme hizmetleri.':'إصلاح الحوادث والطلاء الموضعي وإزالة الانبعاجات دون طلاء.','30–120 dk':'30–120 دقيقة','Teşhis sonrası':'بعد التشخيص','1–3 gün':'1–3 أيام','1–5 gün':'1–5 أيام',
+  'Nasıl çalışıyoruz?':'كيف نعمل؟','Dört adımda':'خدمة واضحة','net servis.':'في أربع خطوات.','Aracınızı teslim ederken ne olacağını, ne kadar süreceğini ve ne ödeyeceğinizi bilirsiniz.':'عند تسليم السيارة تعرف ما الذي سيحدث والمدة والتكلفة.','Randevu':'الموعد','Hizmeti, aracınızı ve size uygun zamanı seçin.':'اختر الخدمات وسيارتك والوقت المناسب.','Teşhis':'التشخيص','Aracınız uzman ekip ve güncel cihazlarla kontrol edilir.':'يفحص فريق مختص سيارتك بأجهزة حديثة.','Onay':'الموافقة','İşlem ve fiyat bilgisi size iletilir; onayınız alınır.':'نرسل تفاصيل العمل والسعر ونحصل على موافقتك.','Teslim':'التسليم','Kontrol sonrası garantili şekilde aracınızı teslim alın.':'استلم سيارتك بعد الفحص النهائي.',
+  'Neden Çiçek Otomotiv?':'لماذا Çiçek Otomotiv؟','Şeffaf Fiyat':'سعر واضح','İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.':'عرض سعر مكتوب قبل العمل، بلا أعمال غير معتمدة أو فواتير مفاجئة.','Doğru Teknoloji':'تقنية صحيحة','Güncel arıza tespit cihazları, OEM parçalar ve deneyimli teknisyenler.':'أجهزة تشخيص حديثة وقطع OEM وفنيون ذوو خبرة.','Garantili İşçilik':'عمل موثوق','Yapılan işlemler kayıt altındadır ve işçilik garantisiyle teslim edilir.':'كل الأعمال مسجلة وتُسلّم بضمان الصيانة.',
+  'VAG uzman servisi · Online randevu':'خدمة VAG متخصصة · حجز إلكتروني','Servis saatin':'موعد صيانة','hazır.':'جاهز.','Pzt–Cmt':'الإثنين–السبت','Pazar':'الأحد','Kapalı':'مغلق','Hizmetler':'الخدمات','Araç':'السيارة','Zaman':'الوقت','01 / Çoklu hizmet seçimi':'01 / اختيار عدة خدمات','Bir veya daha fazla hizmet seç.':'اختر خدمة واحدة أو أكثر.','En az 1 hizmet seçin':'اختر خدمة واحدة على الأقل','Notun (isteğe bağlı)':'ملاحظات (اختياري)','Sorunu veya isteğini kısaca anlat':'اشرح المشكلة أو الطلب باختصار','02 / Araç':'02 / السيارة','Aracını tanıyalım.':'أخبرنا عن سيارتك.','Araç markası':'ماركة السيارة','Marka seçin':'اختر الماركة','Diğer / Genel':'أخرى / عامة','Markayı yazın':'اكتب الماركة','Model':'الموديل','Model yılı':'سنة الموديل','Plaka':'لوحة السيارة','03 / Zaman':'03 / الوقت','Sana uygun zamanı seç.':'اختر الوقت المناسب.','Tarih':'التاريخ','Saat':'الوقت','Saat seçin':'اختر الوقت','Bilgi':'معلومة','Bu bir randevu talebidir. Servis kapasitesi kontrol edildikten sonra kesin onay size iletilir.':'هذا طلب موعد. نرسل التأكيد النهائي بعد التحقق من سعة المركز.','04 / İletişim':'04 / التواصل','Sana nasıl ulaşalım?':'كيف نتواصل معك؟','Ad soyad':'الاسم الكامل','Adınız Soyadınız':'الاسم الكامل','Telefon':'الهاتف','E-posta (isteğe bağlı)':'البريد الإلكتروني (اختياري)','← Geri':'رجوع →','Devam Et →':'متابعة ←','Randevu Talebi Oluştur →':'إرسال طلب الموعد ←',
+  "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
+};
+Object.assign(AR_TEXT, {
+  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية',
+  'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'نحن متخصصون في سيارات VAG، ويمكنك أيضاً طلب الصيانة والإصلاح للعلامات الأخرى. اختر كل الخدمات التي تحتاجها وسيصل الطلب مباشرة إلى نظام الحجز.',
+  'Google işletme profili':'ملف النشاط على Google','Canlı Google bağlantısı bekleniyor':'بانتظار اتصال Google المباشر','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'لا نعرض تقييمات مختلقة. يمكنك مشاهدة جميع التقييمات الحقيقية في ملف نشاطنا على Google.','Tüm gerçek yorumları Google’da gör →':'شاهد كل التقييمات الحقيقية على Google ←',
+  'Örn. Golf 7, A3, Octavia':'مثال: Golf 7 أو A3 أو Octavia','Örn. BMW, Mercedes-Benz, Renault':'مثال: BMW أو Mercedes-Benz أو Renault','Randevu talebimin işlenmesi için kişisel verilerimin':'أوافق على استخدام بياناتي الشخصية لمعالجة طلب الموعد وفق','KVKK aydınlatma metni':'بيان الخصوصية','kapsamında kullanılmasını kabul ediyorum.':'.','Randevu onayı ve servis güncellemelerinin WhatsApp üzerinden iletilmesini istiyorum.':'أرغب في تلقي تأكيد الموعد وتحديثات الصيانة عبر واتساب.',
+  'Bulamadığın bir cevap varsa bizi arayabilir veya WhatsApp\'tan yazabilirsin.':'إذا لم تجد الإجابة، اتصل بنا أو راسلنا عبر واتساب.','Randevu almadan gelebilir miyim?':'هل يمكنني الحضور دون موعد؟','Gelebilirsiniz; ancak yoğunlukta beklememek için online randevu oluşturmanızı öneririz.':'يمكنك الحضور، لكن ننصح بالحجز الإلكتروني لتجنب الانتظار.','Hangi markalara servis veriyorsunuz?':'ما العلامات التي تخدمونها؟','Volkswagen, Audi, Škoda, SEAT ve CUPRA araçlara; VAG motor, DSG, elektronik ve platform teknolojilerinde uzman servis veriyoruz.':'نقدم خدمة متخصصة لمحركات VAG وناقل DSG والإلكترونيات والمنصات لسيارات Volkswagen وAudi وŠkoda وSEAT وCUPRA، ونقبل طلبات العلامات الأخرى أيضاً.','Birden fazla işlem seçebilir miyim?':'هل يمكن اختيار أكثر من خدمة؟','Evet. Randevu formunda bakım, DSG, motor-elektronik, fren, kaporta ve genel kontrol seçeneklerinden birden fazlasını birlikte seçebilirsiniz.':'نعم، يمكنك اختيار عدة خدمات معاً في طلب واحد.','Fiyat onayı olmadan işlem yapılır mı?':'هل يبدأ العمل دون موافقة على السعر؟','Hayır. Teşhis sonrası işlem ve fiyat bilgisi iletilir; onayınız olmadan ek işleme başlanmaz.':'لا. نرسل تفاصيل العمل والسعر بعد التشخيص ولا نبدأ عملاً إضافياً دون موافقتك.','İşçilik garantisi var mı?':'هل توجد كفالة على العمل؟','Evet. Yapılan işlemin kapsamına göre garanti koşulları işleme başlamadan önce yazılı olarak paylaşılır.':'نعم، تُشارك شروط الكفالة كتابياً قبل بدء العمل حسب نطاقه.',
+  "2001'den beri Başakşehir'de doğru teşhis, şeffaf fiyat ve garantili işçilik.":'تشخيص دقيق وأسعار واضحة وخدمة موثوقة في باشاك شهير منذ 2001.','KVKK · Gizlilik · Kullanım Koşulları':'الخصوصية · حماية البيانات · شروط الاستخدام','RANDEVU TALEBİ':'طلب موعد','Talebin alındı.':'تم استلام طلبك.','Randevunu kontrol edip en kısa sürede sana dönüş yapacağız.':'سنراجع موعدك ونتواصل معك في أقرب وقت.','WhatsApp\'ta Aç':'افتح في واتساب','Kapat':'إغلاق'
+});
+const EN_TO_TR = Object.fromEntries(Object.entries(EN_TEXT).map(([tr, en]) => [en, tr]));
+const AR_TO_TR = Object.fromEntries(Object.entries(AR_TEXT).map(([tr, ar]) => [ar, tr]));
+
+function languageText(tr, en, ar) { return currentLanguage === 'ar' ? ar : currentLanguage === 'en' ? en : tr; }
 
 function localized(text) {
-  if (currentLanguage !== 'en') return text;
-  return EN_TEXT[text] || text;
+  return currentLanguage === 'ar' ? (AR_TEXT[text] || text) : currentLanguage === 'en' ? (EN_TEXT[text] || text) : text;
 }
 
 function translateValue(value, language) {
   const clean = value.trim();
   if (!clean) return value;
-  let translated = language === 'en' ? EN_TEXT[clean] : TR_TEXT[clean];
-  if (!translated && language === 'en' && /^(\d+) hizmet seçildi$/.test(clean)) translated = `${clean.match(/\d+/)[0]} services selected`;
-  if (!translated && language === 'tr' && /^(\d+) services selected$/.test(clean)) translated = `${clean.match(/\d+/)[0]} hizmet seçildi`;
+  const turkish = EN_TO_TR[clean] || AR_TO_TR[clean] || clean;
+  let translated = language === 'ar' ? AR_TEXT[turkish] : language === 'en' ? EN_TEXT[turkish] : turkish;
+  const count = clean.match(/^(\d+) (?:hizmet seçildi|services selected|خدمات مختارة)$/)?.[1];
+  if (count) translated = language === 'ar' ? `${count} خدمات مختارة` : language === 'en' ? `${count} services selected` : `${count} hizmet seçildi`;
   if (!translated) return value;
   return value.replace(clean, translated);
 }
@@ -97,7 +127,8 @@ function translateDocument(language) {
   }));
   $$('blockquote[lang]').forEach(quote => quote.lang = language);
   document.documentElement.lang = language;
-  document.title = language === 'en'
+  document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  document.title = language === 'ar' ? 'Çiçek Otomotiv | مركز صيانة سيارات متخصص · باشاك شهير' : language === 'en'
     ? (document.body.dataset.titleEn || 'Çiçek Otomotiv | VAG Specialist Service · Başakşehir')
     : (document.body.dataset.titleTr || 'Çiçek Otomotiv | Profesyonel Oto Servis · Başakşehir');
 }
@@ -105,7 +136,7 @@ function translateDocument(language) {
 function initPreferences() {
   const themeToggle = $('#themeToggle');
   const languageToggle = $('#languageToggle');
-  currentLanguage = localStorage.getItem('cicekLanguage') === 'en' ? 'en' : 'tr';
+  currentLanguage = ['tr','en','ar'].includes(localStorage.getItem('cicekLanguage')) ? localStorage.getItem('cicekLanguage') : 'tr';
   let theme = document.documentElement.dataset.theme || 'dark';
   const sync = () => {
     document.documentElement.dataset.theme = theme;
@@ -113,24 +144,25 @@ function initPreferences() {
     if (themeToggle) {
       const goLight = theme === 'dark';
       themeToggle.setAttribute('aria-pressed', String(theme === 'light'));
-      themeToggle.setAttribute('aria-label', currentLanguage === 'en' ? `Switch to ${goLight ? 'light' : 'dark'} theme` : `${goLight ? 'Açık' : 'Koyu'} temaya geç`);
+      themeToggle.setAttribute('aria-label', languageText(`${goLight ? 'Açık' : 'Koyu'} temaya geç`, `Switch to ${goLight ? 'light' : 'dark'} theme`, `الانتقال إلى الوضع ${goLight ? 'الفاتح' : 'الداكن'}`));
       $('span', themeToggle).textContent = goLight ? '☼' : '☾';
-      $('.theme-label', themeToggle).textContent = currentLanguage === 'en' ? (goLight ? 'Light' : 'Dark') : (goLight ? 'Açık' : 'Koyu');
+      $('.theme-label', themeToggle).textContent = languageText(goLight ? 'Açık' : 'Koyu', goLight ? 'Light' : 'Dark', goLight ? 'فاتح' : 'داكن');
     }
     if (languageToggle) {
-      $('b', languageToggle).textContent = currentLanguage === 'tr' ? 'EN' : 'TR';
-      languageToggle.setAttribute('aria-label', currentLanguage === 'tr' ? 'Switch to English' : 'Türkçeye geç');
+      const nextLanguage = currentLanguage === 'tr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'tr';
+      $('b', languageToggle).textContent = nextLanguage.toUpperCase();
+      languageToggle.setAttribute('aria-label', nextLanguage === 'tr' ? 'Türkçeye geç' : nextLanguage === 'en' ? 'Switch to English' : 'التبديل إلى العربية');
     }
     const hours = $('.appointment-intro .hours');
-    if (hours) hours.dataset.hoursLabel = currentLanguage === 'en' ? 'BOOKING START TIMES · 09:00–17:00' : 'RANDEVU BAŞLANGIÇ SAATLERİ · 09:00–17:00';
+    if (hours) hours.dataset.hoursLabel = languageText('RANDEVU BAŞLANGIÇ SAATLERİ · 09:00–17:00','BOOKING START TIMES · 09:00–17:00','مواعيد بدء الحجز · 09:00–17:00');
     const panel = $('.appointment-panel');
-    if (panel) panel.dataset.loadingLabel = currentLanguage === 'en' ? 'Submitting your request…' : 'Talebiniz oluşturuluyor…';
+    if (panel) panel.dataset.loadingLabel = languageText('Talebiniz oluşturuluyor…','Submitting your request…','جارٍ إرسال طلبك…');
   };
   translateDocument(currentLanguage);
   sync();
   themeToggle?.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; localStorage.setItem('cicekTheme', theme); sync(); });
   languageToggle?.addEventListener('click', () => {
-    currentLanguage = currentLanguage === 'tr' ? 'en' : 'tr';
+    currentLanguage = currentLanguage === 'tr' ? 'en' : currentLanguage === 'en' ? 'ar' : 'tr';
     localStorage.setItem('cicekLanguage', currentLanguage);
     translateDocument(currentLanguage);
     sync();
@@ -317,6 +349,39 @@ function selectService(service) {
 function initAppointmentForm() {
   const form = $('#appointmentForm');
   if (!form) return;
+  const serviceOptions = $('.service-options', form);
+  if (serviceOptions && !$('input[value="Klima Bakımı"]', serviceOptions)) {
+    const climate = document.createElement('label');
+    climate.innerHTML = '<input type="checkbox" name="services" value="Klima Bakımı"><span>Klima Bakımı</span>';
+    serviceOptions.append(climate);
+  }
+  const brandSelect = form.elements.brand;
+  if (brandSelect && !$('option[value="other"]', brandSelect)) {
+    const other = document.createElement('option');
+    other.value = 'other';
+    other.textContent = 'Diğer / Genel';
+    brandSelect.append(other);
+    const customField = document.createElement('label');
+    customField.className = 'field custom-brand-field';
+    customField.hidden = true;
+    customField.innerHTML = '<span>Markayı yazın</span><input name="custom_brand" maxlength="60" autocomplete="off" placeholder="Örn. BMW, Mercedes-Benz, Renault">';
+    brandSelect.closest('.field')?.after(customField);
+    brandSelect.addEventListener('change', () => {
+      const isOther = brandSelect.value === 'other';
+      customField.hidden = !isOther;
+      customField.querySelector('input').required = isOther;
+      if (!isOther) customField.querySelector('input').value = '';
+    });
+  }
+  const progressVehicle = $$('.form-progress>span')[1]?.querySelector('b');
+  if (progressVehicle) progressVehicle.textContent = 'Araç';
+  const vehicleStep = $('.form-step[data-step="2"]', form);
+  const vehicleSmall = $('.form-heading small', vehicleStep);
+  const brandLabel = brandSelect?.closest('.field')?.querySelector(':scope > span');
+  if (vehicleSmall) vehicleSmall.textContent = '02 / Araç';
+  if (brandLabel) brandLabel.textContent = 'Araç markası';
+  const bookingIntro = $('.appointment-intro>p');
+  if (bookingIntro) bookingIntro.textContent = 'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.';
   const steps = $$('.form-step', form);
   const indicators = $$('.form-progress>span');
   const progressBar = $('.form-progress>i b');
@@ -332,7 +397,7 @@ function initAppointmentForm() {
   $('#formStartedAt').value = String(Date.now());
   const updateServiceCount = () => {
     const count = serviceInputs.filter(input => input.checked).length;
-    if (serviceCount) serviceCount.textContent = count ? (currentLanguage === 'en' ? `${count} services selected` : `${count} hizmet seçildi`) : localized('En az 1 hizmet seçin');
+    if (serviceCount) serviceCount.textContent = count ? languageText(`${count} hizmet seçildi`, `${count} services selected`, `${count} خدمات مختارة`) : localized('En az 1 hizmet seçin');
     if (date?.value) loadAvailability();
   };
   serviceInputs.forEach(input => input.addEventListener('change', updateServiceCount));
@@ -343,7 +408,7 @@ function initAppointmentForm() {
     const max = new Date(); max.setMonth(max.getMonth() + 3);
     date.max = localDate(max);
     date.addEventListener('change', () => {
-      if (new Date(`${date.value}T12:00:00`).getDay() === 0) { date.value = ''; resetTime(currentLanguage === 'en' ? 'Select a date first' : 'Önce tarih seçin'); showError(currentLanguage === 'en' ? 'Our service is closed on Sundays. Please choose another day.' : 'Pazar günleri servisimiz kapalıdır. Lütfen başka bir gün seçin.'); return; }
+      if (new Date(`${date.value}T12:00:00`).getDay() === 0) { date.value = ''; resetTime(languageText('Önce tarih seçin','Select a date first','اختر التاريخ أولاً')); showError(languageText('Pazar günleri servisimiz kapalıdır. Lütfen başka bir gün seçin.','Our service is closed on Sundays. Please choose another day.','المركز مغلق يوم الأحد. يرجى اختيار يوم آخر.')); return; }
       loadAvailability();
     });
   }
@@ -368,8 +433,8 @@ function initAppointmentForm() {
   }
   async function loadAvailability() {
     const services = serviceInputs.filter(input => input.checked).map(input => input.value);
-    if (!date.value || !services.length) { resetTime(currentLanguage === 'en' ? 'Select a date and service first' : 'Önce tarih ve hizmet seçin'); return; }
-    resetTime(currentLanguage === 'en' ? 'Loading available times…' : 'Uygun saatler yükleniyor…');
+    if (!date.value || !services.length) { resetTime(languageText('Önce tarih ve hizmet seçin','Select a date and service first','اختر التاريخ والخدمة أولاً')); return; }
+    resetTime(languageText('Uygun saatler yükleniyor…','Loading available times…','جارٍ تحميل الأوقات المتاحة…'));
     const duration = services.length === 1 && services[0] === 'Periyodik Bakım' ? 60 : 120;
     const fallback = duration === 60 ? ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'] : ['09:00','11:00','13:00','15:00','17:00'];
     try {
@@ -377,18 +442,16 @@ function initAppointmentForm() {
       if (!response.ok) throw new Error(currentLanguage === 'en' ? 'Available times could not be loaded.' : 'Uygun saatler alınamadı.');
       const result = await response.json();
       const available = result.available || [];
-      const availabilityLabel = currentLanguage === 'en'
-        ? (available.length ? 'Select time' : 'No suitable time remains for this date')
-        : (available.length ? 'Saat seçin' : 'Bu tarih için uygun saat kalmadı');
+      const availabilityLabel = available.length ? languageText('Saat seçin','Select time','اختر الوقت') : languageText('Bu tarih için uygun saat kalmadı','No suitable time remains for this date','لا يوجد وقت متاح لهذا التاريخ');
       time.innerHTML = `<option value="">${availabilityLabel}</option>${available.map(value => `<option>${value}</option>`).join('')}`;
       time.disabled = !available.length;
     } catch (availabilityError) {
       if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-        time.innerHTML = `<option value="">${currentLanguage === 'en' ? 'Select time · local preview' : 'Saat seçin · yerel önizleme'}</option>${fallback.map(value => `<option>${value}</option>`).join('')}`;
+        time.innerHTML = `<option value="">${languageText('Saat seçin · yerel önizleme','Select time · local preview','اختر الوقت · معاينة محلية')}</option>${fallback.map(value => `<option>${value}</option>`).join('')}`;
         time.disabled = false;
       } else {
-        resetTime(currentLanguage === 'en' ? 'Times are currently unavailable' : 'Saatler şu anda alınamıyor');
-        showError(currentLanguage === 'en' ? 'Available times could not be loaded. Please try again shortly.' : 'Uygun saatler alınamadı. Lütfen kısa süre sonra tekrar deneyin.');
+        resetTime(languageText('Saatler şu anda alınamıyor','Times are currently unavailable','الأوقات غير متاحة حالياً'));
+        showError(languageText('Uygun saatler alınamadı. Lütfen kısa süre sonra tekrar deneyin.','Available times could not be loaded. Please try again shortly.','تعذر تحميل الأوقات المتاحة. حاول مرة أخرى بعد قليل.'));
       }
     }
   }
@@ -407,7 +470,7 @@ function initAppointmentForm() {
       if (empty) valid = false;
     });
     if (step === 3 && phone.value.replace(/\D/g, '').length < 10) { phone.classList.add('invalid'); valid = false; }
-    if (!valid) showError(currentLanguage === 'en' ? 'Complete the required fields to continue.' : 'Devam etmek için zorunlu alanları tamamlayın.');
+    if (!valid) showError(languageText('Devam etmek için zorunlu alanları tamamlayın.','Complete the required fields to continue.','أكمل الحقول المطلوبة للمتابعة.'));
     return valid;
   }
   function showError(message) { error.textContent = message; error.classList.add('show'); }
@@ -420,6 +483,7 @@ function initAppointmentForm() {
     const panel = $('.appointment-panel');
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    if (data.brand === 'other') data.display_brand = data.custom_brand;
     data.services = formData.getAll('services');
     data.service = data.services.join(', ');
     data.whatsapp_consent = form.elements.whatsapp_consent.checked;
@@ -435,7 +499,7 @@ function initAppointmentForm() {
       $('#formStartedAt').value = String(Date.now());
       render();
     } catch (requestError) {
-      showError(requestError.message || (currentLanguage === 'en' ? 'Your request could not be sent. Please call or message us on WhatsApp.' : 'Talebiniz gönderilemedi. Lütfen bizi arayın veya WhatsApp üzerinden yazın.'));
+      showError(requestError.message || languageText('Talebiniz gönderilemedi. Lütfen bizi arayın veya WhatsApp üzerinden yazın.','Your request could not be sent. Please call or message us on WhatsApp.','تعذر إرسال طلبك. يرجى الاتصال بنا أو مراسلتنا عبر واتساب.'));
     } finally {
       panel.classList.remove('loading');
       submit.disabled = false;
@@ -450,7 +514,7 @@ async function createAppointment(data) {
     const response = await fetch('/api/appointments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
     const body = await response.json().catch(() => ({}));
     if (response.ok) return body;
-    if (response.status !== 404 && response.status !== 503) throw new Error(body.error || (currentLanguage === 'en' ? 'The booking request could not be created.' : 'Randevu talebi oluşturulamadı.'));
+    if (response.status !== 404 && response.status !== 503) throw new Error(body.error || languageText('Randevu talebi oluşturulamadı.','The booking request could not be created.','تعذر إنشاء طلب الموعد.'));
   } catch (error) {
     if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') throw error;
   }
@@ -465,13 +529,14 @@ function showSuccess(data, result) {
   const dialog = $('#successDialog');
   const reference = result.reference || makeReference();
   $('#referenceCode').textContent = reference;
-  $('#successText').textContent = currentLanguage === 'en'
-    ? (result.storage === 'local-demo' ? 'A local preview record was created. On the live site, your request will be sent directly to the service.' : 'We will review your booking and contact you shortly by phone or WhatsApp.')
-    : (result.storage === 'local-demo' ? 'Yerel önizleme kaydı oluşturuldu. Canlı sitede talebiniz doğrudan servise iletilecek.' : 'Randevunuzu kontrol edip en kısa sürede telefon veya WhatsApp üzerinden dönüş yapacağız.');
+  $('#successText').textContent = result.storage === 'local-demo'
+    ? languageText('Yerel önizleme kaydı oluşturuldu. Canlı sitede talebiniz doğrudan servise iletilecek.','A local preview record was created. On the live site, your request will be sent directly to the service.','تم إنشاء سجل معاينة محلي. في الموقع المنشور سيصل طلبك مباشرة إلى مركز الصيانة.')
+    : languageText('Randevunuzu kontrol edip en kısa sürede telefon veya WhatsApp üzerinden dönüş yapacağız.','We will review your booking and contact you shortly by phone or WhatsApp.','سنراجع موعدك ونتواصل معك قريباً عبر الهاتف أو واتساب.');
   const serviceSummary = Array.isArray(data.services) ? data.services.join(' · ') : data.service;
-  const message = currentLanguage === 'en'
-    ? `Hello, I created a booking request with reference ${reference}.\nServices: ${serviceSummary}\nVehicle: ${data.brand} ${data.model}\nDate: ${data.date} ${data.time}`
-    : `Merhaba, ${reference} takip kodlu randevu talebimi oluşturdum.\nHizmetler: ${serviceSummary}\nAraç: ${data.brand} ${data.model}\nTarih: ${data.date} ${data.time}`;
+  const message = currentLanguage === 'ar'
+    ? `مرحباً، أنشأت طلب موعد بالرمز ${reference}.\nالخدمات: ${serviceSummary}\nالسيارة: ${data.display_brand || data.brand} ${data.model}\nالتاريخ: ${data.date} ${data.time}`
+    : currentLanguage === 'en' ? `Hello, I created a booking request with reference ${reference}.\nServices: ${serviceSummary}\nVehicle: ${data.display_brand || data.brand} ${data.model}\nDate: ${data.date} ${data.time}`
+    : `Merhaba, ${reference} takip kodlu randevu talebimi oluşturdum.\nHizmetler: ${serviceSummary}\nAraç: ${data.display_brand || data.brand} ${data.model}\nTarih: ${data.date} ${data.time}`;
   $('#successWhatsapp').href = `https://wa.me/902125491763?text=${encodeURIComponent(message)}`;
   dialog.showModal();
 }
@@ -479,6 +544,11 @@ function showSuccess(data, result) {
 function initReviews() {
   const track = $('#reviewTrack');
   if (!track) return;
+  const sourceUrl = 'https://share.google/Ku7rt8w8gclaphIJl';
+  const pending = document.createElement('article');
+  pending.className = 'review review-source-state';
+  pending.innerHTML = `<div class="stars" aria-hidden="true">G</div><blockquote>${localized('Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.')}</blockquote><div><b>${localized('Canlı Google bağlantısı bekleniyor')}</b><a href="${sourceUrl}" target="_blank" rel="noopener">${localized('Tüm gerçek yorumları Google’da gör →')}</a></div>`;
+  track.replaceChildren(pending);
   let index = 0;
   let cards = $$('.review', track);
   const update = () => {
@@ -500,6 +570,10 @@ function initReviews() {
     const link = $('.google-rating');
     if (rating) rating.textContent = `${String(data.rating).replace('.', ',')} / 5`;
     if (count) count.textContent = `${data.count} Google yorumu`;
+    const heroReviewValue = $('.hero-stats .stat:nth-child(2) strong');
+    const heroReviewLabel = $('.hero-stats .stat:nth-child(2) span');
+    if (heroReviewValue) heroReviewValue.textContent = String(data.count);
+    if (heroReviewLabel) heroReviewLabel.textContent = localized('Doğrulanmış Google yorumu');
     if (link && data.url) link.href = data.url;
     track.replaceChildren(...data.reviews.map(review => {
       const article = document.createElement('article');

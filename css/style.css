@@ -140,3 +140,91 @@ footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background
 .footer-main nav a:hover{color:#9ce9ef}
 .footer-main>div:last-child span{color:#72898d}
 .footer-bottom{color:#5f777b;border-top-color:rgba(48,192,208,.1)}
+
+/* September 2026 interface pass: real imagery, seamless motion, RTL and mobile */
+.hero-stats{grid-template-columns:repeat(3,1fr)}
+.hero-stats .stat:nth-child(3){border-right:0}
+.marquee-track{gap:0;animation:marqueeLoop 30s linear infinite;will-change:transform}
+.marquee-group{display:flex;align-items:center;gap:35px;flex:none;padding-right:35px}
+@keyframes marqueeLoop{to{transform:translateX(-50%)}}
+.scene.scene-dsg,.scene.scene-track{background-color:#02090d;background-size:cover;background-position:center}
+.scene.scene-dsg{background-image:url('../img/real-service-diagnostics.jpg')}
+.scene.scene-track{background-image:url('../img/real-service-workshop.jpg')}
+.scene.scene-dsg .scene-car,.scene.scene-track .scene-car{display:none}
+.scene.scene-dsg::after,.scene.scene-track::after{background:linear-gradient(90deg,rgba(2,9,13,.5),transparent 26% 72%,rgba(2,9,13,.5)),linear-gradient(180deg,rgba(2,9,13,.45),transparent 22% 66%,rgba(2,9,13,.82));box-shadow:inset 0 0 42px 8px rgba(2,9,13,.88)}
+.scene-grid{opacity:.28}
+.scene-dsg .telemetry,.scene-dsg .diagnostic-orbit,.scene-track .track-panel{backdrop-filter:blur(12px);background:rgba(2,15,19,.72)}
+.service-slice{isolation:isolate;background-position:center;background-size:cover}
+.service-slice::before{content:"";position:absolute;z-index:-2;inset:0;background-size:cover;background-position:center;opacity:.2;filter:grayscale(.3) saturate(.75);transition:.45s ease}
+.service-slice:nth-child(odd)::before{background-image:url('../img/real-service-diagnostics.jpg')}
+.service-slice:nth-child(even)::before{background-image:url('../img/real-service-workshop.jpg')}
+.service-slice::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,rgba(1,13,17,.72),rgba(1,13,17,.95))}
+.service-slice.active::before,.service-slice:hover::before{opacity:.42;transform:scale(1.035)}
+.custom-brand-field[hidden]{display:none!important}
+.review-source-state{flex-basis:100%;min-height:230px;align-items:flex-start}
+.review-source-state .stars{font:800 1.15rem Manrope;color:#fff;background:linear-gradient(135deg,#4285f4,#34a853);width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
+.review-source-state blockquote{max-width:720px;margin-block:22px}
+.review-source-state a{display:inline-block;margin-top:8px;color:var(--brand-teal);font-size:.75rem;border-bottom:1px solid currentColor}
+html[lang="ar"] body{font-family:"Noto Kufi Arabic",Manrope,sans-serif;direction:rtl}
+html[lang="ar"] .hero-title,html[lang="ar"] .split-heading{letter-spacing:-.035em}
+html[lang="ar"] .brand,html[lang="ar"] .car-stage,html[lang="ar"] .scene,html[lang="ar"] .google-map{direction:ltr}
+html[lang="ar"] .check-list li::before{margin-right:0;margin-left:7px}
+html[lang="ar"] .mini-metrics div{border-left:0;border-right:1px solid var(--brand-red);padding-left:0;padding-right:14px}
+html[lang="ar"] input[type="tel"],html[lang="ar"] input[type="email"],html[lang="ar"] input[type="date"],html[lang="ar"] input[name="plate"]{direction:ltr;text-align:right}
+html[lang="ar"] .wide-link b,html[lang="ar"] .button span{transform:scaleX(-1)}
+
+@media(max-width:1020px){
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .hero-stats .stat{border-bottom:0!important;border-right:1px solid var(--line)}
+  .hero-stats .stat:last-child{border-right:0}
+  .scene.scene-dsg,.scene.scene-track{background-size:cover;background-position:center}
+}
+@media(max-width:620px){
+  html,body{overflow-x:hidden}
+  .shell{width:min(100% - 28px,1260px)}
+  .site-header .brand-logo{width:106px;height:auto}
+  .preference-button .theme-label{display:none}
+  .preference-button{min-width:36px;padding-inline:7px}
+  .hero{padding-top:102px}
+  .hero-kicker{font-size:.62rem;line-height:1.6}
+  .hero-title{font-size:clamp(2.55rem,13vw,3.4rem);line-height:.96}
+  .hero-sub{font-size:.88rem;line-height:1.7;max-width:34rem}
+  .hero-actions .button,.hero-actions .text-button{width:100%;max-width:none;justify-content:space-between}
+  .car-stage{height:290px;margin-inline:-14px;background-size:245% auto;background-position:52% 91%}
+  .hero-stats{grid-template-columns:1fr 1fr;margin-top:12px}
+  .hero-stats .stat{min-height:112px;padding:24px 12px;border-bottom:1px solid var(--line)!important}
+  .hero-stats .stat:nth-child(2){border-right:0}
+  .hero-stats .stat:last-child{grid-column:1/-1;border-right:0;border-bottom:0!important}
+  .marquee-group{gap:24px;padding-right:24px}
+  .marquee-track{animation-duration:24s}
+  .story,.story-reverse{gap:30px;padding-block:70px}
+  .story-copy{min-width:0}
+  .split-heading{font-size:clamp(2.55rem,12.2vw,3.15rem);overflow-wrap:anywhere}
+  .story-copy>p,.section-head>p,.faq-intro>p,.appointment-intro>p{font-size:.86rem;line-height:1.75}
+  .scene.scene-dsg,.scene.scene-track{height:330px;background-size:cover;background-position:center}
+  .diagnostic-orbit{transform:scale(.86);transform-origin:top right}
+  .telemetry{max-width:44%}
+  .track-panel{width:76%;left:5%;top:13%}
+  .service-slices{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-14px;padding-inline:14px}
+  .service-slices::-webkit-scrollbar{display:none}
+  .service-slice,.service-slice.active{flex:0 0 82%;min-height:330px;scroll-snap-align:center;border:1px solid rgba(48,192,208,.2)}
+  .service-more{display:flex;overflow-x:auto;flex-wrap:nowrap;padding-bottom:7px;scrollbar-width:none}
+  .service-chip{flex:none}
+  .appointment{padding-top:76px}
+  .appointment-panel{padding:24px 16px;min-height:0;background-size:cover}
+  .form-progress{gap:8px;overflow-x:auto;padding-bottom:8px}
+  .form-progress>span{min-width:54px;flex:1}
+  .form-heading h3{font-size:1.55rem;line-height:1.15}
+  .service-options{grid-template-columns:1fr}
+  .service-options label span{min-height:52px;display:flex;align-items:center}
+  .field input,.field select,.field textarea{min-height:52px;font-size:16px}
+  .field textarea{min-height:112px}
+  .form-actions{gap:9px}
+  .form-actions .button{margin:0}
+  .review-heading{gap:24px}
+  .slider-controls{align-self:flex-end}
+  .review-source-state{min-height:260px}
+  .faq-list summary{gap:16px;line-height:1.5}
+  .contact-panel{height:460px}
+  .contact-cards{left:12px;right:12px;bottom:12px}
+}
