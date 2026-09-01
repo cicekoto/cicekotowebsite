@@ -131,3 +131,12 @@ html[data-theme="light"] .footer-bottom{color:#65797e;border-top-color:rgba(0,93
 .floating-whatsapp span{line-height:1}
 .floating-whatsapp:hover{transform:translateY(-3px);filter:saturate(1.08);box-shadow:0 16px 40px rgba(12,151,79,.42)}
 .floating-whatsapp:focus-visible{outline:3px solid rgba(36,215,120,.32);outline-offset:4px}
+
+/* Footer continues the site's dark petrol surface */
+footer{position:relative;border-top-color:rgba(48,192,208,.14);background:radial-gradient(circle at 17% 0,rgba(48,192,208,.085),transparent 34%),radial-gradient(circle at 88% 18%,rgba(192,64,80,.035),transparent 28%),linear-gradient(180deg,#031015 0,#021015 52%,#02090d 100%)}
+footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(48,192,208,.34),rgba(192,64,80,.18),transparent);pointer-events:none}
+.footer-main p{color:#789095}
+.footer-main nav{color:#80979b}
+.footer-main nav a:hover{color:#9ce9ef}
+.footer-main>div:last-child span{color:#72898d}
+.footer-bottom{color:#5f777b;border-top-color:rgba(48,192,208,.1)}
