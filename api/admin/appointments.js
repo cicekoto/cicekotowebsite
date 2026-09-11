@@ -78,8 +78,13 @@ async function updateAppointment(res,url,headers,body){
     if(eventResponse.ok)event=(await eventResponse.json())[0]||null;
   }
   const statusChanged=body.status!==undefined&&body.status!==current.status;
-  if((statusChanged||scheduleChanged)&&['confirmed','rescheduled','cancelled'].includes(appointment.status))await notifyCustomerWhatsApp(appointment,appointment.status).catch(()=>false);
-  return res.status(200).json({ok:true,appointment,event});
+  let notificationEvent=null;
+  if((statusChanged||scheduleChanged)&&['confirmed','rescheduled','cancelled'].includes(appointment.status)){
+    const sent=await notifyCustomerWhatsApp(appointment,appointment.status).catch(()=>false);
+    const notificationResponse=await fetch(`${url}/rest/v1/appointment_events`,{method:'POST',headers:{...headers,Prefer:'return=representation'},body:JSON.stringify({appointment_id:body.id,event_type:'notification_attempted',metadata:{channel:'customer_whatsapp',event:appointment.status,sent,consent:Boolean(appointment.whatsapp_consent)}})});
+    if(notificationResponse.ok)notificationEvent=(await notificationResponse.json())[0]||null;
+  }
+  return res.status(200).json({ok:true,appointment,event,notificationEvent});
 }
 
 function clean(value,max){return String(value||'').replace(/[\u0000-\u001f\u007f]/g,' ').trim().replace(/[<>]/g,'').slice(0,max)}

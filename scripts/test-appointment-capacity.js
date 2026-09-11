@@ -18,11 +18,18 @@ global.fetch = async url => String(url).includes('consume_api_rate_limit') ? ({
   ]
 });
 
+const futureWeekday = (() => {
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+  while (date.getDay() === 0) date.setDate(date.getDate() + 1);
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+})();
+
 const req = {
   method: 'GET',
   headers: { 'x-forwarded-for': '203.0.113.20' },
   query: {
-    date: '2026-09-02',
+    date: futureWeekday,
     services: JSON.stringify(['Periyodik Bakım'])
   }
 };

@@ -99,6 +99,10 @@ Object.assign(AR_TEXT, {
   'Bulamadığın bir cevap varsa bizi arayabilir veya WhatsApp\'tan yazabilirsin.':'إذا لم تجد الإجابة، اتصل بنا أو راسلنا عبر واتساب.','Randevu almadan gelebilir miyim?':'هل يمكنني الحضور دون موعد؟','Gelebilirsiniz; ancak yoğunlukta beklememek için online randevu oluşturmanızı öneririz.':'يمكنك الحضور، لكن ننصح بالحجز الإلكتروني لتجنب الانتظار.','Hangi markalara servis veriyorsunuz?':'ما العلامات التي تخدمونها؟','Volkswagen, Audi, Škoda, SEAT ve CUPRA araçlara; VAG motor, DSG, elektronik ve platform teknolojilerinde uzman servis veriyoruz.':'نقدم خدمة متخصصة لمحركات VAG وناقل DSG والإلكترونيات والمنصات لسيارات Volkswagen وAudi وŠkoda وSEAT وCUPRA، ونقبل طلبات العلامات الأخرى أيضاً.','Birden fazla işlem seçebilir miyim?':'هل يمكن اختيار أكثر من خدمة؟','Evet. Randevu formunda bakım, DSG, motor-elektronik, fren, kaporta ve genel kontrol seçeneklerinden birden fazlasını birlikte seçebilirsiniz.':'نعم، يمكنك اختيار عدة خدمات معاً في طلب واحد.','Fiyat onayı olmadan işlem yapılır mı?':'هل يبدأ العمل دون موافقة على السعر؟','Hayır. Teşhis sonrası işlem ve fiyat bilgisi iletilir; onayınız olmadan ek işleme başlanmaz.':'لا. نرسل تفاصيل العمل والسعر بعد التشخيص ولا نبدأ عملاً إضافياً دون موافقتك.','İşçilik garantisi var mı?':'هل توجد كفالة على العمل؟','Evet. Yapılan işlemin kapsamına göre garanti koşulları işleme başlamadan önce yazılı olarak paylaşılır.':'نعم، تُشارك شروط الكفالة كتابياً قبل بدء العمل حسب نطاقه.',
   "2001'den beri Başakşehir'de doğru teşhis, şeffaf fiyat ve garantili işçilik.":'تشخيص دقيق وأسعار واضحة وخدمة موثوقة في باشاك شهير منذ 2001.','KVKK · Gizlilik · Kullanım Koşulları':'الخصوصية · حماية البيانات · شروط الاستخدام','RANDEVU TALEBİ':'طلب موعد','Talebin alındı.':'تم استلام طلبك.','Randevunu kontrol edip en kısa sürede sana dönüş yapacağız.':'سنراجع موعدك ونتواصل معك في أقرب وقت.','WhatsApp\'ta Aç':'افتح في واتساب','Kapat':'إغلاق'
 });
+if (window.CICEK_PAGE_TRANSLATIONS) {
+  Object.assign(EN_TEXT, window.CICEK_PAGE_TRANSLATIONS.en || {});
+  Object.assign(AR_TEXT, window.CICEK_PAGE_TRANSLATIONS.ar || {});
+}
 const EN_TO_TR = Object.fromEntries(Object.entries(EN_TEXT).map(([tr, en]) => [en, tr]));
 const AR_TO_TR = Object.fromEntries(Object.entries(AR_TEXT).map(([tr, ar]) => [ar, tr]));
 
@@ -140,7 +144,8 @@ function translateDocument(language) {
 function initPreferences() {
   const themeToggle = $('#themeToggle');
   const languageToggle = $('#languageToggle');
-  currentLanguage = ['tr','en','ar'].includes(localStorage.getItem('cicekLanguage')) ? localStorage.getItem('cicekLanguage') : 'tr';
+  const lockedLanguage = document.body.dataset.languageLock;
+  currentLanguage = ['tr','en','ar'].includes(lockedLanguage) ? lockedLanguage : (['tr','en','ar'].includes(localStorage.getItem('cicekLanguage')) ? localStorage.getItem('cicekLanguage') : 'tr');
   let theme = document.documentElement.dataset.theme || 'dark';
   const sync = () => {
     document.documentElement.dataset.theme = theme;
@@ -220,6 +225,7 @@ function initNavigation() {
   const header = $('#siteHeader');
   const toggle = $('#menuToggle');
   const menu = $('#mobileMenu');
+  if (header && menu?.parentElement === header) header.after(menu);
   const links = $$('.mobile-menu a');
   const closeMenu = () => {
     toggle?.classList.remove('open');
@@ -235,6 +241,7 @@ function initNavigation() {
     document.body.classList.toggle('menu-open', open);
   });
   links.forEach(link => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   addEventListener('resize', () => { if (innerWidth > 1020) closeMenu(); }, { passive: true });
   const updateHeader = () => header?.classList.toggle('scrolled', scrollY > 24);
   updateHeader();
@@ -372,17 +379,24 @@ function initAppointmentForm() {
     other.value = 'other';
     other.textContent = 'Diğer / Genel';
     brandSelect.append(other);
-    const customField = document.createElement('label');
-    customField.className = 'field custom-brand-field';
-    customField.hidden = true;
-    customField.innerHTML = '<span>Markayı yazın</span><input name="custom_brand" maxlength="60" autocomplete="off" placeholder="Örn. BMW, Mercedes-Benz, Renault">';
-    brandSelect.closest('.field')?.after(customField);
-    brandSelect.addEventListener('change', () => {
+  }
+  if (brandSelect) {
+    let customField = $('.custom-brand-field', form);
+    if (!customField) {
+      customField = document.createElement('label');
+      customField.className = 'field custom-brand-field';
+      customField.hidden = true;
+      customField.innerHTML = '<span>Markayı yazın</span><input name="custom_brand" maxlength="60" autocomplete="off" placeholder="Örn. BMW, Mercedes-Benz, Renault">';
+      brandSelect.closest('.field')?.after(customField);
+    }
+    const syncCustomBrand = () => {
       const isOther = brandSelect.value === 'other';
       customField.hidden = !isOther;
       customField.querySelector('input').required = isOther;
       if (!isOther) customField.querySelector('input').value = '';
-    });
+    };
+    brandSelect.addEventListener('change', syncCustomBrand);
+    syncCustomBrand();
   }
   const progressVehicle = $$('.form-progress>span')[1]?.querySelector('b');
   if (progressVehicle) progressVehicle.textContent = 'Araç';

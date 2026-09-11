@@ -51,7 +51,16 @@ module.exports = async function handler(req, res) {
       if (String(failure.message || '').includes('SLOT_UNAVAILABLE')) return res.status(409).json({ error:'Bu saat az önce doldu. Lütfen başka bir saat seçin.', code:'SLOT_UNAVAILABLE' });
       throw new Error(`Supabase appointment RPC failed: ${insert.status}`);
     }
-    await Promise.allSettled([notifyOwnerCallMeBot(record), notifyCustomerWhatsApp(record, 'received')]);
+    const created = await insert.json().catch(() => null);
+    const appointment = Array.isArray(created) ? created[0] : created;
+    const [ownerResult,customerResult] = await Promise.allSettled([notifyOwnerCallMeBot(record), notifyCustomerWhatsApp(record, 'received')]);
+    if(appointment?.id){
+      const events=[
+        {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'owner_callmebot',sent:ownerResult.status==='fulfilled'&&ownerResult.value===true}},
+        {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'customer_whatsapp',event:'received',sent:customerResult.status==='fulfilled'&&customerResult.value===true,consent:record.whatsapp_consent}}
+      ];
+      await fetch(`${supabaseUrl}/rest/v1/appointment_events`,{method:'POST',headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`,'Content-Type':'application/json'},body:JSON.stringify(events)}).catch(()=>null);
+    }
     return res.status(201).json({ ok:true, reference, status:'pending' });
   } catch (error) {
     console.error('appointment_create_failed', error.message);
