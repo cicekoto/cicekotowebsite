@@ -50,7 +50,7 @@ const EN_TEXT = {
   'KVKK aydınlatma metni': 'privacy notice', 'kapsamında kullanılmasını kabul ediyorum.': '.',
   'Randevu onayı ve servis güncellemelerinin WhatsApp üzerinden iletilmesini istiyorum.': 'I would like booking confirmations and service updates via WhatsApp.',
   '← Geri': '← Back', 'Devam Et →': 'Continue →', 'Randevu Talebi Oluştur →': 'Submit Booking Request →',
-  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '168 Google yorumu': '168 Google reviews',
+  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '174 Google yorumu': '174 Google reviews',
   '“Turan Usta çok yardımcı oldu. Bir saat içinde aracımın bakımını yaptılar.”': '“Turan Usta was very helpful. They completed my vehicle maintenance within an hour.”',
   '“Çiçek Otomotive uğradım ve çok memnun kaldım. Turan Usta ve ekibine teşekkürlerimi sunarım.”': '“I visited Çiçek Otomotiv and was very satisfied. My thanks to Turan Usta and his team.”',
   '“Çok ilgiliydiler ve yardımcı oldular; aracımı işlemleri yapılmış hâlde teslim aldım.”': '“They were attentive and helpful; I received my vehicle with the requested work completed.”',
@@ -91,7 +91,7 @@ const AR_TEXT = {
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
 Object.assign(AR_TEXT, {
-  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','168 Google yorumu':'168 تقييماً على Google',
+  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','174 Google yorumu':'174 تقييماً على Google',
   'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'نحن متخصصون في سيارات VAG، ويمكنك أيضاً طلب الصيانة والإصلاح للعلامات الأخرى. اختر كل الخدمات التي تحتاجها وسيصل الطلب مباشرة إلى نظام الحجز.',
   'Google işletme profili':'ملف النشاط على Google','Canlı Google bağlantısı bekleniyor':'بانتظار اتصال Google المباشر','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'لا نعرض تقييمات مختلقة. يمكنك مشاهدة جميع التقييمات الحقيقية في ملف نشاطنا على Google.','Tüm gerçek yorumları Google’da gör →':'شاهد كل التقييمات الحقيقية على Google ←',
   '“Turan Usta çok yardımcı oldu. Fiyat olarak da gayet uygundu.”':'“كان توران أوسطا متعاوناً جداً، وكان السعر مناسباً للغاية.”','“Çiçek Otomotive uğradım ve çok memnun kaldım. Gönül rahatlığı ile aracınızda işlem yaptırabilirsiniz.”':'“زرت Çiçek Otomotiv وكنت راضياً جداً. يمكنكم صيانة سيارتكم هنا بكل ثقة.”','Google yorumu · 5/5 · Ağustos 2026':'تقييم Google · 5/5 · أغسطس 2026','Google yorumu · 5/5 · Mayıs 2026':'تقييم Google · 5/5 · مايو 2026','Google’da doğrula ↗':'تحقق على Google ↗',

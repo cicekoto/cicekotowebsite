@@ -1,116 +1,66 @@
 # Çiçek Otomotiv randevu sistemi
 
-## Güncel production durumu — 1 Eylül 2026
+## Production mimarisi — 12 Eylül 2026
 
-- Randevu formu Vercel Functions üzerinden Supabase `appointments` tablosuna yazıyor.
-- Günlük araç sayısı sınırı yok; aynı zaman aralığındaki çakışmalar işlem süresine göre engelleniyor.
-- Randevu başlangıç saatleri 09:00–17:00, pazar günü kapalı.
-- Admin paneli şifreyi tarayıcı depolamasında tutmuyor; `HttpOnly`, `Secure`, `SameSite=Strict` imzalı oturum çerezi kullanıyor.
-- Admin yazma işlemleri aynı-kaynak, özel istek başlığı ve oturuma bağlı CSRF belirteciyle korunuyor; oturum kullanıcı aracısına bağlanıyor ve dört saatte sona eriyor.
-- Giriş, randevu oluşturma, telefon numarası ve müsaitlik sorguları Supabase üzerinde kalıcı hız sınırına tabi.
-- Supabase tablolarında RLS açık; `anon` ve `authenticated` rollerinin doğrudan tablo/fonksiyon erişimi kaldırıldı.
-- CallMeBot işletme sahibine yeni talep alarmı için hazır; müşteri mesajları Meta WhatsApp Cloud API şablonları için hazır.
-- Google Places bağlantısı yapılandırıldığında puan ve en fazla beş gerçek yorum otomatik gösteriliyor; bağlantı yoksa doğrulanmış sabit yorumlar kalıyor.
+Randevu formu tarayıcıdan doğrudan Supabase'e bağlanmaz. İstek önce Vercel Function'a gelir; alanlar, marka, hizmetler, tarih/saat, KVKK onayı, bal küpü alanı ve form doldurma süresi doğrulanır. Sunucu yalnızca kendi ortamında bulunan service-role anahtarıyla güvenli RPC fonksiyonunu çağırır.
 
-### Production environment variables
+### Çalışma kuralları
 
-| Değişken | Durum / amaç |
+- Günlük araç sayısı sınırı yoktur.
+- Aynı zaman aralığındaki çakışmalar işlem süresine göre engellenir.
+- Tek başına periyodik bakım 60 dakika, diğer hizmet kombinasyonları 120 dakikadır.
+- Randevu başlangıç saatleri 09:00–17:00 arasındadır; pazar günü kapalıdır.
+- Bir talepte 1–9 benzersiz hizmet kabul edilir.
+- VAG markalarının yanında “Diğer / Genel” seçeneğiyle başka markalar da kaydedilebilir.
+
+### Veri modeli
+
+| Tablo | Amaç |
 | --- | --- |
-| `SUPABASE_URL` | Zorunlu, yapılandırıldı |
-| `SUPABASE_SERVICE_ROLE_KEY` | Zorunlu, yalnızca Vercel Functions sunucusunda; tarayıcıya gönderilmez |
-| `ADMIN_USERNAME` | Zorunlu, yapılandırıldı |
-| `ADMIN_PASSWORD` | Zorunlu; en az 14 karakter |
-| `ADMIN_SESSION_SECRET` | Önerilir; admin oturum imzası için paroladan ayrı ve yüksek entropili anahtar |
-| `RATE_LIMIT_SECRET` | Önerilir; IP/telefon gibi hız sınırı öznelerini veritabanına yazmadan önce HMAC ile anonimleştirir |
-| `CALLMEBOT_PHONE` | İsteğe bağlı; yalnızca işletme sahibine bildirim |
-| `CALLMEBOT_API_KEY` | İsteğe bağlı; CallMeBot aktivasyonundan gelir |
-| `WHATSAPP_ACCESS_TOKEN` | Müşteri mesajları için Meta erişim anahtarı |
-| `WHATSAPP_PHONE_NUMBER_ID` | Meta WhatsApp gönderici numarası kimliği |
-| `WHATSAPP_GRAPH_API_VERSION` | Kullanılacak Graph API sürümü; açıkça yapılandırılmalı |
-| `WHATSAPP_TEMPLATE_LANGUAGE` | Varsayılan `tr` |
-| `WHATSAPP_TEMPLATE_RECEIVED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
-| `WHATSAPP_TEMPLATE_CONFIRMED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
-| `WHATSAPP_TEMPLATE_RESCHEDULED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
-| `WHATSAPP_TEMPLATE_CANCELLED` | Dört gövdeli parametre: ad, takip kodu, tarih, saat |
-| `GOOGLE_PLACES_API_KEY` | Google Places API anahtarı |
-| `GOOGLE_PLACE_ID` | Çiçek Otomotiv Google işletme Place ID'si |
+| `appointments` | Randevu, müşteri, araç, izin ve durum bilgileri |
+| `appointment_events` | Oluşturma, durum değişikliği, bildirim denemesi ve yönetici güncelleme kaydı |
+| `api_rate_limits` | IP ve telefon gibi öznelerin HMAC özetiyle kalıcı hız sınırı |
 
-## Uygulanan mimari
+`appointments`, `appointment_events` ve `api_rate_limits` tablolarında RLS açıktır. `anon` ve `authenticated` rolleri doğrudan erişemez. `create_website_appointment` ve `consume_api_rate_limit` fonksiyonlarını yalnızca `service_role` çalıştırabilir.
 
-Form doğrudan veritabanına yazmaz. Vercel Function girdiyi, VAG markasını, hizmetleri, tarih/saat aralığını ve KVKK onayını doğrular; hız sınırlarını uygular ve yalnızca sunucuda tutulan service-role anahtarıyla güvenli RPC üzerinden kaydı oluşturur. Yönetim ekranı kısa ömürlü, imzalı ve `HttpOnly` oturumla korunur.
+### Yönetim güvenliği
 
-CallMeBot yalnızca işletme sahibinin kendi WhatsApp numarasına yeni randevu uyarısı göndermek için kullanılabilir. Resmî sayfası ücretsiz API'nin kişisel kullanım için olduğunu ve başkalarına mesaj göndermediğini açıkça belirtiyor. Müşterilere otomatik onay ve hatırlatma göndermek için WhatsApp Business Platform (Cloud API) ya da Twilio gibi resmî bir sağlayıcı gerekir.
+- Parola tarayıcı depolamasında tutulmaz.
+- Oturum çerezi `HttpOnly`, `Secure`, `SameSite=Strict` ve dört saat ömürlüdür.
+- Oturum kullanıcı aracısına bağlanır ve HMAC ile imzalanır.
+- Yazma işlemleri same-origin, özel istek başlığı ve oturuma bağlı CSRF belirteci gerektirir.
+- Giriş ve yönetim yazmaları hız sınırına tabidir.
+- CSV çıktısında formül enjeksiyonu engellenir.
+- CSP, clickjacking, MIME sniffing, HSTS, referrer ve izin politikaları Vercel katmanında uygulanır.
 
-Kaynaklar:
+### Bildirimler
 
-- [CallMeBot ücretsiz WhatsApp API](https://www.callmebot.com/blog/free-api-whatsapp-messages/)
-- [Supabase veritabanı ve RLS](https://supabase.com/docs/guides/database/overview)
-- [Supabase Edge Functions](https://supabase.com/docs/guides/functions)
-- [Supabase zamanlanmış Edge Functions](https://supabase.com/docs/guides/functions/schedule-functions)
-- [Supabase secret yönetimi](https://supabase.com/docs/guides/functions/secrets)
+- CallMeBot yalnızca işletme sahibinin numarasına yeni talep uyarısı göndermek için kullanılır.
+- Müşteriye mesaj yalnızca WhatsApp izni verilmişse ve ilgili Meta WhatsApp Cloud API şablonu yapılandırılmışsa gönderilir.
+- Alındı, onaylandı, saat değişti ve iptal şablonları desteklenir.
+- Her bildirim denemesi `appointment_events` tablosuna başarılı/başarısız sonucu ile kaydedilir.
 
-## Önerilen akış
+### Google yorumları
 
-1. Müşteri hizmet, araç, tarih/saat ve iletişim bilgilerini girer.
-2. Edge Function alanları doğrular; KVKK açık rızasını ve spam kontrolünü denetler.
-3. `appointments` tablosuna `pending` durumunda kayıt açılır.
-4. İşletme sahibine CallMeBot ile "yeni talep" bildirimi gönderilir.
-5. Yönetim panelinde randevu onaylanır veya yeni saat önerilir.
-6. Müşteriye onaylı WhatsApp şablonuyla mesaj gönderilir.
-7. Supabase Cron, randevudan 24 saat ve 2 saat önce hatırlatma kuyruğu oluşturur.
-8. Her gönderim `notification_outbox` tablosunda idempotency anahtarıyla kaydedilir; aynı mesaj iki kez gitmez.
+Google Places API yapılandırıldığında puan, toplam yorum sayısı ve API'nin döndürdüğü en fazla beş yorum otomatik gösterilir. Bağlantı yoksa Google işletme sayfasına bağlanan, elle doğrulanmış yorumlar görünür. Google'ın tüm yorumlarını programatik olarak almak için işletme profilinin sahiplenilmesi ve Google Business Profile API erişimi gerekir.
 
-## Veri modeli
+### Production değişkenleri
 
-| Tablo | Amaç | Önemli alanlar |
-| --- | --- | --- |
-| `services` | Randevuya açık hizmetler | `slug`, `name`, `duration_minutes`, `active` |
-| `appointments` | Müşteri randevu talepleri | `public_code`, `service_id`, `starts_at`, `status`, araç ve iletişim alanları |
-| `appointment_events` | Durum değişikliklerinin denetim kaydı | `appointment_id`, `event_type`, `actor_id`, `metadata` |
-| `business_hours` | Haftalık çalışma planı | `weekday`, `opens_at`, `closes_at`, `slot_minutes` |
-| `closures` | Tatil ve özel kapalı günler | `starts_at`, `ends_at`, `reason` |
-| `notification_outbox` | WhatsApp/e-posta gönderim kuyruğu | `provider`, `template`, `status`, `attempts`, `idempotency_key` |
+Tam liste ve örnek değer biçimleri kökteki `.env.example` dosyasındadır. Zorunlu değişkenler:
 
-## Güvenlik
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD`
+- `ADMIN_SESSION_SECRET`
+- `RATE_LIMIT_SECRET`
 
-- `appointments`, `appointment_events` ve `notification_outbox` istemciden okunamaz.
-- Tarayıcıda Supabase secret/service-role anahtarı bulunmaz; bu anahtar yalnızca Edge Function secret'ı olur.
-- Yönetim ekranında parola veya service-role anahtarı JavaScript'e gömülmez; parola yalnızca sunucu tarafında karşılaştırılır.
-- Telefon, plaka ve müşteri notları kişisel veri kabul edilir. Loglara açık biçimde yazılmaz.
-- Formda kalıcı IP/telefon hız sınırlaması, bal küpü alanı, minimum form doldurma süresi, gövde boyutu ve içerik türü denetimi bulunur.
-- Admin değişikliklerinde CSRF, aynı-kaynak ve özel istek başlığı denetimi; CSV çıktısında formül enjeksiyonu koruması bulunur.
-- CSP, clickjacking, MIME sniffing, referrer, izin politikası ve admin/API önbellek başlıkları Vercel katmanında zorlanır.
-- KVKK aydınlatma metni ve açık iletişim izni randevu onayından ayrı tutulur.
+Son iki değişken teknik olarak geriye dönük varsayılanlara sahiptir; production'da admin parolasından ayrı tutulmaları gerekir.
 
-## Bildirim stratejisi
+### Kurulum doğrulaması
 
-### Aşama 1 — hızlı ve düşük maliyetli
-
-- CallMeBot: yalnızca servis sahibinin numarasına yeni randevu alarmı.
-- Müşteri: form sonunda önceden doldurulmuş WhatsApp konuşması veya telefonla manuel onay.
-
-### Aşama 2 — önerilen üretim çözümü
-
-- WhatsApp Business Platform Cloud API.
-- Onaylı mesaj şablonları: `appointment_received`, `appointment_confirmed`, `appointment_reminder`, `appointment_rescheduled`, `appointment_cancelled`.
-- Webhook ile teslim edildi/okundu/hata durumlarının kaydı.
-- İşletme panelinden yanıt ve saat değişikliği.
-
-## Uygulama sırası
-
-1. Tasarım yönü seçilir ve mobil/masaüstü üretim arayüzü tamamlanır.
-2. Supabase projesi açılır; migration, RLS ve Auth kurulur.
-3. Randevu oluşturma Edge Function'ı ve yönetim paneli bağlanır.
-4. CallMeBot işletme alarmı devreye alınır.
-5. WhatsApp Business hesabı hazırsa müşteri şablonları eklenir; hazır değilse manuel WhatsApp akışı geçici olarak kullanılır.
-6. Cron hatırlatmaları, webhook ve hata/tekrar deneme mekanizması açılır.
-7. Uçtan uca test, KVKK kontrolü ve Vercel üretim dağıtımı yapılır.
-
-## Kurulum sırasında gerekecek bilgiler
-
-- Supabase proje erişimi veya yeni proje açma izni
-- Vercel proje erişimi ve environment variable yetkisi
-- CallMeBot API anahtarı ve bildirim alacak işletme numarası
-- Müşteriye otomatik mesaj isteniyorsa Meta Business hesabı, doğrulanmış işletme numarası ve onaylı WhatsApp şablonları
-- Gerçek hizmet süreleri, günlük araç kapasitesi, resmi tatil/kapalı gün kuralları
-- KVKK aydınlatma metni ve ticari ileti izni tercihi
+1. `supabase/migrations` dosyalarını sırayla çalıştırın.
+2. Yarım/eski kurulumlarda `202609120001_production_reconcile.sql` dosyasını son kez çalıştırın.
+3. Vercel ortam değişkenlerini Production ve Preview'a ekleyip redeploy yapın.
+4. Admin → Sistem durumu ekranında Supabase kartının `HAZIR` olduğunu doğrulayın.
+5. Ana sayfada hizmet, araç ve tarih seçerek uygun saatlerin geldiğini kontrol edin.

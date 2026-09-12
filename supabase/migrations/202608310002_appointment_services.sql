@@ -14,6 +14,6 @@ begin
   ) then
     alter table public.appointments
       add constraint appointments_services_count_check
-      check (cardinality(services) between 1 and 6);
+      check (cardinality(services) between 1 and 9);
   end if;
 end $$;

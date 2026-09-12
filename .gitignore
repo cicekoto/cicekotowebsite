@@ -3,5 +3,8 @@ Thumbs.db
 *.log
 .vercel
 node_modules/
-
-.vercel
+.env
+.env.*
+!.env.example
+.playwright-cli/
+output/

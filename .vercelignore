@@ -5,4 +5,8 @@ docs
 forged-clone
 scripts
 supabase
+.playwright-cli
+output
+.env*
+README.md
 *.log

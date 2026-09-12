@@ -15,6 +15,8 @@ function response() {
   delete process.env.CALLMEBOT_API_KEY;
   const userAgent = 'system-test-agent';
   const token = createSession(process.env.ADMIN_USERNAME, process.env.ADMIN_SESSION_SECRET, userAgent);
+  const originalFetch = global.fetch;
+  global.fetch = async () => ({ ok: true });
 
   const unauthorized = response();
   await handler({ method: 'GET', headers: {} }, unauthorized);
@@ -24,9 +26,15 @@ function response() {
   await handler({ method: 'GET', headers: { cookie: `${COOKIE_NAME}=${encodeURIComponent(token)}`, 'user-agent': userAgent } }, authorized);
   assert.equal(authorized.statusCode, 200);
   assert.equal(authorized.body.integrations.database.configured, true);
+  assert.equal(authorized.body.integrations.database.reachable, true);
+  assert.equal(authorized.body.integrations.database.state, 'ready');
   assert.equal(authorized.body.integrations.ownerWhatsApp.configured, false);
   assert.equal(authorized.body.security.sessionHours, 4);
   assert.equal(JSON.stringify(authorized.body).includes(process.env.SUPABASE_SERVICE_ROLE_KEY), false);
+  global.fetch = async () => { throw new Error('dns'); };
+  const unreachable = response();
+  await handler({ method: 'GET', headers: { cookie: `${COOKIE_NAME}=${encodeURIComponent(token)}`, 'user-agent': userAgent } }, unreachable);
+  assert.equal(unreachable.body.integrations.database.state, 'error');
+  global.fetch = originalFetch;
   console.log('admin-system security tests passed');
 })().catch(error => { console.error(error); process.exitCode = 1; });
-
