@@ -1,9 +1,10 @@
-const CACHE = 'cicekoto-neon-v32';
+const CACHE = 'cicekoto-neon-v33';
 const ASSETS = [
   '/',
   '/index.html',
-  '/css/style.css?v=27',
-  '/js/main.js?v=25',
+  '/css/fonts.css?v=1',
+  '/css/style.css?v=28',
+  '/js/main.js?v=26',
   '/img/favicon.svg',
   '/favicon.ico',
   '/img/apple-touch-icon.png',
@@ -11,6 +12,10 @@ const ASSETS = [
   '/img/icon-512.png',
   '/img/cicek-oto-logo.png',
   '/img/optimized/hologram-vag-sedan-v1.webp',
+  '/fonts/manrope-latin.woff2',
+  '/fonts/manrope-latin-ext.woff2',
+  '/fonts/space-grotesk-latin.woff2',
+  '/fonts/space-grotesk-latin-ext.woff2',
   '/manifest.json'
 ];
 

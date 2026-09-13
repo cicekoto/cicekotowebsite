@@ -48,6 +48,7 @@ html[data-theme="light"] body{background:#f4f7fb;color:#111827}html[data-theme="
 @media(prefers-reduced-motion:reduce){.holo-car,.holo-car::before,.holo-car::after,.car-stage::after{animation:none!important}.holo-car{transform:none!important}}
 
 /* Delivery QA: WCAG AA contrast for the continuous service ticker and mobile CTA. */
+.page-loader{transition-duration:.32s}
 .marquee span{color:#9299a6}
 .mobile-dock .primary,.mobile-dock .primary span{color:#fff}
 html[data-theme="light"] .mobile-dock .primary,html[data-theme="light"] .mobile-dock .primary span{color:#fff}
