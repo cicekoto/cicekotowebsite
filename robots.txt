@@ -2,5 +2,12 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin.html
+Disallow: /api/
 
-Sitemap: https://cicekotowebsite.vercel.app/sitemap.xml
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /api/
+
+Sitemap: https://cicek-otomotiv.vercel.app/sitemap.xml

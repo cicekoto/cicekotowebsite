@@ -13,6 +13,8 @@ function response() {
   process.env.SUPABASE_URL = 'https://example.supabase.co';
   process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-role-test';
   delete process.env.CALLMEBOT_API_KEY;
+  delete process.env.RESEND_API_KEY;
+  delete process.env.RESEND_FROM_EMAIL;
   const userAgent = 'system-test-agent';
   const token = createSession(process.env.ADMIN_USERNAME, process.env.ADMIN_SESSION_SECRET, userAgent);
   const originalFetch = global.fetch;
@@ -29,8 +31,14 @@ function response() {
   assert.equal(authorized.body.integrations.database.reachable, true);
   assert.equal(authorized.body.integrations.database.state, 'ready');
   assert.equal(authorized.body.integrations.ownerWhatsApp.configured, false);
+  assert.equal(authorized.body.integrations.customerEmail.configured, false);
   assert.equal(authorized.body.security.sessionHours, 4);
   assert.equal(JSON.stringify(authorized.body).includes(process.env.SUPABASE_SERVICE_ROLE_KEY), false);
+  process.env.RESEND_API_KEY = 're_test';
+  process.env.RESEND_FROM_EMAIL = 'Çiçek Oto <randevu@bildirim.example.com>';
+  const configured = response();
+  await handler({ method: 'GET', headers: { cookie: `${COOKIE_NAME}=${encodeURIComponent(token)}`, 'user-agent': userAgent } }, configured);
+  assert.equal(configured.body.integrations.customerEmail.configured, true);
   global.fetch = async () => { throw new Error('dns'); };
   const unreachable = response();
   await handler({ method: 'GET', headers: { cookie: `${COOKIE_NAME}=${encodeURIComponent(token)}`, 'user-agent': userAgent } }, unreachable);

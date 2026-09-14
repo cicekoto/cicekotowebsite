@@ -11,14 +11,14 @@ const EN_TEXT = {
   'Servis Süreci': 'Service process', 'VAG araçlara': 'For VAG vehicles', 'uzman servis.': 'specialist service.',
   'VAG grubu araçlarda doğru teşhis, şeffaf fiyat ve garantili işçilik. Aracınızı teknolojiyle, işimizi marka uzmanlığıyla koruyoruz.': 'Accurate diagnostics, transparent pricing and guaranteed workmanship for VAG vehicles. We protect your car with technology and brand expertise.',
   'Online randevu': 'Book online', 'Hizmetleri keşfet': 'Explore services', 'UZMANI': 'SPECIALIST',
-  'Google müşteri puanı': 'Google customer rating', 'Doğrulanmış Google yorumu': 'Verified Google reviews',
+  'Google müşteri puanı': 'Google customer rating', 'Doğrulanmış Google yorumu': 'Verified Google reviews', 'Google değerlendirmesi': 'Google reviews',
   'VAG markasında uzmanlık': 'VAG brands covered', 'İşçilik garantisi': 'Workmanship warranty',
   'Doğru teşhis': 'Accurate diagnostics', 'Gereksiz': 'No unnecessary', 'masraf yok.': 'expense.',
   'Güncel OBD cihazları ve deneyimli teknisyen kadromuzla arızayı noktasal olarak buluyoruz. Tahmine dayalı parça değişimi yapmıyor, işlem başlamadan fiyatı netleştiriyoruz.': 'With current OBD equipment and experienced technicians, we pinpoint the fault. We do not replace parts based on guesses and confirm the price before work begins.',
   'Onaysız işlem yok': 'No work without approval', 'Orijinal veya OEM parça': 'Genuine or OEM parts', 'Yazılı fiyat bilgisi': 'Written price information',
   'Aracınız için randevu alın': 'Book for your vehicle', 'Süreç takibi': 'Service tracking', 'Servis süreci': 'Your service journey', 'cebinde.': 'in your pocket.',
-  'Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri WhatsApp üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.': 'Follow important updates on WhatsApp from drop-off to delivery. If additional work is needed, we ask first and never proceed without your approval.',
-  '2 saat': '2 hours', 'ortalama bakım kabulü': 'average maintenance intake', 'Anlık': 'Instant', 'WhatsApp bilgilendirme': 'WhatsApp updates',
+  'Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri e-posta üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.': 'Follow important updates by email from drop-off to delivery. If additional work is needed, we ask first and never proceed without your approval.',
+  '2 saat': '2 hours', 'ortalama bakım kabulü': 'average maintenance intake', 'Anlık': 'Instant', 'E-posta bilgilendirme': 'Email updates',
   'Sürecin nasıl işlediğini görün': 'See how the process works', 'Tek noktada': 'One team for', 'tam servis.': 'complete service.',
   'PERİYODİK BAKIM': 'SCHEDULED MAINTENANCE', 'DSG ŞANZIMAN': 'DSG TRANSMISSION', 'MOTOR TAMİRİ': 'ENGINE REPAIR', 'OBD TEŞHİS': 'OBD DIAGNOSTICS', 'KAPORTA & BOYA': 'BODY & PAINT', 'PDR GÖÇÜK': 'PAINTLESS DENT REPAIR',
   'Bakım, mekanik, elektronik ve kaporta işlemleri tek ekip tarafından yönetilir.': 'Maintenance, mechanical, electronic and bodywork services are managed by one team.',
@@ -50,7 +50,7 @@ const EN_TEXT = {
   'KVKK aydınlatma metni': 'privacy notice', 'kapsamında kullanılmasını kabul ediyorum.': '.',
   'Randevu onayı ve servis güncellemelerinin WhatsApp üzerinden iletilmesini istiyorum.': 'I would like booking confirmations and service updates via WhatsApp.',
   '← Geri': '← Back', 'Devam Et →': 'Continue →', 'Randevu Talebi Oluştur →': 'Submit Booking Request →',
-  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '174 Google yorumu': '174 Google reviews',
+  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '1,9 bin+ Google değerlendirmesi': '1.9K+ Google reviews',
   '“Turan Usta çok yardımcı oldu. Bir saat içinde aracımın bakımını yaptılar.”': '“Turan Usta was very helpful. They completed my vehicle maintenance within an hour.”',
   '“Çiçek Otomotive uğradım ve çok memnun kaldım. Turan Usta ve ekibine teşekkürlerimi sunarım.”': '“I visited Çiçek Otomotiv and was very satisfied. My thanks to Turan Usta and his team.”',
   '“Çok ilgiliydiler ve yardımcı oldular; aracımı işlemleri yapılmış hâlde teslim aldım.”': '“They were attentive and helpful; I received my vehicle with the requested work completed.”',
@@ -72,7 +72,7 @@ const EN_TEXT = {
   'Menüyü aç': 'Open menu', 'Açık temaya geç': 'Switch to light theme', 'Önceki yorum': 'Previous review', 'Sonraki yorum': 'Next review', 'Sayfanın başına dön': 'Back to top', 'Mobil hızlı erişim': 'Mobile quick access'
 };
 Object.assign(EN_TEXT, {
-  'Araç':'Vehicle','02 / Araç':'02 / Vehicle','Araç markası':'Vehicle brand','Diğer / Genel':'Other / General','Markayı yazın':'Enter the brand','Gerçek müşteri yorumları':'Real customer reviews',
+  'E-posta':'Email','Araç':'Vehicle','02 / Araç':'02 / Vehicle','Araç markası':'Vehicle brand','Diğer / Genel':'Other / General','Markayı yazın':'Enter the brand','Gerçek müşteri yorumları':'Real customer reviews',
   'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'We specialise in VAG vehicles, and you can also request maintenance or repairs for other brands. Select every service you need; your request goes directly to our booking system.',
   'Google işletme profili':'Google Business Profile','Canlı Google bağlantısı bekleniyor':'Live Google connection pending','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'We do not display fabricated reviews. You can view every real review on our Google Business Profile.','Tüm gerçek yorumları Google’da gör →':'View all real reviews on Google →'
 });
@@ -80,9 +80,9 @@ Object.assign(EN_TEXT, {
 const AR_TEXT = {
   'İçeriğe geç':'انتقل إلى المحتوى','Ana menü':'القائمة الرئيسية','Hizmetler':'الخدمات','Süreç':'الخطوات','Neden Biz?':'لماذا نحن؟','Yorumlar':'التقييمات','İletişim':'اتصل بنا','Randevu Al':'احجز موعداً','Servis Süreci':'مراحل الصيانة',
   'VAG araçlara':'خدمة متخصصة','uzman servis.':'لسيارات VAG.','VAG grubu araçlarda doğru teşhis, şeffaf fiyat ve garantili işçilik. Aracınızı teknolojiyle, işimizi marka uzmanlığıyla koruyoruz.':'تشخيص دقيق وأسعار واضحة وخدمة احترافية لسيارات مجموعة VAG. نحمي سيارتك بالتقنية والخبرة المتخصصة.','Online randevu':'حجز موعد','Hizmetleri keşfet':'اكتشف الخدمات',
-  'Google müşteri puanı':'تقييم العملاء على Google','Doğrulanmış Google yorumu':'تقييمات Google الموثقة','VAG markasında uzmanlık':'خبرة في علامات VAG','Doğru teşhis':'تشخيص دقيق','Gereksiz':'لا مصاريف','masraf yok.':'غير ضرورية.',
+  'Google müşteri puanı':'تقييم العملاء على Google','Doğrulanmış Google yorumu':'تقييمات Google الموثقة','Google değerlendirmesi':'تقييمات Google','VAG markasında uzmanlık':'خبرة في علامات VAG','Doğru teşhis':'تشخيص دقيق','Gereksiz':'لا مصاريف','masraf yok.':'غير ضرورية.',
   'Güncel OBD cihazları ve deneyimli teknisyen kadromuzla arızayı noktasal olarak buluyoruz. Tahmine dayalı parça değişimi yapmıyor, işlem başlamadan fiyatı netleştiriyoruz.':'نحدد العطل بدقة بأجهزة OBD الحديثة وفريق فني خبير. لا نبدّل القطع بالتخمين ونوضح السعر قبل بدء العمل.','Onaysız işlem yok':'لا عمل دون موافقة','Orijinal veya OEM parça':'قطع أصلية أو OEM','Yazılı fiyat bilgisi':'سعر مكتوب','Aracınız için randevu alın':'احجز موعداً لسيارتك',
-  'Süreç takibi':'متابعة الصيانة','Servis süreci':'مراحل الصيانة','cebinde.':'بين يديك.','Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri WhatsApp üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.':'تابع أهم التطورات عبر واتساب من تسليم السيارة حتى استلامها. نستأذنك أولاً عند الحاجة إلى عمل إضافي.','2 saat':'ساعتان','ortalama bakım kabulü':'متوسط استقبال الصيانة','Anlık':'فوري','WhatsApp bilgilendirme':'تحديثات واتساب','Sürecin nasıl işlediğini görün':'شاهد كيف تسير العملية',
+  'Süreç takibi':'متابعة الصيانة','Servis süreci':'مراحل الصيانة','cebinde.':'بين يديك.','Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri e-posta üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.':'تابع أهم التطورات عبر البريد الإلكتروني من تسليم السيارة حتى استلامها. نستأذنك أولاً عند الحاجة إلى عمل إضافي.','2 saat':'ساعتان','ortalama bakım kabulü':'متوسط استقبال الصيانة','Anlık':'فوري','E-posta bilgilendirme':'تحديثات البريد الإلكتروني','Sürecin nasıl işlediğini görün':'شاهد كيف تسير العملية',
   'Tek noktada':'كل الخدمات','tam servis.':'في مكان واحد.','Bakım, mekanik, elektronik ve kaporta işlemleri tek ekip tarafından yönetilir.':'يدير فريق واحد أعمال الصيانة والميكانيك والإلكترونيات والهيكل.','Periyodik Bakım':'الصيانة الدورية','DSG Şanzıman':'ناقل DSG','Motor & Elektronik':'المحرك والإلكترونيات','Kaporta & Boya':'الهيكل والطلاء','Fren Sistemi':'نظام الفرامل','Klima Bakımı':'صيانة المكيّف','Süspansiyon':'نظام التعليق','Elektrik Arızası':'أعطال كهربائية','Genel Kontrol':'فحص عام',
   'Yağ, filtre, sıvılar ve tüm kilometre bakımları fabrika reçetesiyle.':'الزيوت والفلاتر والسوائل وجميع صيانة الكيلومترات وفق مواصفات المصنع.','DQ200, DQ250, kavrama ve mekatronik sistemlerinde uzman onarım.':'إصلاح متخصص لأنظمة DQ200 وDQ250 والقابض والميكاترونيك.','Motor revizyonu, ECU işlemleri ve kapsamlı elektronik arıza tespiti.':'توضيب المحرك وأعمال ECU وتشخيص شامل للأعطال الإلكترونية.','Kaza onarımı, spot boya ve boyasız göçük düzeltme hizmetleri.':'إصلاح الحوادث والطلاء الموضعي وإزالة الانبعاجات دون طلاء.','30–120 dk':'30–120 دقيقة','Teşhis sonrası':'بعد التشخيص','1–3 gün':'1–3 أيام','1–5 gün':'1–5 أيام',
   'Nasıl çalışıyoruz?':'كيف نعمل؟','Dört adımda':'خدمة واضحة','net servis.':'في أربع خطوات.','Aracınızı teslim ederken ne olacağını, ne kadar süreceğini ve ne ödeyeceğinizi bilirsiniz.':'عند تسليم السيارة تعرف ما الذي سيحدث والمدة والتكلفة.','Randevu':'الموعد','Hizmeti, aracınızı ve size uygun zamanı seçin.':'اختر الخدمات وسيارتك والوقت المناسب.','Teşhis':'التشخيص','Aracınız uzman ekip ve güncel cihazlarla kontrol edilir.':'يفحص فريق مختص سيارتك بأجهزة حديثة.','Onay':'الموافقة','İşlem ve fiyat bilgisi size iletilir; onayınız alınır.':'نرسل تفاصيل العمل والسعر ونحصل على موافقتك.','Teslim':'التسليم','Kontrol sonrası garantili şekilde aracınızı teslim alın.':'استلم سيارتك بعد الفحص النهائي.',
@@ -91,7 +91,7 @@ const AR_TEXT = {
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
 Object.assign(AR_TEXT, {
-  'Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','174 Google yorumu':'174 تقييماً على Google',
+  'E-posta':'البريد الإلكتروني','Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','1,9 bin+ Google değerlendirmesi':'أكثر من 1.9 ألف تقييم على Google',
   'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'نحن متخصصون في سيارات VAG، ويمكنك أيضاً طلب الصيانة والإصلاح للعلامات الأخرى. اختر كل الخدمات التي تحتاجها وسيصل الطلب مباشرة إلى نظام الحجز.',
   'Google işletme profili':'ملف النشاط على Google','Canlı Google bağlantısı bekleniyor':'بانتظار اتصال Google المباشر','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'لا نعرض تقييمات مختلقة. يمكنك مشاهدة جميع التقييمات الحقيقية في ملف نشاطنا على Google.','Tüm gerçek yorumları Google’da gör →':'شاهد كل التقييمات الحقيقية على Google ←',
   '“Turan Usta çok yardımcı oldu. Fiyat olarak da gayet uygundu.”':'“كان توران أوسطا متعاوناً جداً، وكان السعر مناسباً للغاية.”','“Çiçek Otomotive uğradım ve çok memnun kaldım. Gönül rahatlığı ile aracınızda işlem yaptırabilirsiniz.”':'“زرت Çiçek Otomotiv وكنت راضياً جداً. يمكنكم صيانة سيارتكم هنا بكل ثقة.”','Google yorumu · 5/5 · Ağustos 2026':'تقييم Google · 5/5 · أغسطس 2026','Google yorumu · 5/5 · Mayıs 2026':'تقييم Google · 5/5 · مايو 2026','Google’da doğrula ↗':'تحقق على Google ↗',
@@ -138,7 +138,7 @@ function translateDocument(language) {
   document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   document.title = language === 'ar' ? 'Çiçek Otomotiv | مركز صيانة سيارات متخصص · باشاك شهير' : language === 'en'
     ? (document.body.dataset.titleEn || 'Çiçek Otomotiv | VAG Specialist Service · Başakşehir')
-    : (document.body.dataset.titleTr || 'Çiçek Otomotiv | Profesyonel Oto Servis · Başakşehir');
+    : (document.body.dataset.titleTr || 'Başakşehir VAG Özel Servis | Çiçek Otomotiv');
 }
 
 function initPreferences() {
@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReviews();
   initFaq();
   initDialog();
+  configureCustomerNotifications();
   initPreferences();
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('/sw.js').catch(() => {});
 });
@@ -350,6 +351,23 @@ function selectService(service) {
   $('#randevu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+function configureCustomerNotifications() {
+  const input = $('#appointmentForm input[name="email"]');
+  if (!input) return;
+  input.required = true;
+  const label = $('span', input.closest('label'));
+  if (label) label.textContent = 'E-posta';
+
+  const whatsappConsent = $('#appointmentForm input[name="whatsapp_consent"]');
+  whatsappConsent?.closest('.consent')?.remove();
+
+  const tracking = $('#servis-takibi');
+  const trackingCopy = tracking?.querySelector('.story-copy > p');
+  const trackingMetric = tracking?.querySelector('.mini-metrics > div:last-child span');
+  if (trackingCopy) trackingCopy.textContent = 'Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri e-posta üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.';
+  if (trackingMetric) trackingMetric.textContent = 'E-posta bilgilendirme';
+}
+
 function initAppointmentForm() {
   const form = $('#appointmentForm');
   if (!form) return;
@@ -507,7 +525,7 @@ function initAppointmentForm() {
     if (data.brand === 'other') data.display_brand = data.custom_brand;
     data.services = formData.getAll('services');
     data.service = data.services.join(', ');
-    data.whatsapp_consent = form.elements.whatsapp_consent.checked;
+    data.whatsapp_consent = Boolean(form.elements.whatsapp_consent?.checked);
     data.kvkk = form.elements.kvkk.checked;
     panel.classList.add('loading');
     submit.disabled = true;
@@ -539,11 +557,7 @@ async function createAppointment(data) {
   } catch (error) {
     if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') throw error;
   }
-  const record = { ...data, id: crypto.randomUUID?.() || `${Date.now()}`, reference: makeReference(), status: 'pending', created_at: new Date().toISOString(), storage_mode: 'local-demo' };
-  const existing = JSON.parse(localStorage.getItem('cicekOtoApts') || '[]');
-  existing.push(record);
-  localStorage.setItem('cicekOtoApts', JSON.stringify(existing));
-  return { ok: true, reference: record.reference, storage: 'local-demo' };
+  return { ok: true, reference: makeReference(), storage: 'local-demo' };
 }
 
 function showSuccess(data, result) {
@@ -552,7 +566,7 @@ function showSuccess(data, result) {
   $('#referenceCode').textContent = reference;
   $('#successText').textContent = result.storage === 'local-demo'
     ? languageText('Yerel önizleme kaydı oluşturuldu. Canlı sitede talebiniz doğrudan servise iletilecek.','A local preview record was created. On the live site, your request will be sent directly to the service.','تم إنشاء سجل معاينة محلي. في الموقع المنشور سيصل طلبك مباشرة إلى مركز الصيانة.')
-    : languageText('Randevunuzu kontrol edip en kısa sürede telefon veya WhatsApp üzerinden dönüş yapacağız.','We will review your booking and contact you shortly by phone or WhatsApp.','سنراجع موعدك ونتواصل معك قريباً عبر الهاتف أو واتساب.');
+    : languageText('Randevunuzu kontrol edip sonucu e-posta adresinize ileteceğiz.','We will review your booking and email you the result.','سنراجع موعدك ونرسل النتيجة إلى بريدك الإلكتروني.');
   const serviceSummary = Array.isArray(data.services) ? data.services.join(' · ') : data.service;
   const message = currentLanguage === 'ar'
     ? `مرحباً، أنشأت طلب موعد بالرمز ${reference}.\nالخدمات: ${serviceSummary}\nالسيارة: ${data.display_brand || data.brand} ${data.model}\nالتاريخ: ${data.date} ${data.time}`
@@ -590,7 +604,7 @@ function initReviews() {
     const count = $('.google-rating>span:not(.google-g)');
     const link = $('.google-rating');
     if (rating) rating.textContent = `${String(data.rating).replace('.', ',')} / 5`;
-    if (count) count.textContent = `${data.count} Google yorumu`;
+    if (count) count.textContent = languageText(`${data.count} Google yorumu`, `${data.count} Google reviews`, `${data.count} تقييماً على Google`);
     const heroReviewValue = $('.hero-stats .stat:nth-child(2) strong');
     const heroReviewLabel = $('.hero-stats .stat:nth-child(2) span');
     if (heroReviewValue) heroReviewValue.textContent = String(data.count);

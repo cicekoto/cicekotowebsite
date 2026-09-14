@@ -28,14 +28,16 @@ const browserHeaders={
   assert.equal(sameOrigin({headers:{...browserHeaders,origin:'https://evil.example'}}),false);
   assert.equal(sameOrigin({headers:{...browserHeaders,'sec-fetch-site':'cross-site'}}),false);
 
-  global.fetch=async url=>String(url).includes('consume_api_rate_limit')
-    ?{ok:true,json:async()=>({allowed:true,retry_after:900})}
+  const rateBuckets=[];
+  global.fetch=async (url,options={})=>String(url).includes('consume_api_rate_limit')
+    ?(rateBuckets.push(JSON.parse(options.body).p_bucket),{ok:true,json:async()=>({allowed:true,retry_after:900})})
     :{ok:true,json:async()=>[]};
 
   const loginRes=response();
   await sessionHandler({method:'POST',body:{username:'test-admin',password:'test-password-with-enough-entropy'},headers:browserHeaders},loginRes);
   assert.equal(loginRes.statusCode,200);
   assert.ok(loginRes.body.csrfToken);
+  assert.deepEqual(rateBuckets.sort(),['admin-login-credential','admin-login-ip']);
   const setCookies=loginRes.headers['Set-Cookie'];
   assert.ok(Array.isArray(setCookies));
   const activeCookie=setCookies.find(value=>value.startsWith(`${COOKIE_NAME}=`)&&!value.includes('Max-Age=0'));

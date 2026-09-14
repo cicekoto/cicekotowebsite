@@ -2,6 +2,7 @@ const assert=require('node:assert/strict');
 const crypto=require('node:crypto');
 const fs=require('node:fs');
 const {consumeMemory}=require('../lib/rate-limit');
+const {bodyWithinLimit,requestBodyBytes}=require('../lib/admin-auth');
 
 const config=JSON.parse(fs.readFileSync('vercel.json','utf8'));
 const headers=config.headers.find(item=>item.source==='/(.*)').headers;
@@ -24,6 +25,10 @@ for(const file of ['index.html','hizmetler.html']){
 assert.equal(consumeMemory('security-test',2,60,1000).allowed,true);
 assert.equal(consumeMemory('security-test',2,60,1000).allowed,true);
 assert.equal(consumeMemory('security-test',2,60,1000).allowed,false);
+assert.equal(requestBodyBytes({headers:{},body:{value:'abc'}}),15);
+assert.equal(bodyWithinLimit({headers:{},body:{value:'abc'}},15),true);
+assert.equal(bodyWithinLimit({headers:{},body:{value:'abc'}},14),false);
+assert.equal(bodyWithinLimit({headers:{'content-length':'bad'},body:{}},4096),false);
 const worker=fs.readFileSync('sw.js','utf8');
 assert.match(worker,/requestUrl\.pathname === '\/admin'/);
 assert.match(worker,/pathname\.startsWith\('\/api\/'\)/);

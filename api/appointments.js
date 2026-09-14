@@ -1,7 +1,7 @@
 const ALLOWED_SERVICES = new Set(['Periyodik Bakım','DSG Şanzıman','Motor & Elektronik','Fren Sistemi','Kaporta & Boya','Genel Kontrol','Klima Bakımı','Süspansiyon','Elektrik Arızası']);
 const ALLOWED_BRANDS = new Set(['Volkswagen','Audi','Škoda','SEAT','CUPRA']);
-const { notifyCustomerWhatsApp, notifyOwnerCallMeBot } = require('../lib/notifications');
-const { sameOrigin } = require('../lib/admin-auth');
+const { notifyCustomerEmail, notifyOwnerCallMeBot } = require('../lib/notifications');
+const { bodyWithinLimit, sameOrigin } = require('../lib/admin-auth');
 const { applyRateLimit, clientIp, consumeRateLimit } = require('../lib/rate-limit');
 
 module.exports = async function handler(req, res) {
@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Yalnızca GET ve POST desteklenir.' });
   if (!sameOrigin(req)) return res.status(403).json({ error: 'Güvenlik doğrulaması başarısız.' });
   if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) return res.status(415).json({ error: 'JSON içerik türü gereklidir.' });
-  if (Number(req.headers['content-length'] || 0) > 16384) return res.status(413).json({ error: 'İstek çok büyük.' });
+  if (!bodyWithinLimit(req, 16384)) return res.status(413).json({ error: 'İstek çok büyük.' });
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     if (!body || Array.isArray(body) || typeof body !== 'object') return res.status(400).json({ error: 'Geçersiz istek.' });
@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
     if (!services.length || services.length > ALLOWED_SERVICES.size) return res.status(400).json({ error: 'En az bir geçerli hizmet seçin.' });
     const validBrand = validVehicleBrand(brand, customBrand);
     if (name.length<2 || !phone || !validBrand || model.length<1 || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time) || body.kvkk !== true) return res.status(400).json({ error: 'Zorunlu alanları ve araç marka seçimini kontrol edin.' });
-    if(email&&!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/.test(email))return res.status(400).json({error:'Geçerli bir e-posta adresi girin.'});
+    if(!email||!/^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/.test(email))return res.status(400).json({error:'Müşteri bildirimi için geçerli bir e-posta adresi girin.'});
     if(year&&(!/^\d{4}$/.test(year)||Number(year)<1950||Number(year)>new Date().getFullYear()+1))return res.status(400).json({error:'Geçerli bir model yılı girin.'});
     if(plate&&!/^[0-9A-ZÇĞİÖŞÜ ]{5,12}$/.test(plate))return res.status(400).json({error:'Geçerli bir plaka girin.'});
     const appointmentDate = new Date(`${date}T${time}:00+03:00`);
@@ -53,11 +53,11 @@ module.exports = async function handler(req, res) {
     }
     const created = await insert.json().catch(() => null);
     const appointment = Array.isArray(created) ? created[0] : created;
-    const [ownerResult,customerResult] = await Promise.allSettled([notifyOwnerCallMeBot(record), notifyCustomerWhatsApp(record, 'received')]);
+    const [ownerResult,customerResult] = await Promise.allSettled([notifyOwnerCallMeBot(record), notifyCustomerEmail(record, 'received')]);
     if(appointment?.id){
       const events=[
         {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'owner_callmebot',sent:ownerResult.status==='fulfilled'&&ownerResult.value===true}},
-        {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'customer_whatsapp',event:'received',sent:customerResult.status==='fulfilled'&&customerResult.value===true,consent:record.whatsapp_consent}}
+        {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'customer_email',event:'received',sent:customerResult.status==='fulfilled'&&customerResult.value===true,address_present:Boolean(record.customer_email)}}
       ];
       await fetch(`${supabaseUrl}/rest/v1/appointment_events`,{method:'POST',headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`,'Content-Type':'application/json'},body:JSON.stringify(events)}).catch(()=>null);
     }

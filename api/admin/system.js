@@ -16,9 +16,9 @@ module.exports = async function handler(req, res) {
     checkedAt: new Date().toISOString(),
     integrations: {
       database,
-      ownerWhatsApp: integrationStatus(has('CALLMEBOT_PHONE') && has('CALLMEBOT_API_KEY'), 'CallMeBot işletme bildirimi'),
-      customerWhatsApp: integrationStatus(has('WHATSAPP_ACCESS_TOKEN') && has('WHATSAPP_PHONE_NUMBER_ID') && has('WHATSAPP_GRAPH_API_VERSION') && has('WHATSAPP_TEMPLATE_RECEIVED'), 'WhatsApp müşteri bildirimi'),
-      googleReviews: integrationStatus(has('GOOGLE_PLACES_API_KEY') && has('GOOGLE_PLACE_ID'), 'Google yorum bağlantısı')
+      ownerWhatsApp: integrationStatus(has('CALLMEBOT_PHONE') && has('CALLMEBOT_API_KEY'), 'CallMeBot usta bildirimi'),
+      customerEmail: integrationStatus(has('RESEND_API_KEY') && has('RESEND_FROM_EMAIL'), 'Resend müşteri e-postası'),
+      googleReviews: integrationStatus(has('GOOGLE_PLACES_API_KEY'), 'Google yorum bağlantısı')
     },
     security: { sessionHours: 4, csrf: true, rateLimit: true, secureCookie: true },
     booking: { start: '09:00', end: '17:00', closedDay: 'Pazar', dailyVehicleLimit: null }

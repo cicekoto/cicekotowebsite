@@ -11,7 +11,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   desktop.on('pageerror', error => errors.push(error.message));
   await desktop.goto(`${baseUrl}/`, { waitUntil: 'domcontentloaded' });
   await desktop.waitForTimeout(700);
-  assert.match(await desktop.locator('.google-rating').innerText(), /174 Google yorumu/);
+  assert.match(await desktop.locator('.google-rating').innerText(), /(1,9 bin\+ Google değerlendirmesi|\d+ Google yorumu)/);
   await desktop.getByLabel('Periyodik Bakım', { exact: true }).evaluate(input => {
     input.checked = true;
     input.dispatchEvent(new Event('change', { bubbles: true }));

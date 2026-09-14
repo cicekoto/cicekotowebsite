@@ -14,7 +14,7 @@
         { "key": "Cross-Origin-Resource-Policy", "value": "same-site" },
         { "key": "Origin-Agent-Cluster", "value": "?1" },
         { "key": "X-DNS-Prefetch-Control", "value": "off" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-Z8ppZoOIynVvx/1ahSqHc2Dzmtz3gnVGgwwBKAdSb60=' 'sha256-2Z1HS2Vhl2XzsrxCozBgO9LgpMK4OsjDvXYpa0zsc7M=' 'sha256-GqssdNzdAG/xb6g+yQOyiAEEIRw7CvEe3Ydwtx49oiw='; script-src-attr 'none'; style-src 'self' https://fonts.googleapis.com; style-src-elem 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' 'sha256-Z8ppZoOIynVvx/1ahSqHc2Dzmtz3gnVGgwwBKAdSb60=' 'sha256-xHWMR97BW8h7IRemFMGWfEoJggNc+DYmxvbCxSt6EpA=' 'sha256-yFlPouOFMRieXwLNqVCC4EXSBkK1kpq0S/CxhoFSX1k='; script-src-attr 'none'; style-src 'self'; style-src-elem 'self'; style-src-attr 'unsafe-inline'; font-src 'self'; img-src 'self' data:; frame-src https://www.google.com https://maps.google.com; connect-src 'self'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests; block-all-mixed-content" }
       ]
     },
     {
@@ -34,7 +34,14 @@
     {
       "source": "/api/admin/(.*)",
       "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
         { "key": "Cache-Control", "value": "private, no-store, max-age=0" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     },
     {

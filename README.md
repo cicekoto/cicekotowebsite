@@ -1,12 +1,12 @@
 # Çiçek Otomotiv web sitesi
 
-Çiçek Otomotiv için VAG odaklı, mobil uyumlu servis sitesi; Supabase tabanlı online randevu sistemi, güvenli yönetim paneli ve isteğe bağlı WhatsApp/Google entegrasyonları içerir.
+Çiçek Otomotiv için VAG odaklı, mobil uyumlu servis sitesi; Supabase tabanlı online randevu sistemi, güvenli yönetim paneli ve CallMeBot, Resend ve Google entegrasyonları içerir.
 
 ## Canlı adresler
 
-- Site: <https://cicekotowebsite.vercel.app/>
-- Yönetim: <https://cicekotowebsite.vercel.app/admin.html>
-- Hizmet rehberi: <https://cicekotowebsite.vercel.app/hizmetler>
+- Site: <https://cicek-otomotiv.vercel.app/>
+- Yönetim: <https://cicek-otomotiv.vercel.app/admin.html>
+- Hizmet rehberi: <https://cicek-otomotiv.vercel.app/hizmetler>
 
 ## Özellikler
 
@@ -18,7 +18,7 @@
 - Randevu listesi, günlük plan, müşteri dizini, CSV dışa aktarma ve entegrasyon durumu
 - Türkçe, İngilizce ve Arapça; açık/koyu tema; mobil menü ve hızlı erişim çubuğu
 - KVKK, gizlilik ve kullanım koşulları sayfaları
-- CallMeBot işletme bildirimi, Meta WhatsApp Cloud API müşteri şablonları ve Google Places desteği
+- CallMeBot ile ustaya yeni talep bildirimi, Resend ile müşteriye randevu e-postaları ve Google Places desteği
 
 ## Production kurulumu
 
@@ -49,7 +49,9 @@ Yerel statik önizleme için örneğin `npx http-server . -p 4173 -c-1` kullanı
 
 ## Entegrasyon davranışı
 
-- CallMeBot yalnızca işletme sahibine yeni talep uyarısı gönderir.
-- Müşteriye otomatik WhatsApp mesajı, açık rıza ve onaylı Meta şablonu varsa gönderilir.
-- Google Places değişkenleri yoksa sayfa, Google bağlantısıyla doğrulanabilen sabit yorumları gösterir.
+- CallMeBot yalnızca ustanın telefonuna yeni talep uyarısı gönderir.
+- Resend müşteriye talep alındı, onaylandı, saat değişti ve iptal edildi e-postalarını gönderir. Yeni randevularda e-posta alanı zorunludur.
+- Resend gönderimi için doğrulanmış bir alan adı, `RESEND_API_KEY` ve `RESEND_FROM_EMAIL` gerekir.
+- `GOOGLE_PLACES_API_KEY` varsa puan, değerlendirme sayısı ve Google API'nin sunduğu en fazla beş yorum canlı alınır. İşletmenin doğrulanmış Place ID'si kodda hazırdır; `GOOGLE_PLACE_ID` yalnızca gerektiğinde üzerine yazmak içindir.
+- Google API anahtarı yoksa sayfa, işletmenin doğrudan Google Haritalar bağlantısını ve doğrulanmış sabit yorum örneklerini gösterir.
 - Yönetim panelindeki “Sistem durumu” ekranı sırları göstermeden hangi entegrasyonların hazır olduğunu bildirir.

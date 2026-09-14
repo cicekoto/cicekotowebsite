@@ -1,5 +1,5 @@
-const { isAdminRequest, verifyCsrf, verifySession } = require('../../lib/admin-auth');
-const { notifyCustomerWhatsApp } = require('../../lib/notifications');
+const { bodyWithinLimit, isAdminRequest, verifyCsrf, verifySession } = require('../../lib/admin-auth');
+const { notifyCustomerEmail } = require('../../lib/notifications');
 const { applyRateLimit, clientIp, consumeRateLimit } = require('../../lib/rate-limit');
 
 const ALLOWED_STATUSES = new Set(['pending','confirmed','rescheduled','completed','cancelled']);
@@ -15,14 +15,15 @@ module.exports = async function handler(req,res){
   const headers={apikey:key,Authorization:`Bearer ${key}`,'Content-Type':'application/json'};
   try{
     if(req.method==='GET') return listAppointments(res,url,headers);
-    if(req.method==='PATCH'){
+    if(req.method==='PATCH'||req.method==='DELETE'){
       if(!isAdminRequest(req)||!verifyCsrf(req,user,secret)) return res.status(403).json({error:'Güvenlik doğrulaması başarısız.'});
       if(!String(req.headers['content-type']||'').toLowerCase().startsWith('application/json')) return res.status(415).json({error:'JSON içerik türü gereklidir.'});
-      if(Number(req.headers['content-length']||0)>8192) return res.status(413).json({error:'İstek çok büyük.'});
-      const rate=await consumeRateLimit({supabaseUrl:url,serviceKey:key,bucket:'admin-write',subject:clientIp(req),limit:80,windowSeconds:600});
+      if(!bodyWithinLimit(req,8192)) return res.status(413).json({error:'İstek çok büyük.'});
+      const deleting=req.method==='DELETE';
+      const rate=await consumeRateLimit({supabaseUrl:url,serviceKey:key,bucket:deleting?'admin-delete':'admin-write',subject:clientIp(req),limit:deleting?20:80,windowSeconds:600});
       if(!applyRateLimit(res,rate)) return res.status(429).json({error:'Çok fazla yönetim işlemi. Lütfen kısa süre sonra tekrar deneyin.'});
       let body;try{body=typeof req.body==='string'?JSON.parse(req.body):req.body}catch{return res.status(400).json({error:'Geçersiz istek.'})}
-      return updateAppointment(res,url,headers,body||{});
+      return deleting?deleteCustomer(res,url,headers,body||{}):updateAppointment(res,url,headers,body||{});
     }
     return res.status(405).json({error:'Desteklenmeyen metod.'});
   }catch(error){console.error('admin_appointments_failed',error.message);return res.status(500).json({error:'İşlem tamamlanamadı.'})}
@@ -80,16 +81,36 @@ async function updateAppointment(res,url,headers,body){
   const statusChanged=body.status!==undefined&&body.status!==current.status;
   let notificationEvent=null;
   if((statusChanged||scheduleChanged)&&['confirmed','rescheduled','cancelled'].includes(appointment.status)){
-    const sent=await notifyCustomerWhatsApp(appointment,appointment.status).catch(()=>false);
-    const notificationResponse=await fetch(`${url}/rest/v1/appointment_events`,{method:'POST',headers:{...headers,Prefer:'return=representation'},body:JSON.stringify({appointment_id:body.id,event_type:'notification_attempted',metadata:{channel:'customer_whatsapp',event:appointment.status,sent,consent:Boolean(appointment.whatsapp_consent)}})});
+    const sent=await notifyCustomerEmail(appointment,appointment.status).catch(()=>false);
+    const notificationResponse=await fetch(`${url}/rest/v1/appointment_events`,{method:'POST',headers:{...headers,Prefer:'return=representation'},body:JSON.stringify({appointment_id:body.id,event_type:'notification_attempted',metadata:{channel:'customer_email',event:appointment.status,sent,address_present:Boolean(appointment.customer_email)}})});
     if(notificationResponse.ok)notificationEvent=(await notificationResponse.json())[0]||null;
   }
   return res.status(200).json({ok:true,appointment,event,notificationEvent});
 }
 
+async function deleteCustomer(res,url,headers,body){
+  if(!body||Array.isArray(body)||typeof body!=='object') return res.status(400).json({error:'Geçerli bir silme isteği gereklidir.'});
+  const phone=normalizeCustomerPhone(body.customer_phone);
+  if(!phone) return res.status(400).json({error:'Geçerli bir müşteri telefonu gereklidir.'});
+  if(body.confirmation!==`DELETE_CUSTOMER:${phone}`) return res.status(400).json({error:'Müşteri silme doğrulaması eksik.'});
+
+  const customerQuery=`customer_phone=eq.${encodeURIComponent(phone)}&select=id,customer_name,customer_phone&limit=1000`;
+  const currentResponse=await fetch(`${url}/rest/v1/appointments?${customerQuery}`,{headers});
+  if(!currentResponse.ok) throw new Error(`delete-read ${currentResponse.status}`);
+  const current=await currentResponse.json();
+  if(!current.length) return res.status(404).json({error:'Müşteriye ait randevu kaydı bulunamadı.'});
+
+  const deleteResponse=await fetch(`${url}/rest/v1/appointments?customer_phone=eq.${encodeURIComponent(phone)}`,{method:'DELETE',headers:{...headers,Prefer:'return=representation'}});
+  if(!deleteResponse.ok) throw new Error(`delete ${deleteResponse.status}`);
+  const deleted=await deleteResponse.json();
+  const deletedIds=deleted.map(item=>item.id).filter(Boolean);
+  return res.status(200).json({ok:true,deleted_count:deletedIds.length,deleted_ids:deletedIds,customer_name:current[0].customer_name,customer_phone:phone});
+}
+
 function clean(value,max){return String(value||'').replace(/[\u0000-\u001f\u007f]/g,' ').trim().replace(/[<>]/g,'').slice(0,max)}
+function normalizeCustomerPhone(value){const digits=String(value||'').replace(/\D/g,'').replace(/^90/,'').replace(/^0/,'');return digits.length===10?`+90${digits}`:''}
 function todayYmd(offset=0){const date=new Date();date.setDate(date.getDate()+offset);return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
 function allowedTimes(duration){return duration===60?['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00']:['09:00','11:00','13:00','15:00','17:00']}
 function overlaps(aStart,aDuration,bStart,bDuration){const toMinutes=value=>{const [h,m]=value.split(':').map(Number);return h*60+m};const a=toMinutes(aStart),b=toMinutes(bStart);return a<b+bDuration&&b<a+aDuration}
 
-module.exports._test={allowedTimes,overlaps,clean,todayYmd};
+module.exports._test={allowedTimes,overlaps,clean,normalizeCustomerPhone,todayYmd};

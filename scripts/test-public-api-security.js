@@ -44,6 +44,10 @@ const baseHeaders = {
   await appointmentsHandler({ method: 'POST', headers: { ...baseHeaders, 'content-length': '16385' }, body: {} }, oversized);
   assert.equal(oversized.statusCode, 413);
 
+  const oversizedParsedBody = response();
+  await appointmentsHandler({ method: 'POST', headers: baseHeaders, body: { notes: 'x'.repeat(17000) } }, oversizedParsedBody);
+  assert.equal(oversizedParsedBody.statusCode, 413);
+
   const tooFast = response();
   await appointmentsHandler({ method: 'POST', headers: baseHeaders, body: { form_started_at: Date.now() } }, tooFast);
   assert.equal(tooFast.statusCode, 400);

@@ -1,4 +1,4 @@
-const { COOKIE_NAME, clearSessionCookies, createSession, csrfToken, isAdminRequest, safeEqual, sessionCookie, verifyCsrf, verifySession } = require('../../lib/admin-auth');
+const { COOKIE_NAME, bodyWithinLimit, clearSessionCookies, createSession, csrfToken, isAdminRequest, safeEqual, sessionCookie, verifyCsrf, verifySession } = require('../../lib/admin-auth');
 const { applyRateLimit, clientIp, consumeRateLimit } = require('../../lib/rate-limit');
 
 module.exports = async function handler(req, res) {
@@ -25,24 +25,23 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Desteklenmeyen metod.' });
   if (!isAdminRequest(req)) return res.status(403).json({ error: 'Güvenlik doğrulaması başarısız.' });
   if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) return res.status(415).json({ error: 'JSON içerik türü gereklidir.' });
-  if (Number(req.headers['content-length'] || 0) > 4096) return res.status(413).json({ error: 'İstek çok büyük.' });
+  if (!bodyWithinLimit(req, 4096)) return res.status(413).json({ error: 'İstek çok büyük.' });
 
   let body;
   try { body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {}); }
   catch { return res.status(400).json({ error: 'Geçersiz istek.' }); }
   if (!body || Array.isArray(body) || typeof body !== 'object' || typeof body.username !== 'string' || typeof body.password !== 'string' || body.username.length > 100 || body.password.length > 256) return res.status(400).json({ error: 'Geçersiz istek.' });
 
-  const rate = await consumeRateLimit({
-    supabaseUrl: process.env.SUPABASE_URL,
-    serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-    bucket: 'admin-login',
-    subject: `${clientIp(req)}:${String(body.username).toLocaleLowerCase('tr-TR')}`,
-    limit: 5,
-    windowSeconds: 900
-  });
-  if (!applyRateLimit(res, rate)) return res.status(429).json({ error: 'Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin.' });
+  const ip = clientIp(req);
+  const [ipRate, credentialRate] = await Promise.all([
+    consumeRateLimit({ supabaseUrl:process.env.SUPABASE_URL, serviceKey:process.env.SUPABASE_SERVICE_ROLE_KEY, bucket:'admin-login-ip', subject:ip, limit:20, windowSeconds:900 }),
+    consumeRateLimit({ supabaseUrl:process.env.SUPABASE_URL, serviceKey:process.env.SUPABASE_SERVICE_ROLE_KEY, bucket:'admin-login-credential', subject:`${ip}:${String(body.username).toLocaleLowerCase('tr-TR')}`, limit:5, windowSeconds:900 })
+  ]);
+  if (!applyRateLimit(res, ipRate) || !applyRateLimit(res, credentialRate)) return res.status(429).json({ error: 'Çok fazla giriş denemesi. Lütfen daha sonra tekrar deneyin.' });
 
-  if (!safeEqual(body.username, username) || !safeEqual(body.password, password)) {
+  const usernameMatches = safeEqual(body.username, username);
+  const passwordMatches = safeEqual(body.password, password);
+  if (!usernameMatches || !passwordMatches) {
     await new Promise(resolve => setTimeout(resolve, 650));
     return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
   }
