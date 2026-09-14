@@ -1,4 +1,5 @@
 const { verifySession } = require('../../lib/admin-auth');
+const { supabaseHeaders } = require('../../lib/supabase');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
@@ -34,7 +35,7 @@ async function databaseStatus(url, key) {
   if (!String(url || '').trim() || !String(key || '').trim()) return { configured: false, reachable: false, state: 'missing', label };
   try {
     const response = await fetch(`${String(url).replace(/\/$/, '')}/rest/v1/appointments?select=id&limit=1`, {
-      headers: { apikey: key, Authorization: `Bearer ${key}` },
+      headers: supabaseHeaders(key),
       signal: AbortSignal.timeout(3500)
     });
     return { configured: true, reachable: response.ok, state: response.ok ? 'ready' : 'error', label };

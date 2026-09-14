@@ -1,6 +1,7 @@
 const { bodyWithinLimit, isAdminRequest, verifyCsrf, verifySession } = require('../../lib/admin-auth');
 const { notifyCustomerEmail } = require('../../lib/notifications');
 const { applyRateLimit, clientIp, consumeRateLimit } = require('../../lib/rate-limit');
+const { supabaseHeaders } = require('../../lib/supabase');
 
 const ALLOWED_STATUSES = new Set(['pending','confirmed','rescheduled','completed','cancelled']);
 
@@ -12,7 +13,7 @@ module.exports = async function handler(req,res){
   const secret=process.env.ADMIN_SESSION_SECRET||pass;
   if(!url||!key||!user||!pass||pass.length<14||!secret||secret.length<14) return res.status(503).json({error:'Yönetim güvenlik yapılandırması eksik.'});
   if(!verifySession(req.headers.cookie,user,secret,req.headers['user-agent']||'')) return res.status(401).json({error:'Yönetici oturumu gerekli.'});
-  const headers={apikey:key,Authorization:`Bearer ${key}`,'Content-Type':'application/json'};
+  const headers=supabaseHeaders(key, {'Content-Type':'application/json'});
   try{
     if(req.method==='GET') return listAppointments(res,url,headers);
     if(req.method==='PATCH'||req.method==='DELETE'){

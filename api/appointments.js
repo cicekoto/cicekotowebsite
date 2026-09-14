@@ -3,6 +3,7 @@ const ALLOWED_BRANDS = new Set(['Volkswagen','Audi','Škoda','SEAT','CUPRA']);
 const { notifyCustomerEmail, notifyOwnerCallMeBot } = require('../lib/notifications');
 const { bodyWithinLimit, sameOrigin } = require('../lib/admin-auth');
 const { applyRateLimit, clientIp, consumeRateLimit } = require('../lib/rate-limit');
+const { supabaseHeaders } = require('../lib/supabase');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
@@ -45,7 +46,7 @@ module.exports = async function handler(req, res) {
     if(!applyRateLimit(res,phoneRate))return res.status(429).json({error:'Bu telefon numarası için günlük randevu deneme sınırına ulaşıldı.'});
     const reference = makeReference();
     const record = { reference, status:'pending', service:services.join(', '), services, duration_minutes:durationMinutes, vehicle_brand:brand, vehicle_model:model, vehicle_year:year||null, plate:plate||null, requested_date:date, requested_time:time, customer_name:name, customer_phone:phone, customer_email:email||null, notes:clean(body.notes,600)||null, kvkk_consent:true, whatsapp_consent:body.whatsapp_consent===true, source:'website' };
-    const insert = await fetch(`${supabaseUrl}/rest/v1/rpc/create_website_appointment`, { method:'POST', headers:{ apikey:serviceKey, Authorization:`Bearer ${serviceKey}`, 'Content-Type':'application/json' }, body:JSON.stringify({ p_record:record }) });
+    const insert = await fetch(`${supabaseUrl}/rest/v1/rpc/create_website_appointment`, { method:'POST', headers:supabaseHeaders(serviceKey, {'Content-Type':'application/json'}), body:JSON.stringify({ p_record:record }) });
     if (!insert.ok) {
       const failure = await insert.json().catch(() => ({}));
       if (String(failure.message || '').includes('SLOT_UNAVAILABLE')) return res.status(409).json({ error:'Bu saat az önce doldu. Lütfen başka bir saat seçin.', code:'SLOT_UNAVAILABLE' });
@@ -59,7 +60,7 @@ module.exports = async function handler(req, res) {
         {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'owner_callmebot',sent:ownerResult.status==='fulfilled'&&ownerResult.value===true}},
         {appointment_id:appointment.id,event_type:'notification_attempted',metadata:{channel:'customer_email',event:'received',sent:customerResult.status==='fulfilled'&&customerResult.value===true,address_present:Boolean(record.customer_email)}}
       ];
-      await fetch(`${supabaseUrl}/rest/v1/appointment_events`,{method:'POST',headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`,'Content-Type':'application/json'},body:JSON.stringify(events)}).catch(()=>null);
+      await fetch(`${supabaseUrl}/rest/v1/appointment_events`,{method:'POST',headers:supabaseHeaders(serviceKey, {'Content-Type':'application/json'}),body:JSON.stringify(events)}).catch(()=>null);
     }
     return res.status(201).json({ ok:true, reference, status:'pending' });
   } catch (error) {
@@ -79,7 +80,7 @@ async function getAvailability(req,res,supabaseUrl,serviceKey){
     if(Number.isNaN(day.getTime())||day.getDay()===0||date<todayYmd()||date>todayYmd(90))return res.status(400).json({error:'Önümüzdeki 90 gün içinde, pazar hariç bir tarih seçin.'});
     const durationMinutes=appointmentDuration(services);
     const query=`requested_date=eq.${encodeURIComponent(date)}&status=neq.cancelled&select=requested_time,duration_minutes&order=requested_time.asc`;
-    const response=await fetch(`${supabaseUrl}/rest/v1/appointments?${query}`,{headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`}});
+    const response=await fetch(`${supabaseUrl}/rest/v1/appointments?${query}`,{headers:supabaseHeaders(serviceKey)});
     if(!response.ok)throw new Error(`Supabase availability failed: ${response.status}`);
     const existing=await response.json();
     const available=allowedTimes(durationMinutes).filter(time=>!existing.some(item=>overlaps(time,durationMinutes,String(item.requested_time).slice(0,5),Number(item.duration_minutes)||120)));

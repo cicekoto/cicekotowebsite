@@ -1,6 +1,7 @@
 const assert = require('node:assert/strict');
 const { notifyCustomerEmail, notifyOwnerCallMeBot, _test: notificationTest } = require('../lib/notifications');
 const googleReviewsHandler = require('../api/google-reviews');
+const { supabaseHeaders } = require('../lib/supabase');
 
 function response() {
   return {
@@ -12,6 +13,15 @@ function response() {
 }
 
 (async () => {
+  assert.deepEqual(supabaseHeaders('sb_secret_example', { 'Content-Type': 'application/json' }), {
+    apikey: 'sb_secret_example',
+    'Content-Type': 'application/json'
+  });
+  assert.deepEqual(supabaseHeaders('legacy-service-role-jwt'), {
+    apikey: 'legacy-service-role-jwt',
+    Authorization: 'Bearer legacy-service-role-jwt'
+  });
+
   const record = { reference: 'CO-26TEST', customer_name: 'Test <Kullanıcı>', customer_phone: '+905551112233', customer_email: 'test@example.com', vehicle_brand: 'Volkswagen', vehicle_model: 'Golf', services: ['Periyodik Bakım'], requested_date: '2026-09-02', requested_time: '10:00', whatsapp_consent: true };
   delete process.env.CALLMEBOT_PHONE;
   delete process.env.CALLMEBOT_API_KEY;
