@@ -553,7 +553,7 @@ function showSuccess(data, result) {
     ? `مرحباً، أنشأت طلب موعد بالرمز ${reference}.\nالخدمات: ${serviceSummary}\nالسيارة: ${data.display_brand || data.brand} ${data.model}\nالتاريخ: ${data.date} ${data.time}`
     : currentLanguage === 'en' ? `Hello, I created a booking request with reference ${reference}.\nServices: ${serviceSummary}\nVehicle: ${data.display_brand || data.brand} ${data.model}\nDate: ${data.date} ${data.time}`
     : `Merhaba, ${reference} takip kodlu randevu talebimi oluşturdum.\nHizmetler: ${serviceSummary}\nAraç: ${data.display_brand || data.brand} ${data.model}\nTarih: ${data.date} ${data.time}`;
-  $('#successWhatsapp').href = `https://wa.me/902125491763?text=${encodeURIComponent(message)}`;
+  $('#successWhatsapp').href = `https://wa.me/905325953964?text=${encodeURIComponent(message)}`;
   dialog.showModal();
 }
 
