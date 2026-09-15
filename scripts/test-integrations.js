@@ -60,6 +60,9 @@ function response() {
   await googleReviewsHandler({ method: 'GET' }, fallbackRes);
   assert.equal(fallbackRes.statusCode, 200);
   assert.deepEqual(fallbackRes.body, { configured: false, reviews: [] });
+  const queryRes = response();
+  await googleReviewsHandler({ method: 'GET', query: { bypass: '1' } }, queryRes);
+  assert.equal(queryRes.statusCode, 400);
 
   process.env.GOOGLE_PLACES_API_KEY = 'places-key';
   delete process.env.GOOGLE_PLACE_ID;
@@ -72,6 +75,7 @@ function response() {
   assert.equal(reviewsRes.statusCode, 200);
   assert.equal(reviewsRes.body.reviews[0].author, 'Müşteri');
   assert.equal(reviewsRes.body.count, 1900);
+  assert.equal(reviewsRes.headers['Cache-Control'], 'public, s-maxage=3600, stale-while-revalidate=86400');
   assert.equal(googleReviewsHandler._test.safeGoogleUrl('javascript:alert(1)'), '');
   console.log('integration tests passed');
 })().catch(error => {

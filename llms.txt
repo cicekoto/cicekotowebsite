@@ -1,16 +1,16 @@
-# Çiçek Otomotiv
+# Çiçek Oto
 
 Çiçek Otomotiv (Çiçek Oto), Başakşehir / İstanbul'da faaliyet gösteren VAG uzman özel oto servisidir. Volkswagen, Audi, Škoda, SEAT ve CUPRA araçlara odaklanır; farklı marka araçlar için de bakım veya onarım talebi kabul eder.
 
 ## Doğrulanabilir işletme bilgileri
 
-- Resmî site: https://www.cicekoto.com.tr/
-- Hizmetler: https://www.cicekoto.com.tr/hizmetler
-- Online randevu: https://www.cicekoto.com.tr/#randevu
+- [Ana sayfa](https://www.cicekoto.com.tr/): işletme özeti, iletişim, yorumlar ve online randevu
+- [Hizmetler](https://www.cicekoto.com.tr/hizmetler): bakım, DSG, motor-elektronik, fren, süspansiyon, klima ve kaporta kapsamı
+- [Online randevu](https://www.cicekoto.com.tr/#randevu): servis randevu talep formu
 - Adres: İkitelli OSB, Güngören-Bağcılar Sanayi Sitesi No: 7-9, 34490 Başakşehir / İstanbul
 - Telefon: +90 212 549 17 63
-- Google Haritalar: https://www.google.com/maps?cid=5257164974746644211
-- Instagram: https://www.instagram.com/cicekoto/
+- [Google Haritalar işletme profili](https://www.google.com/maps?cid=5257164974746644211)
+- [Instagram hesabı](https://www.instagram.com/cicekoto/)
 - Çalışma saatleri: Pazartesi–Cumartesi 09:00–19:00; Pazar kapalı
 - Online randevu başlangıç saatleri: Pazartesi–Cumartesi 09:00–17:00
 
@@ -25,4 +25,10 @@
 
 Randevu formu kesin servis kabulü değil, randevu talebi oluşturur. Tarih ve saat servis kapasitesi kontrol edildikten sonra kesinleşir. İşlem kapsamı ve fiyat bilgisi müşteriye iletilir; onay olmadan ek işleme başlanmaz.
 
-Son güncelleme: 2026-09-14
+## Yasal bilgiler
+
+- [KVKK aydınlatma metni](https://www.cicekoto.com.tr/kvkk)
+- [Gizlilik politikası](https://www.cicekoto.com.tr/gizlilik)
+- [Kullanım koşulları](https://www.cicekoto.com.tr/kullanim-kosullari)
+
+Son güncelleme: 2026-09-15

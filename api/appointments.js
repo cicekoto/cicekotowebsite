@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const ALLOWED_SERVICES = new Set(['Periyodik Bakım','DSG Şanzıman','Motor & Elektronik','Fren Sistemi','Kaporta & Boya','Genel Kontrol','Klima Bakımı','Süspansiyon','Elektrik Arızası']);
 const ALLOWED_BRANDS = new Set(['Volkswagen','Audi','Škoda','SEAT','CUPRA']);
 const { notifyCustomerEmail, notifyOwnerCallMeBot } = require('../lib/notifications');
@@ -83,7 +84,7 @@ async function getAvailability(req,res,supabaseUrl,serviceKey){
     const response=await fetch(`${supabaseUrl}/rest/v1/appointments?${query}`,{headers:supabaseHeaders(serviceKey)});
     if(!response.ok)throw new Error(`Supabase availability failed: ${response.status}`);
     const existing=await response.json();
-    const available=allowedTimes(durationMinutes).filter(time=>!existing.some(item=>overlaps(time,durationMinutes,String(item.requested_time).slice(0,5),Number(item.duration_minutes)||120)));
+    const available=allowedTimes(durationMinutes).filter(time=>isBookableStart(date,time)&&!existing.some(item=>overlaps(time,durationMinutes,String(item.requested_time).slice(0,5),Number(item.duration_minutes)||120)));
     return res.status(200).json({available,duration_minutes:durationMinutes});
   }catch(error){console.error('appointment_availability_failed',error.message);return res.status(500).json({error:'Uygun saatler şu anda alınamadı.'})}
 }
@@ -96,7 +97,8 @@ function allowedTimes(duration){return duration===60?['09:00','10:00','11:00','1
 function overlaps(aStart,aDuration,bStart,bDuration){const toMinutes=value=>{const [h,m]=value.split(':').map(Number);return h*60+m};const a=toMinutes(aStart),b=toMinutes(bStart);return a<b+bDuration&&b<a+aDuration}
 function normalizePhone(value){const digits=String(value||'').replace(/\D/g,'').replace(/^90/,'').replace(/^0/,'');return digits.length===10?`+90${digits}`:''}
 function validVehicleBrand(brand,customBrand=''){return ALLOWED_BRANDS.has(brand)||(/^[\p{L}\p{N}][\p{L}\p{N} .&'’/-]{1,59}$/u.test(brand)&&customBrand===brand)}
-function makeReference(){return `CO-${new Date().getFullYear().toString().slice(-2)}${Math.random().toString(36).slice(2,7).toUpperCase()}`}
+function makeReference(){return `CO-${new Date().getFullYear().toString().slice(-2)}${crypto.randomBytes(4).toString('hex').toUpperCase()}`}
 function todayYmd(offset=0){const date=new Date();date.setDate(date.getDate()+offset);return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
+function isBookableStart(date,time,now=Date.now()){const start=new Date(`${date}T${time}:00+03:00`).getTime();return Number.isFinite(start)&&start>=now-60000}
 
-module.exports._test={allowedTimes,appointmentDuration,clean,normalizePhone,overlaps,todayYmd,validVehicleBrand};
+module.exports._test={allowedTimes,appointmentDuration,clean,isBookableStart,makeReference,normalizePhone,overlaps,todayYmd,validVehicleBrand};

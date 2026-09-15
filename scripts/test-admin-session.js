@@ -28,6 +28,13 @@ const browserHeaders={
   assert.equal(sameOrigin({headers:{...browserHeaders,origin:'https://evil.example'}}),false);
   assert.equal(sameOrigin({headers:{...browserHeaders,'sec-fetch-site':'cross-site'}}),false);
 
+  const savedSecret=process.env.ADMIN_SESSION_SECRET;
+  delete process.env.ADMIN_SESSION_SECRET;
+  const missingSecretRes=response();
+  await sessionHandler({method:'POST',body:{username:'test-admin',password:'test-password-with-enough-entropy'},headers:browserHeaders},missingSecretRes);
+  assert.equal(missingSecretRes.statusCode,503);
+  process.env.ADMIN_SESSION_SECRET=savedSecret;
+
   const rateBuckets=[];
   global.fetch=async (url,options={})=>String(url).includes('consume_api_rate_limit')
     ?(rateBuckets.push(JSON.parse(options.body).p_bucket),{ok:true,json:async()=>({allowed:true,retry_after:900})})

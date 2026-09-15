@@ -8,8 +8,9 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Desteklenmeyen metod.' });
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
-  const secret = process.env.ADMIN_SESSION_SECRET || password;
-  if (!username || !password || !secret || !verifySession(req.headers.cookie, username, secret, req.headers['user-agent'] || '')) return res.status(401).json({ error: 'Yönetici oturumu gerekli.' });
+  const secret = process.env.ADMIN_SESSION_SECRET;
+  if (!username || !password || password.length < 14 || !secret || secret.length < 32) return res.status(503).json({ error: 'Yönetim güvenlik yapılandırması eksik.' });
+  if (!verifySession(req.headers.cookie, username, secret, req.headers['user-agent'] || '')) return res.status(401).json({ error: 'Yönetici oturumu gerekli.' });
 
   const has = name => Boolean(String(process.env[name] || '').trim());
   const database = await databaseStatus(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);

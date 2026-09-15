@@ -9,7 +9,7 @@ function response() {
 (async () => {
   process.env.ADMIN_USERNAME = 'test-admin';
   process.env.ADMIN_PASSWORD = 'a-strong-test-password';
-  process.env.ADMIN_SESSION_SECRET = 'a-separate-session-secret';
+  process.env.ADMIN_SESSION_SECRET = 'a-separate-session-secret-with-32-chars';
   process.env.SUPABASE_URL = 'https://example.supabase.co';
   process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-role-test';
   delete process.env.CALLMEBOT_API_KEY;

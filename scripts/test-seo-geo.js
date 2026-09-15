@@ -21,6 +21,7 @@ for (const [file, canonical] of [
   assert.match(html, /<title>[^<]*Çiçek Oto<\/title>/, `${file} title must use Çiçek Oto`);
   assert.match(html, /<link rel="icon" href="\/img\/favicon-32\.png\?v=4" type="image\/png" sizes="32x32">/, `${file} missing 32px PNG favicon`);
   assert.match(html, /<link rel="icon" href="\/img\/favicon-16\.png\?v=4" type="image\/png" sizes="16x16">/, `${file} missing 16px PNG favicon`);
+  assert.match(html, /<link rel="icon" href="\/img\/icon-192\.png\?v=4" type="image\/png" sizes="192x192">/, `${file} missing search-friendly PNG favicon`);
   assert.doesNotMatch(html, /favicon\.(?:svg|ico)/, `${file} must not reference legacy favicons`);
   assert.match(html, /class="header-social"[^>]+href="https:\/\/www\.instagram\.com\/cicekoto\/"/, `${file} missing header Instagram link`);
   assert.match(html, new RegExp(`<link rel="canonical" href="${canonical.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}">`));
@@ -42,6 +43,7 @@ for (const file of ['404.html', 'admin.html', 'kvkk.html', 'gizlilik.html', 'kul
   assert.match(html, /<title>[^<]*Çiçek Oto[^<]*<\/title>/, `${file} title must use Çiçek Oto`);
   assert.match(html, /favicon-32\.png\?v=4/, `${file} missing 32px PNG favicon`);
   assert.match(html, /favicon-16\.png\?v=4/, `${file} missing 16px PNG favicon`);
+  assert.match(html, /icon-192\.png\?v=4/, `${file} missing search-friendly PNG favicon`);
   assert.doesNotMatch(html, /favicon\.(?:svg|ico)/, `${file} must not reference legacy favicons`);
 }
 
@@ -54,6 +56,7 @@ assert.ok(serviceTypes.has('ItemList'));
 
 const robots = fs.readFileSync('robots.txt', 'utf8');
 assert.match(robots, /User-agent: OAI-SearchBot\s+Allow: \//);
+assert.match(robots, /User-agent: ChatGPT-User\s+Allow: \//);
 assert.match(robots, /Disallow: \/api\//);
 assert.match(robots, /Sitemap: https:\/\/www\.cicekoto\.com\.tr\/sitemap\.xml/);
 
@@ -64,6 +67,7 @@ assert.match(sitemap, /real-service-workshop\.jpg/);
 
 const llms = fs.readFileSync('llms.txt', 'utf8');
 assert.match(llms, /Çiçek Otomotiv/);
+assert.match(llms, /\[Ana sayfa\]\(https:\/\/www\.cicekoto\.com\.tr\/\)/);
 assert.match(llms, /\+90 212 549 17 63/);
 assert.match(llms, /Randevu formu kesin servis kabulü değil/);
 assert.doesNotMatch(llms, /API_KEY|PASSWORD|SECRET|service-role/i);

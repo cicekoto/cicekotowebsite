@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr" data-theme="dark">
 <head>
   <meta charset="utf-8">
@@ -8,6 +8,7 @@
   <title>Çiçek Oto · Servis Yönetimi</title>
   <link rel="icon" href="img/favicon-32.png?v=4" type="image/png" sizes="32x32">
   <link rel="icon" href="img/favicon-16.png?v=4" type="image/png" sizes="16x16">
+  <link rel="icon" href="img/icon-192.png?v=4" type="image/png" sizes="192x192">
 
   <link rel="stylesheet" href="css/fonts.css?v=1">
   <link rel="stylesheet" href="css/admin.css?v=5">
@@ -16,9 +17,9 @@
   <section class="login-screen" id="login" aria-labelledby="loginTitle">
     <div class="login-visual" aria-hidden="true"><div class="login-grid"></div><div class="login-orbit"><span></span></div><p>VAG servis operasyon merkezi</p></div>
     <form class="login-card" id="loginForm">
-      <a class="brand" href="/" aria-label="Çiçek Oto ana sayfa"><img src="img/cicek-oto-logo.png" alt="Çiçek Oto"></a>
-      <div class="eyebrow">YETKİLİ ERİŞİM</div><h1 id="loginTitle">Çiçek Otomotiv yönetimi</h1><p>Randevuları, günlük servis akışını ve müşteri iletişimini tek ekrandan yönetin.</p>
-      <label class="field"><span>Kullanıcı adı</span><input name="username" autocomplete="username" required></label>
+      <a class="brand" href="/" aria-label="Çiçek Oto ana sayfa"><img src="img/optimized/cicek-oto-logo.webp" width="512" height="313" alt="Çiçek Oto"></a>
+      <div class="eyebrow">YETKİLİ ERİŞİM</div><h1 id="loginTitle">Çiçek Oto yönetimi</h1><p>Randevuları, günlük servis akışını ve müşteri iletişimini tek ekrandan yönetin.</p>
+      <label class="field"><span>Kullanıcı adı</span><input type="text" name="username" autocomplete="username" required></label>
       <label class="field"><span>Şifre</span><input type="password" name="password" autocomplete="current-password" required></label>
       <div class="form-error" id="loginError" role="alert"></div>
       <button class="button primary login-button" type="submit"><span>Giriş yap</span><span>→</span></button><small>Oturumunuz 4 saat boyunca güvenli çerez ile korunur.</small>
@@ -27,7 +28,7 @@
 
   <div class="admin-app" id="dashboard" hidden>
     <aside class="sidebar" id="sidebar">
-      <a class="sidebar-brand" href="/" aria-label="Çiçek Oto ana sayfa"><img src="img/cicek-oto-logo.png" alt="Çiçek Oto"><span><b>ÇİÇEK OTO</b><small>Servis yönetimi</small></span></a>
+      <a class="sidebar-brand" href="/" aria-label="Çiçek Oto ana sayfa"><img src="img/optimized/cicek-oto-logo.webp" width="512" height="313" alt="Çiçek Oto"><span><b>ÇİÇEK OTO</b><small>Servis yönetimi</small></span></a>
       <nav class="side-nav" aria-label="Yönetim bölümleri">
         <button class="nav-item active" data-view="overview" type="button"><span class="nav-icon">⌂</span><span>Genel bakış</span></button>
         <button class="nav-item" data-view="schedule" type="button"><span class="nav-icon">▦</span><span>Günlük plan</span><b id="navTodayCount">0</b></button>
@@ -63,7 +64,7 @@
           <article class="panel pending-panel"><div class="panel-head"><div><span class="panel-kicker">AKSİYON GEREKİYOR</span><h2>Yeni talepler</h2></div><span class="count-badge" id="pendingBadge">0</span></div><div class="request-list" id="pendingList"></div></article>
           <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">DAĞILIM</span><h2>Randevu durumları</h2></div></div><div class="status-analytics"><div class="donut" id="statusDonut"><div><strong id="donutTotal">0</strong><span>randevu</span></div></div><div class="legend" id="statusLegend"></div></div></article>
           <article class="panel services-panel"><div class="panel-head"><div><span class="panel-kicker">HİZMET YOĞUNLUĞU</span><h2>En çok talep edilenler</h2></div></div><div class="service-bars" id="serviceBars"></div></article>
-          <article class="panel customer-panel"><div class="panel-head"><div><span class="panel-kicker">MÜŞTERİ & ARAÇ</span><h2>Operasyon içgörüleri</h2></div></div><div class="customer-insights"><div><span>Tekil müşteri</span><strong id="uniqueCustomers">0</strong><small>telefon numarasına göre</small></div><div><span>Tekrar gelen</span><strong id="returningCustomers">0</strong><small>birden fazla kaydı olan</small></div><div><span>E-posta kayıtlı</span><strong id="emailCoverage">0%</strong><small>bildirim gönderilebilecek kayıt</small></div><div><span>Ortalama süre</span><strong id="averageDuration">0 dk</strong><small>randevu başına plan</small></div></div></article>
+          <article class="panel customer-panel"><div class="panel-head"><div><span class="panel-kicker">MÜŞTERİ &amp; ARAÇ</span><h2>Operasyon içgörüleri</h2></div></div><div class="customer-insights"><div><span>Tekil müşteri</span><strong id="uniqueCustomers">0</strong><small>telefon numarasına göre</small></div><div><span>Tekrar gelen</span><strong id="returningCustomers">0</strong><small>birden fazla kaydı olan</small></div><div><span>E-posta kayıtlı</span><strong id="emailCoverage">0%</strong><small>bildirim gönderilebilecek kayıt</small></div><div><span>Ortalama süre</span><strong id="averageDuration">0 dk</strong><small>randevu başına plan</small></div></div></article>
         </div>
       </section>
 
@@ -77,7 +78,7 @@
         <div class="page-heading compact"><div><div class="eyebrow">KAYIT MERKEZİ</div><h1>Tüm randevular</h1><p>Arayın, filtreleyin, dışa aktarın ve ayrıntıları yönetin.</p></div><div class="heading-actions"><button class="button secondary" id="exportJson" type="button">JSON yedeği ↓</button><button class="button secondary" id="exportCsv" type="button">CSV dışa aktar ↓</button></div></div>
         <div class="filter-bar panel"><label class="table-search"><span>⌕</span><input id="tableSearch" type="search" placeholder="Ad, telefon, plaka, araç, hizmet veya kod"></label><label><span>Durum</span><select id="statusFilter"><option value="">Tüm durumlar</option><option value="pending">Bekleyen</option><option value="confirmed">Onaylandı</option><option value="rescheduled">Saat değişti</option><option value="completed">Tamamlandı</option><option value="cancelled">İptal</option></select></label><label><span>Tarih</span><select id="dateFilter"><option value="">Tüm tarihler</option><option value="today">Bugün</option><option value="tomorrow">Yarın</option><option value="week">Bu hafta</option><option value="past">Geçmiş</option></select></label><label><span>Sıralama</span><select id="sortFilter"><option value="appointmentAsc">Randevu tarihi</option><option value="newest">En yeni talep</option><option value="customer">Müşteri adı</option></select></label><button class="text-button clear-filters" id="clearFilters" type="button">Filtreleri temizle</button></div>
         <div class="table-meta"><span id="resultCount">0 kayıt</span><span id="lastUpdated"></span></div>
-        <div class="appointment-table panel"><div class="loading-state" id="loader"><span></span><p>Randevular yükleniyor…</p></div><table id="appointmentsTable" hidden><thead><tr><th>Randevu</th><th>Müşteri</th><th>Araç</th><th>Hizmet</th><th>Tarih / Saat</th><th>Durum</th><th></th></tr></thead><tbody></tbody></table><div class="empty-state" id="tableEmpty" hidden><i>⌕</i><h3>Kayıt bulunamadı</h3><p>Arama veya filtreleri değiştirerek tekrar deneyin.</p></div></div>
+        <div class="appointment-table panel"><div class="loading-state" id="loader"><span></span><p>Randevular yükleniyor…</p></div><table id="appointmentsTable" hidden><thead><tr><th scope="col">Randevu</th><th scope="col">Müşteri</th><th scope="col">Araç</th><th scope="col">Hizmet</th><th scope="col">Tarih / Saat</th><th scope="col">Durum</th><th scope="col" aria-label="İşlemler"></th></tr></thead><tbody></tbody></table><div class="empty-state" id="tableEmpty" hidden><i>⌕</i><h3>Kayıt bulunamadı</h3><p>Arama veya filtreleri değiştirerek tekrar deneyin.</p></div></div>
       </section>
 
       <section class="view" id="view-customers" data-view-panel="customers">
@@ -87,7 +88,7 @@
       </section>
 
       <section class="view" id="view-system" data-view-panel="system">
-        <div class="page-heading compact"><div><div class="eyebrow">SİSTEM & ENTEGRASYON</div><h1>Çalışma durumu</h1><p>Gizli anahtarları göstermeden canlı servislerin yapılandırma durumunu kontrol edin.</p></div><button class="button secondary" id="refreshSystem" type="button">Durumu yenile ↻</button></div>
+        <div class="page-heading compact"><div><div class="eyebrow">SİSTEM &amp; ENTEGRASYON</div><h1>Çalışma durumu</h1><p>Gizli anahtarları göstermeden canlı servislerin yapılandırma durumunu kontrol edin.</p></div><button class="button secondary" id="refreshSystem" type="button">Durumu yenile ↻</button></div>
         <div class="system-grid" id="systemGrid"><div class="panel system-loading">Sistem bilgileri alınıyor…</div></div>
         <div class="panel operations-card"><div class="panel-head"><div><span class="panel-kicker">OPERASYON KURALLARI</span><h2>Randevu ayarları</h2></div></div><div class="operations-list"><div><span>Online başlangıç saatleri</span><b>09:00–17:00</b></div><div><span>Çalışma günleri</span><b>Pazartesi–Cumartesi</b></div><div><span>Günlük araç sınırı</span><b>Sınır yok; saat çakışması engellenir</b></div><div><span>Yönetici oturumu</span><b>4 saat</b></div></div></div>
       </section>

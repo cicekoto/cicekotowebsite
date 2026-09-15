@@ -9,6 +9,7 @@ const headers=config.headers.find(item=>item.source==='/(.*)').headers;
 const byName=Object.fromEntries(headers.map(item=>[item.key,item.value]));
 assert.equal(byName['X-Frame-Options'],'DENY');
 assert.equal(byName['Cross-Origin-Opener-Policy'],'same-origin');
+assert.equal(byName['X-Permitted-Cross-Domain-Policies'],'none');
 assert.match(byName['Content-Security-Policy'],/frame-ancestors 'none'/);
 assert.match(byName['Content-Security-Policy'],/script-src-attr 'none'/);
 assert.doesNotMatch(byName['Content-Security-Policy'],/script-src[^;]*'unsafe-inline'/);
@@ -21,6 +22,10 @@ for(const file of ['index.html','hizmetler.html']){
     assert.ok(byName['Content-Security-Policy'].includes(`'sha256-${hash}'`),`${file} inline script hash missing`);
   }
 }
+
+const notFound=fs.readFileSync('404.html','utf8');
+assert.doesNotMatch(notFound,/<style(?:\s|>)/i);
+assert.match(notFound,/css\/404\.css\?v=1/);
 
 assert.equal(consumeMemory('security-test',2,60,1000).allowed,true);
 assert.equal(consumeMemory('security-test',2,60,1000).allowed,true);

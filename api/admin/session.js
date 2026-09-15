@@ -7,9 +7,9 @@ module.exports = async function handler(req, res) {
   res.setHeader('Vary', 'Cookie');
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
-  const secret = process.env.ADMIN_SESSION_SECRET || password;
+  const secret = process.env.ADMIN_SESSION_SECRET;
   const userAgent = String(req.headers['user-agent'] || '');
-  if (!username || !password || password.length < 14 || !secret || secret.length < 14) return res.status(503).json({ error: 'Yönetim güvenlik yapılandırması eksik.' });
+  if (!username || !password || password.length < 14 || !secret || secret.length < 32) return res.status(503).json({ error: 'Yönetim güvenlik yapılandırması eksik.' });
 
   if (req.method === 'GET') {
     if (!verifySession(req.headers.cookie, username, secret, userAgent)) return res.status(401).json({ error: 'Oturum gerekli.' });

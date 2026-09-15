@@ -10,8 +10,8 @@ module.exports = async function handler(req,res){
   res.setHeader('Pragma','no-cache');
   res.setHeader('Vary','Cookie');
   const url=process.env.SUPABASE_URL,key=process.env.SUPABASE_SERVICE_ROLE_KEY,user=process.env.ADMIN_USERNAME,pass=process.env.ADMIN_PASSWORD;
-  const secret=process.env.ADMIN_SESSION_SECRET||pass;
-  if(!url||!key||!user||!pass||pass.length<14||!secret||secret.length<14) return res.status(503).json({error:'Yönetim güvenlik yapılandırması eksik.'});
+  const secret=process.env.ADMIN_SESSION_SECRET;
+  if(!url||!key||!user||!pass||pass.length<14||!secret||secret.length<32) return res.status(503).json({error:'Yönetim güvenlik yapılandırması eksik.'});
   if(!verifySession(req.headers.cookie,user,secret,req.headers['user-agent']||'')) return res.status(401).json({error:'Yönetici oturumu gerekli.'});
   const headers=supabaseHeaders(key, {'Content-Type':'application/json'});
   try{
@@ -58,7 +58,7 @@ async function updateAppointment(res,url,headers,body){
   if(scheduleChanged){
     if(!/^\d{4}-\d{2}-\d{2}$/.test(requestedDate)||!/^\d{2}:\d{2}$/.test(requestedTime))return res.status(400).json({error:'Geçerli bir tarih ve saat seçin.'});
     const day=new Date(`${requestedDate}T12:00:00+03:00`);
-    if(Number.isNaN(day.getTime())||day.getDay()===0||requestedDate<todayYmd()||requestedDate>todayYmd(120))return res.status(400).json({error:'Bugünden sonraki 120 gün içinde, pazar hariç bir tarih seçin.'});
+    if(Number.isNaN(day.getTime())||day.getDay()===0||requestedDate<todayYmd()||requestedDate>todayYmd(120)||!isBookableStart(requestedDate,requestedTime))return res.status(400).json({error:'Bugünden sonraki 120 gün içinde, pazar hariç geçerli bir tarih ve saat seçin.'});
     const duration=Number(current.duration_minutes)||120;
     if(!allowedTimes(duration).includes(requestedTime))return res.status(400).json({error:'Seçilen süre için 09.00–17.00 arasında geçerli bir başlangıç saati seçin.'});
     const conflictQuery=`requested_date=eq.${encodeURIComponent(requestedDate)}&status=neq.cancelled&id=neq.${encodeURIComponent(body.id)}&select=requested_time,duration_minutes`;
@@ -113,5 +113,6 @@ function normalizeCustomerPhone(value){const digits=String(value||'').replace(/\
 function todayYmd(offset=0){const date=new Date();date.setDate(date.getDate()+offset);return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Istanbul',year:'numeric',month:'2-digit',day:'2-digit'}).format(date)}
 function allowedTimes(duration){return duration===60?['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00']:['09:00','11:00','13:00','15:00','17:00']}
 function overlaps(aStart,aDuration,bStart,bDuration){const toMinutes=value=>{const [h,m]=value.split(':').map(Number);return h*60+m};const a=toMinutes(aStart),b=toMinutes(bStart);return a<b+bDuration&&b<a+aDuration}
+function isBookableStart(date,time,now=Date.now()){const start=new Date(`${date}T${time}:00+03:00`).getTime();return Number.isFinite(start)&&start>=now-60000}
 
-module.exports._test={allowedTimes,overlaps,clean,normalizeCustomerPhone,todayYmd};
+module.exports._test={allowedTimes,overlaps,clean,isBookableStart,normalizeCustomerPhone,todayYmd};

@@ -13,7 +13,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   await desktop.goto(`${baseUrl}/`, { waitUntil: 'domcontentloaded' });
   await desktop.waitForTimeout(700);
   assert.match(await desktop.title(), /Çiçek Oto/);
-  assert.equal(await desktop.locator('link[rel="icon"][type="image/png"]').count(), 2);
+  assert.equal(await desktop.locator('link[rel="icon"][type="image/png"]').count(), 3);
   const instagram = desktop.locator('.header-social');
   await expectVisible(instagram);
   assert.equal(await instagram.getAttribute('href'), 'https://www.instagram.com/cicekoto/');
@@ -81,6 +81,16 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   assert.equal(await admin.locator('.integration-card.error').count(), 1);
   assert.match(await admin.locator('.integration-card.error').innerText(), /HATA/);
   await admin.screenshot({ path: 'output/playwright/delivery-final-admin.png', fullPage: true });
+
+  const notFound = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  notFound.on('pageerror', error => errors.push(error.message));
+  const isLocal = baseUrl.includes('127.0.0.1') || baseUrl.includes('localhost');
+  const notFoundResponse = await notFound.goto(`${baseUrl}${isLocal ? '/404.html' : '/olmayan-sayfa-qa'}`, { waitUntil: 'domcontentloaded' });
+  if (!isLocal) assert.equal(notFoundResponse?.status(), 404);
+  assert.equal(await notFound.locator('h1').innerText(), 'Bu sayfa bulunamadı.');
+  assert.equal(await notFound.locator('body').evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(0, 1, 5)');
+  await notFound.screenshot({ path: 'output/playwright/delivery-final-404.png', fullPage: true });
+  await notFound.close();
 
   assert.deepEqual(errors, []);
   await browser.close();

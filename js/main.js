@@ -33,7 +33,7 @@ const EN_TEXT = {
   'Teşhis': 'Diagnosis', 'Aracınız uzman ekip ve güncel cihazlarla kontrol edilir.': 'Your vehicle is inspected by specialists using current equipment.',
   'Onay': 'Approval', 'İşlem ve fiyat bilgisi size iletilir; onayınız alınır.': 'Work and pricing details are shared for your approval.',
   'Teslim': 'Delivery', 'Kontrol sonrası garantili şekilde aracınızı teslim alın.': 'Collect your vehicle after final checks with workmanship assurance.',
-  'Neden Çiçek Otomotiv?': 'Why Çiçek Otomotiv?', 'Şeffaf Fiyat': 'Transparent Pricing', 'İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.': 'A written quote before work. No unapproved jobs or surprise bills.',
+  'Neden Çiçek Oto?': 'Why Çiçek Oto?', 'Şeffaf Fiyat': 'Transparent Pricing', 'İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.': 'A written quote before work. No unapproved jobs or surprise bills.',
   'Doğru Teknoloji': 'Right Technology', 'Güncel arıza tespit cihazları, OEM parçalar ve deneyimli teknisyenler.': 'Current diagnostic equipment, OEM parts and experienced technicians.',
   'Garantili İşçilik': 'Guaranteed Workmanship', 'Yapılan işlemler kayıt altındadır ve işçilik garantisiyle teslim edilir.': 'Every operation is recorded and delivered with workmanship assurance.',
   'VAG uzman servisi · Online randevu': 'VAG specialist · Online booking', 'Servis saatin': 'Your service time', 'hazır.': 'is ready.',
@@ -85,7 +85,7 @@ const AR_TEXT = {
   'Tek noktada':'كل الخدمات','tam servis.':'في مكان واحد.','Bakım, mekanik, elektronik ve kaporta işlemleri tek ekip tarafından yönetilir.':'يدير فريق واحد أعمال الصيانة والميكانيك والإلكترونيات والهيكل.','Periyodik Bakım':'الصيانة الدورية','DSG Şanzıman':'ناقل DSG','Motor & Elektronik':'المحرك والإلكترونيات','Kaporta & Boya':'الهيكل والطلاء','Fren Sistemi':'نظام الفرامل','Klima Bakımı':'صيانة المكيّف','Süspansiyon':'نظام التعليق','Elektrik Arızası':'أعطال كهربائية','Genel Kontrol':'فحص عام',
   'Yağ, filtre, sıvılar ve tüm kilometre bakımları fabrika reçetesiyle.':'الزيوت والفلاتر والسوائل وجميع صيانة الكيلومترات وفق مواصفات المصنع.','DQ200, DQ250, kavrama ve mekatronik sistemlerinde uzman onarım.':'إصلاح متخصص لأنظمة DQ200 وDQ250 والقابض والميكاترونيك.','Motor revizyonu, ECU işlemleri ve kapsamlı elektronik arıza tespiti.':'توضيب المحرك وأعمال ECU وتشخيص شامل للأعطال الإلكترونية.','Kaza onarımı, spot boya ve boyasız göçük düzeltme hizmetleri.':'إصلاح الحوادث والطلاء الموضعي وإزالة الانبعاجات دون طلاء.','30–120 dk':'30–120 دقيقة','Teşhis sonrası':'بعد التشخيص','1–3 gün':'1–3 أيام','1–5 gün':'1–5 أيام',
   'Nasıl çalışıyoruz?':'كيف نعمل؟','Dört adımda':'خدمة واضحة','net servis.':'في أربع خطوات.','Aracınızı teslim ederken ne olacağını, ne kadar süreceğini ve ne ödeyeceğinizi bilirsiniz.':'عند تسليم السيارة تعرف ما الذي سيحدث والمدة والتكلفة.','Randevu':'الموعد','Hizmeti, aracınızı ve size uygun zamanı seçin.':'اختر الخدمات وسيارتك والوقت المناسب.','Teşhis':'التشخيص','Aracınız uzman ekip ve güncel cihazlarla kontrol edilir.':'يفحص فريق مختص سيارتك بأجهزة حديثة.','Onay':'الموافقة','İşlem ve fiyat bilgisi size iletilir; onayınız alınır.':'نرسل تفاصيل العمل والسعر ونحصل على موافقتك.','Teslim':'التسليم','Kontrol sonrası garantili şekilde aracınızı teslim alın.':'استلم سيارتك بعد الفحص النهائي.',
-  'Neden Çiçek Otomotiv?':'لماذا Çiçek Otomotiv؟','Şeffaf Fiyat':'سعر واضح','İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.':'عرض سعر مكتوب قبل العمل، بلا أعمال غير معتمدة أو فواتير مفاجئة.','Doğru Teknoloji':'تقنية صحيحة','Güncel arıza tespit cihazları, OEM parçalar ve deneyimli teknisyenler.':'أجهزة تشخيص حديثة وقطع OEM وفنيون ذوو خبرة.','Garantili İşçilik':'عمل موثوق','Yapılan işlemler kayıt altındadır ve işçilik garantisiyle teslim edilir.':'كل الأعمال مسجلة وتُسلّم بضمان الصيانة.',
+  'Neden Çiçek Oto?':'لماذا Çiçek Oto؟','Şeffaf Fiyat':'سعر واضح','İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.':'عرض سعر مكتوب قبل العمل، بلا أعمال غير معتمدة أو فواتير مفاجئة.','Doğru Teknoloji':'تقنية صحيحة','Güncel arıza tespit cihazları, OEM parçalar ve deneyimli teknisyenler.':'أجهزة تشخيص حديثة وقطع OEM وفنيون ذوو خبرة.','Garantili İşçilik':'عمل موثوق','Yapılan işlemler kayıt altındadır ve işçilik garantisiyle teslim edilir.':'كل الأعمال مسجلة وتُسلّم بضمان الصيانة.',
   'VAG uzman servisi · Online randevu':'خدمة VAG متخصصة · حجز إلكتروني','Servis saatin':'موعد صيانة','hazır.':'جاهز.','Pzt–Cmt':'الإثنين–السبت','Pazar':'الأحد','Kapalı':'مغلق','Hizmetler':'الخدمات','Araç':'السيارة','Zaman':'الوقت','01 / Çoklu hizmet seçimi':'01 / اختيار عدة خدمات','Bir veya daha fazla hizmet seç.':'اختر خدمة واحدة أو أكثر.','En az 1 hizmet seçin':'اختر خدمة واحدة على الأقل','Notun (isteğe bağlı)':'ملاحظات (اختياري)','Sorunu veya isteğini kısaca anlat':'اشرح المشكلة أو الطلب باختصار','02 / Araç':'02 / السيارة','Aracını tanıyalım.':'أخبرنا عن سيارتك.','Araç markası':'ماركة السيارة','Marka seçin':'اختر الماركة','Diğer / Genel':'أخرى / عامة','Markayı yazın':'اكتب الماركة','Model':'الموديل','Model yılı':'سنة الموديل','Plaka':'لوحة السيارة','03 / Zaman':'03 / الوقت','Sana uygun zamanı seç.':'اختر الوقت المناسب.','Tarih':'التاريخ','Saat':'الوقت','Saat seçin':'اختر الوقت','Bilgi':'معلومة','Bu bir randevu talebidir. Servis kapasitesi kontrol edildikten sonra kesin onay size iletilir.':'هذا طلب موعد. نرسل التأكيد النهائي بعد التحقق من سعة المركز.','04 / İletişim':'04 / التواصل','Sana nasıl ulaşalım?':'كيف نتواصل معك؟','Ad soyad':'الاسم الكامل','Adınız Soyadınız':'الاسم الكامل','Telefon':'الهاتف','E-posta':'البريد الإلكتروني','← Geri':'رجوع →','Devam Et →':'متابعة ←','Randevu Talebi Oluştur →':'إرسال طلب الموعد ←',
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
@@ -580,15 +580,17 @@ function initReviews() {
   update();
   if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
   fetch('/api/google-reviews').then(response => response.ok ? response.json() : null).then(data => {
-    if (!data?.reviews?.length) return;
+    const ratingValue = Number(data?.rating);
+    const countValue = Number(data?.count);
+    if (!data?.reviews?.length || !Number.isFinite(ratingValue) || ratingValue < 1 || ratingValue > 5 || !Number.isInteger(countValue) || countValue < 1) return;
     const rating = $('.google-rating b');
     const count = $('.google-rating>span:not(.google-g)');
     const link = $('.google-rating');
-    if (rating) rating.textContent = `${String(data.rating).replace('.', ',')} / 5`;
-    if (count) count.textContent = languageText(`${data.count} Google yorumu`, `${data.count} Google reviews`, `${data.count} تقييماً على Google`);
+    if (rating) rating.textContent = `${String(ratingValue).replace('.', ',')} / 5`;
+    if (count) count.textContent = languageText(`${countValue} Google yorumu`, `${countValue} Google reviews`, `${countValue} تقييماً على Google`);
     const heroReviewValue = $('.hero-stats .stat:nth-child(2) strong');
     const heroReviewLabel = $('.hero-stats .stat:nth-child(2) span');
-    if (heroReviewValue) heroReviewValue.textContent = String(data.count);
+    if (heroReviewValue) heroReviewValue.textContent = String(countValue);
     if (heroReviewLabel) heroReviewLabel.textContent = localized('Doğrulanmış Google yorumu');
     if (link && data.url) link.href = data.url;
     track.replaceChildren(...data.reviews.map(review => {
@@ -596,6 +598,7 @@ function initReviews() {
       article.className = 'review';
       const stars = document.createElement('div');
       stars.className = 'stars';
+      stars.setAttribute('role', 'img');
       stars.setAttribute('aria-label', `${review.rating} yıldız`);
       stars.textContent = '★'.repeat(Math.max(1, Math.min(5, Math.round(review.rating))));
       const quote = document.createElement('blockquote');
