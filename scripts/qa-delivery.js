@@ -18,7 +18,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   await expectVisible(instagram);
   assert.equal(await instagram.getAttribute('href'), 'https://www.instagram.com/cicekoto/');
   assert.doesNotMatch(await desktop.locator('.hero-stats .stat:nth-child(2) strong').innerText(), /NaN/);
-  assert.match(await desktop.locator('.google-rating').innerText(), /(1,9 bin\+ Google değerlendirmesi|\d+ Google yorumu)/);
+  assert.match(await desktop.locator('.google-rating').innerText(), /\d+ Google yorumu/);
   await desktop.getByLabel('Periyodik Bakım', { exact: true }).evaluate(input => {
     input.checked = true;
     input.dispatchEvent(new Event('change', { bubbles: true }));

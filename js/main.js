@@ -11,7 +11,7 @@ const EN_TEXT = {
   'Servis Süreci': 'Service process', 'VAG araçlara': 'For VAG vehicles', 'uzman servis.': 'specialist service.',
   'VAG grubu araçlarda doğru teşhis, şeffaf fiyat ve garantili işçilik. Aracınızı teknolojiyle, işimizi marka uzmanlığıyla koruyoruz.': 'Accurate diagnostics, transparent pricing and guaranteed workmanship for VAG vehicles. We protect your car with technology and brand expertise.',
   'Online randevu': 'Book online', 'Hizmetleri keşfet': 'Explore services', 'UZMANI': 'SPECIALIST',
-  'Google müşteri puanı': 'Google customer rating', 'Doğrulanmış Google yorumu': 'Verified Google reviews', 'Google değerlendirmesi': 'Google reviews',
+  'Google müşteri puanı': 'Google customer rating', 'Google yorumu': 'Google reviews', '174 Google yorumu': '174 Google reviews', 'Google değerlendirmesi': 'Google reviews',
   'VAG markasında uzmanlık': 'VAG brands covered', 'İşçilik garantisi': 'Workmanship warranty',
   'Doğru teşhis': 'Accurate diagnostics', 'Gereksiz': 'No unnecessary', 'masraf yok.': 'expense.',
   'Güncel OBD cihazları ve deneyimli teknisyen kadromuzla arızayı noktasal olarak buluyoruz. Tahmine dayalı parça değişimi yapmıyor, işlem başlamadan fiyatı netleştiriyoruz.': 'With current OBD equipment and experienced technicians, we pinpoint the fault. We do not replace parts based on guesses and confirm the price before work begins.',
@@ -49,7 +49,7 @@ const EN_TEXT = {
   'E-posta': 'Email', 'Randevu talebimin işlenmesi için kişisel verilerimin': 'For processing my booking request, I accept the use of my personal data under the',
   'KVKK aydınlatma metni': 'privacy notice', 'kapsamında kullanılmasını kabul ediyorum.': '.',
   '← Geri': '← Back', 'Devam Et →': 'Continue →', 'Randevu Talebi Oluştur →': 'Submit Booking Request →',
-  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '1,9 bin+ Google değerlendirmesi': '1.9K+ Google reviews',
+  "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '174 Google yorumu': '174 Google reviews',
   '“Turan Usta çok yardımcı oldu. Bir saat içinde aracımın bakımını yaptılar.”': '“Turan Usta was very helpful. They completed my vehicle maintenance within an hour.”',
   '“Çiçek Otomotive uğradım ve çok memnun kaldım. Turan Usta ve ekibine teşekkürlerimi sunarım.”': '“I visited Çiçek Otomotiv and was very satisfied. My thanks to Turan Usta and his team.”',
   '“Çok ilgiliydiler ve yardımcı oldular; aracımı işlemleri yapılmış hâlde teslim aldım.”': '“They were attentive and helpful; I received my vehicle with the requested work completed.”',
@@ -79,7 +79,7 @@ Object.assign(EN_TEXT, {
 const AR_TEXT = {
   'İçeriğe geç':'انتقل إلى المحتوى','Ana menü':'القائمة الرئيسية','Hizmetler':'الخدمات','Süreç':'الخطوات','Neden Biz?':'لماذا نحن؟','Yorumlar':'التقييمات','İletişim':'اتصل بنا','Randevu Al':'احجز موعداً','Servis Süreci':'مراحل الصيانة',
   'VAG araçlara':'خدمة متخصصة','uzman servis.':'لسيارات VAG.','VAG grubu araçlarda doğru teşhis, şeffaf fiyat ve garantili işçilik. Aracınızı teknolojiyle, işimizi marka uzmanlığıyla koruyoruz.':'تشخيص دقيق وأسعار واضحة وخدمة احترافية لسيارات مجموعة VAG. نحمي سيارتك بالتقنية والخبرة المتخصصة.','Online randevu':'حجز موعد','Hizmetleri keşfet':'اكتشف الخدمات',
-  'Google müşteri puanı':'تقييم العملاء على Google','Doğrulanmış Google yorumu':'تقييمات Google الموثقة','Google değerlendirmesi':'تقييمات Google','VAG markasında uzmanlık':'خبرة في علامات VAG','Doğru teşhis':'تشخيص دقيق','Gereksiz':'لا مصاريف','masraf yok.':'غير ضرورية.',
+  'Google müşteri puanı':'تقييم العملاء على Google','Google yorumu':'تقييمات Google','174 Google yorumu':'174 تقييماً على Google','Google değerlendirmesi':'تقييمات Google','VAG markasında uzmanlık':'خبرة في علامات VAG','Doğru teşhis':'تشخيص دقيق','Gereksiz':'لا مصاريف','masraf yok.':'غير ضرورية.',
   'Güncel OBD cihazları ve deneyimli teknisyen kadromuzla arızayı noktasal olarak buluyoruz. Tahmine dayalı parça değişimi yapmıyor, işlem başlamadan fiyatı netleştiriyoruz.':'نحدد العطل بدقة بأجهزة OBD الحديثة وفريق فني خبير. لا نبدّل القطع بالتخمين ونوضح السعر قبل بدء العمل.','Onaysız işlem yok':'لا عمل دون موافقة','Orijinal veya OEM parça':'قطع أصلية أو OEM','Yazılı fiyat bilgisi':'سعر مكتوب','Aracınız için randevu alın':'احجز موعداً لسيارتك',
   'Süreç takibi':'متابعة الصيانة','Servis süreci':'مراحل الصيانة','cebinde.':'بين يديك.','Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri e-posta üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.':'تابع أهم التطورات عبر البريد الإلكتروني من تسليم السيارة حتى استلامها. نستأذنك أولاً عند الحاجة إلى عمل إضافي.','2 saat':'ساعتان','ortalama bakım kabulü':'متوسط استقبال الصيانة','Anlık':'فوري','E-posta bilgilendirme':'تحديثات البريد الإلكتروني','Sürecin nasıl işlediğini görün':'شاهد كيف تسير العملية',
   'Tek noktada':'كل الخدمات','tam servis.':'في مكان واحد.','Bakım, mekanik, elektronik ve kaporta işlemleri tek ekip tarafından yönetilir.':'يدير فريق واحد أعمال الصيانة والميكانيك والإلكترونيات والهيكل.','Periyodik Bakım':'الصيانة الدورية','DSG Şanzıman':'ناقل DSG','Motor & Elektronik':'المحرك والإلكترونيات','Kaporta & Boya':'الهيكل والطلاء','Fren Sistemi':'نظام الفرامل','Klima Bakımı':'صيانة المكيّف','Süspansiyon':'نظام التعليق','Elektrik Arızası':'أعطال كهربائية','Genel Kontrol':'فحص عام',
@@ -90,7 +90,7 @@ const AR_TEXT = {
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
 Object.assign(AR_TEXT, {
-  'E-posta':'البريد الإلكتروني','Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','1,9 bin+ Google değerlendirmesi':'أكثر من 1.9 ألف تقييم على Google',
+  'E-posta':'البريد الإلكتروني','Gerçek müşteri yorumları':'تقييمات عملاء حقيقية','174 Google yorumu':'174 تقييماً على Google',
   'VAG grubu araçlarda uzmanız; diğer markalar için de bakım ve onarım talebi oluşturabilirsiniz. İhtiyacınız olan tüm işlemleri birlikte seçin. Talebiniz doğrudan servis kayıt sistemimize ulaşır.':'نحن متخصصون في سيارات VAG، ويمكنك أيضاً طلب الصيانة والإصلاح للعلامات الأخرى. اختر كل الخدمات التي تحتاجها وسيصل الطلب مباشرة إلى نظام الحجز.',
   'Google işletme profili':'ملف النشاط على Google','Canlı Google bağlantısı bekleniyor':'بانتظار اتصال Google المباشر','Uydurma yorum göstermiyoruz. Tüm gerçek değerlendirmeleri Google işletme profilimizde görebilirsiniz.':'لا نعرض تقييمات مختلقة. يمكنك مشاهدة جميع التقييمات الحقيقية في ملف نشاطنا على Google.','Tüm gerçek yorumları Google’da gör →':'شاهد كل التقييمات الحقيقية على Google ←',
   '“Turan Usta çok yardımcı oldu. Fiyat olarak da gayet uygundu.”':'“كان توران أوسطا متعاوناً جداً، وكان السعر مناسباً للغاية.”','“Çiçek Otomotive uğradım ve çok memnun kaldım. Gönül rahatlığı ile aracınızda işlem yaptırabilirsiniz.”':'“زرت Çiçek Otomotiv وكنت راضياً جداً. يمكنكم صيانة سيارتكم هنا بكل ثقة.”','Google yorumu · 5/5 · Ağustos 2026':'تقييم Google · 5/5 · أغسطس 2026','Google yorumu · 5/5 · Mayıs 2026':'تقييم Google · 5/5 · مايو 2026','Google’da doğrula ↗':'تحقق على Google ↗',
@@ -591,7 +591,7 @@ function initReviews() {
     const heroReviewValue = $('.hero-stats .stat:nth-child(2) strong');
     const heroReviewLabel = $('.hero-stats .stat:nth-child(2) span');
     if (heroReviewValue) heroReviewValue.textContent = String(countValue);
-    if (heroReviewLabel) heroReviewLabel.textContent = localized('Doğrulanmış Google yorumu');
+    if (heroReviewLabel) heroReviewLabel.textContent = localized('Google yorumu');
     if (link && data.url) link.href = data.url;
     track.replaceChildren(...data.reviews.map(review => {
       const article = document.createElement('article');

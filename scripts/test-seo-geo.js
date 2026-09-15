@@ -49,10 +49,16 @@ for (const file of ['404.html', 'admin.html', 'kvkk.html', 'gizlilik.html', 'kul
 
 const homeTypes = graphTypes(page('index.html').structured[0]);
 assert.ok(homeTypes.has('WebSite'));
+const homeHtml = page('index.html').html;
+assert.match(homeHtml, /174 Google yorumu/);
+assert.doesNotMatch(homeHtml, /1,9 bin\+ Google değerlendirmesi/);
+assert.match(homeHtml, /google\.com\/maps\?cid=5257164974746644211/);
+assert.match(homeHtml, /maps\?q=place_id%3AChIJKZIl83-vyhQR8y5m3bAz9Ug&amp;output=embed/);
 const serviceTypes = graphTypes(page('hizmetler.html').structured[0]);
 assert.ok(serviceTypes.has('CollectionPage'));
 assert.ok(serviceTypes.has('BreadcrumbList'));
 assert.ok(serviceTypes.has('ItemList'));
+assert.match(page('hizmetler.html').html, /<title>Başakşehir VAG Servis Hizmetleri \| Çiçek Oto<\/title>/);
 
 const robots = fs.readFileSync('robots.txt', 'utf8');
 assert.match(robots, /User-agent: OAI-SearchBot\s+Allow: \//);
