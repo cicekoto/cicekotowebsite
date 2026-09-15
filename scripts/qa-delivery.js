@@ -85,7 +85,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   const notFound = await browser.newPage({ viewport: { width: 390, height: 844 } });
   notFound.on('pageerror', error => errors.push(error.message));
   const isLocal = baseUrl.includes('127.0.0.1') || baseUrl.includes('localhost');
-  const notFoundResponse = await notFound.goto(`${baseUrl}${isLocal ? '/404.html' : '/olmayan-sayfa-qa'}`, { waitUntil: 'domcontentloaded' });
+  const notFoundResponse = await notFound.goto(`${baseUrl}${isLocal ? '/404.html' : '/olmayan-sayfa-qa'}`, { waitUntil: 'networkidle' });
   if (!isLocal) assert.equal(notFoundResponse?.status(), 404);
   assert.equal(await notFound.locator('h1').innerText(), 'Bu sayfa bulunamadı.');
   assert.equal(await notFound.locator('body').evaluate(element => getComputedStyle(element).backgroundColor), 'rgb(0, 1, 5)');
