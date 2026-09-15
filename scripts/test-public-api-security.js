@@ -15,8 +15,8 @@ function response() {
 }
 
 const baseHeaders = {
-  origin: 'https://cicek-otomotiv.vercel.app',
-  host: 'cicek-otomotiv.vercel.app',
+  origin: 'https://www.cicekoto.com.tr',
+  host: 'www.cicekoto.com.tr',
   'x-forwarded-proto': 'https',
   'sec-fetch-site': 'same-origin',
   'content-type': 'application/json',

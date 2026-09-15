@@ -10,4 +10,4 @@ Disallow: /admin
 Disallow: /admin.html
 Disallow: /api/
 
-Sitemap: https://cicek-otomotiv.vercel.app/sitemap.xml
+Sitemap: https://www.cicekoto.com.tr/sitemap.xml

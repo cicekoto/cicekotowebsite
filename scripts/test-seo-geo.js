@@ -13,8 +13,8 @@ function graphTypes(document) {
 }
 
 for (const [file, canonical] of [
-  ['index.html', 'https://cicek-otomotiv.vercel.app/'],
-  ['hizmetler.html', 'https://cicek-otomotiv.vercel.app/hizmetler']
+  ['index.html', 'https://www.cicekoto.com.tr/'],
+  ['hizmetler.html', 'https://www.cicekoto.com.tr/hizmetler']
 ]) {
   const { html, structured } = page(file);
   assert.equal((html.match(/<title>/g) || []).length, 1, `${file} must have one title`);
@@ -42,7 +42,7 @@ assert.ok(serviceTypes.has('ItemList'));
 const robots = fs.readFileSync('robots.txt', 'utf8');
 assert.match(robots, /User-agent: OAI-SearchBot\s+Allow: \//);
 assert.match(robots, /Disallow: \/api\//);
-assert.match(robots, /Sitemap: https:\/\/cicek-otomotiv\.vercel\.app\/sitemap\.xml/);
+assert.match(robots, /Sitemap: https:\/\/www\.cicekoto\.com\.tr\/sitemap\.xml/);
 
 const sitemap = fs.readFileSync('sitemap.xml', 'utf8');
 assert.match(sitemap, /xmlns:image=/);

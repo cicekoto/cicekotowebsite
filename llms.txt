@@ -4,9 +4,9 @@
 
 ## Doğrulanabilir işletme bilgileri
 
-- Resmî site: https://cicek-otomotiv.vercel.app/
-- Hizmetler: https://cicek-otomotiv.vercel.app/hizmetler
-- Online randevu: https://cicek-otomotiv.vercel.app/#randevu
+- Resmî site: https://www.cicekoto.com.tr/
+- Hizmetler: https://www.cicekoto.com.tr/hizmetler
+- Online randevu: https://www.cicekoto.com.tr/#randevu
 - Adres: İkitelli OSB, Güngören-Bağcılar Sanayi Sitesi No: 7-9, 34490 Başakşehir / İstanbul
 - Telefon: +90 212 549 17 63
 - Google Haritalar: https://www.google.com/maps?cid=5257164974746644211

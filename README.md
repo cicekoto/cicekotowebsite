@@ -4,9 +4,9 @@
 
 ## Canlı adresler
 
-- Site: <https://cicek-otomotiv.vercel.app/>
-- Yönetim: <https://cicek-otomotiv.vercel.app/admin.html>
-- Hizmet rehberi: <https://cicek-otomotiv.vercel.app/hizmetler>
+- Site: <https://www.cicekoto.com.tr/>
+- Yönetim: <https://www.cicekoto.com.tr/admin.html>
+- Hizmet rehberi: <https://www.cicekoto.com.tr/hizmetler>
 
 ## Özellikler
 
