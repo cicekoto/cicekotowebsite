@@ -9,6 +9,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   const errors = [];
   const desktop = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   desktop.on('pageerror', error => errors.push(error.message));
+  await desktop.route('**/api/appointments?*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ available: ['09:00', '10:00'], duration_minutes: 60 }) }));
   await desktop.goto(`${baseUrl}/`, { waitUntil: 'domcontentloaded' });
   await desktop.waitForTimeout(700);
   assert.match(await desktop.locator('.google-rating').innerText(), /(1,9 bin\+ Google değerlendirmesi|\d+ Google yorumu)/);
@@ -19,6 +20,24 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   assert.equal(await desktop.getByLabel('Periyodik Bakım', { exact: true }).isChecked(), true);
   await desktop.getByRole('button', { name: /Devam Et/ }).click();
   await expectVisible(desktop.locator('.form-step[data-step="2"]'));
+  await desktop.getByLabel('Araç markası').selectOption('Volkswagen');
+  await desktop.getByLabel('Model', { exact: true }).fill('Golf 7');
+  await desktop.getByRole('button', { name: /Devam Et/ }).click();
+  await expectVisible(desktop.locator('.form-step[data-step="3"]'));
+  const bookingDate = await desktop.evaluate(() => {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    if (date.getDay() === 0) date.setDate(date.getDate() + 1);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  });
+  await desktop.getByLabel('Tarih', { exact: true }).fill(bookingDate);
+  await desktop.locator('select[name="time"]').waitFor({ state: 'visible' });
+  await desktop.waitForFunction(() => !document.querySelector('[name="time"]').disabled);
+  await desktop.locator('select[name="time"]').selectOption('09:00');
+  await desktop.getByRole('button', { name: /Devam Et/ }).click();
+  await expectVisible(desktop.locator('.form-step[data-step="4"]'));
+  assert.equal(await desktop.getByLabel('E-posta', { exact: true }).getAttribute('required'), '');
+  assert.equal(await desktop.locator('[name="whatsapp_consent"]').count(), 0);
   await desktop.screenshot({ path: 'output/playwright/delivery-final-desktop.png', fullPage: true });
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -43,7 +62,7 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
     integrations: {
       database: { configured: true, reachable: false, state: 'error', label: 'Supabase veritabanı' },
       ownerWhatsApp: { configured: false, reachable: null, state: 'missing', label: 'CallMeBot işletme bildirimi' },
-      customerWhatsApp: { configured: false, reachable: null, state: 'missing', label: 'WhatsApp müşteri bildirimi' },
+      customerEmail: { configured: false, reachable: null, state: 'missing', label: 'Resend müşteri e-postası' },
       googleReviews: { configured: false, reachable: null, state: 'missing', label: 'Google yorum bağlantısı' }
     }
   }) }));

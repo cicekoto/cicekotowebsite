@@ -46,9 +46,8 @@ const EN_TEXT = {
   '03 / Zaman': '03 / Time', 'Sana uygun zamanı seç.': 'Choose a convenient time.', 'Tarih': 'Date', 'Saat': 'Time', 'Saat seçin': 'Select time',
   'Bilgi': 'Note', 'Bu bir randevu talebidir. Servis kapasitesi kontrol edildikten sonra kesin onay size iletilir.': 'This is a booking request. Final confirmation is sent after service capacity is checked.',
   '04 / İletişim': '04 / Contact', 'Sana nasıl ulaşalım?': 'How can we reach you?', 'Ad soyad': 'Full name', 'Adınız Soyadınız': 'Your full name', 'Telefon': 'Phone',
-  'E-posta (isteğe bağlı)': 'Email (optional)', 'Randevu talebimin işlenmesi için kişisel verilerimin': 'For processing my booking request, I accept the use of my personal data under the',
+  'E-posta': 'Email', 'Randevu talebimin işlenmesi için kişisel verilerimin': 'For processing my booking request, I accept the use of my personal data under the',
   'KVKK aydınlatma metni': 'privacy notice', 'kapsamında kullanılmasını kabul ediyorum.': '.',
-  'Randevu onayı ve servis güncellemelerinin WhatsApp üzerinden iletilmesini istiyorum.': 'I would like booking confirmations and service updates via WhatsApp.',
   '← Geri': '← Back', 'Devam Et →': 'Continue →', 'Randevu Talebi Oluştur →': 'Submit Booking Request →',
   "Google'da gerçek müşteri deneyimleri": 'Real customer experiences on Google', 'Sözü araç': 'Let our customers', 'sahiplerine bırakalım.': 'tell the story.', '1,9 bin+ Google değerlendirmesi': '1.9K+ Google reviews',
   '“Turan Usta çok yardımcı oldu. Bir saat içinde aracımın bakımını yaptılar.”': '“Turan Usta was very helpful. They completed my vehicle maintenance within an hour.”',
@@ -87,7 +86,7 @@ const AR_TEXT = {
   'Yağ, filtre, sıvılar ve tüm kilometre bakımları fabrika reçetesiyle.':'الزيوت والفلاتر والسوائل وجميع صيانة الكيلومترات وفق مواصفات المصنع.','DQ200, DQ250, kavrama ve mekatronik sistemlerinde uzman onarım.':'إصلاح متخصص لأنظمة DQ200 وDQ250 والقابض والميكاترونيك.','Motor revizyonu, ECU işlemleri ve kapsamlı elektronik arıza tespiti.':'توضيب المحرك وأعمال ECU وتشخيص شامل للأعطال الإلكترونية.','Kaza onarımı, spot boya ve boyasız göçük düzeltme hizmetleri.':'إصلاح الحوادث والطلاء الموضعي وإزالة الانبعاجات دون طلاء.','30–120 dk':'30–120 دقيقة','Teşhis sonrası':'بعد التشخيص','1–3 gün':'1–3 أيام','1–5 gün':'1–5 أيام',
   'Nasıl çalışıyoruz?':'كيف نعمل؟','Dört adımda':'خدمة واضحة','net servis.':'في أربع خطوات.','Aracınızı teslim ederken ne olacağını, ne kadar süreceğini ve ne ödeyeceğinizi bilirsiniz.':'عند تسليم السيارة تعرف ما الذي سيحدث والمدة والتكلفة.','Randevu':'الموعد','Hizmeti, aracınızı ve size uygun zamanı seçin.':'اختر الخدمات وسيارتك والوقت المناسب.','Teşhis':'التشخيص','Aracınız uzman ekip ve güncel cihazlarla kontrol edilir.':'يفحص فريق مختص سيارتك بأجهزة حديثة.','Onay':'الموافقة','İşlem ve fiyat bilgisi size iletilir; onayınız alınır.':'نرسل تفاصيل العمل والسعر ونحصل على موافقتك.','Teslim':'التسليم','Kontrol sonrası garantili şekilde aracınızı teslim alın.':'استلم سيارتك بعد الفحص النهائي.',
   'Neden Çiçek Otomotiv?':'لماذا Çiçek Otomotiv؟','Şeffaf Fiyat':'سعر واضح','İşlemden önce yazılı teklif. Onaysız işlem ve sürpriz fatura yok.':'عرض سعر مكتوب قبل العمل، بلا أعمال غير معتمدة أو فواتير مفاجئة.','Doğru Teknoloji':'تقنية صحيحة','Güncel arıza tespit cihazları, OEM parçalar ve deneyimli teknisyenler.':'أجهزة تشخيص حديثة وقطع OEM وفنيون ذوو خبرة.','Garantili İşçilik':'عمل موثوق','Yapılan işlemler kayıt altındadır ve işçilik garantisiyle teslim edilir.':'كل الأعمال مسجلة وتُسلّم بضمان الصيانة.',
-  'VAG uzman servisi · Online randevu':'خدمة VAG متخصصة · حجز إلكتروني','Servis saatin':'موعد صيانة','hazır.':'جاهز.','Pzt–Cmt':'الإثنين–السبت','Pazar':'الأحد','Kapalı':'مغلق','Hizmetler':'الخدمات','Araç':'السيارة','Zaman':'الوقت','01 / Çoklu hizmet seçimi':'01 / اختيار عدة خدمات','Bir veya daha fazla hizmet seç.':'اختر خدمة واحدة أو أكثر.','En az 1 hizmet seçin':'اختر خدمة واحدة على الأقل','Notun (isteğe bağlı)':'ملاحظات (اختياري)','Sorunu veya isteğini kısaca anlat':'اشرح المشكلة أو الطلب باختصار','02 / Araç':'02 / السيارة','Aracını tanıyalım.':'أخبرنا عن سيارتك.','Araç markası':'ماركة السيارة','Marka seçin':'اختر الماركة','Diğer / Genel':'أخرى / عامة','Markayı yazın':'اكتب الماركة','Model':'الموديل','Model yılı':'سنة الموديل','Plaka':'لوحة السيارة','03 / Zaman':'03 / الوقت','Sana uygun zamanı seç.':'اختر الوقت المناسب.','Tarih':'التاريخ','Saat':'الوقت','Saat seçin':'اختر الوقت','Bilgi':'معلومة','Bu bir randevu talebidir. Servis kapasitesi kontrol edildikten sonra kesin onay size iletilir.':'هذا طلب موعد. نرسل التأكيد النهائي بعد التحقق من سعة المركز.','04 / İletişim':'04 / التواصل','Sana nasıl ulaşalım?':'كيف نتواصل معك؟','Ad soyad':'الاسم الكامل','Adınız Soyadınız':'الاسم الكامل','Telefon':'الهاتف','E-posta (isteğe bağlı)':'البريد الإلكتروني (اختياري)','← Geri':'رجوع →','Devam Et →':'متابعة ←','Randevu Talebi Oluştur →':'إرسال طلب الموعد ←',
+  'VAG uzman servisi · Online randevu':'خدمة VAG متخصصة · حجز إلكتروني','Servis saatin':'موعد صيانة','hazır.':'جاهز.','Pzt–Cmt':'الإثنين–السبت','Pazar':'الأحد','Kapalı':'مغلق','Hizmetler':'الخدمات','Araç':'السيارة','Zaman':'الوقت','01 / Çoklu hizmet seçimi':'01 / اختيار عدة خدمات','Bir veya daha fazla hizmet seç.':'اختر خدمة واحدة أو أكثر.','En az 1 hizmet seçin':'اختر خدمة واحدة على الأقل','Notun (isteğe bağlı)':'ملاحظات (اختياري)','Sorunu veya isteğini kısaca anlat':'اشرح المشكلة أو الطلب باختصار','02 / Araç':'02 / السيارة','Aracını tanıyalım.':'أخبرنا عن سيارتك.','Araç markası':'ماركة السيارة','Marka seçin':'اختر الماركة','Diğer / Genel':'أخرى / عامة','Markayı yazın':'اكتب الماركة','Model':'الموديل','Model yılı':'سنة الموديل','Plaka':'لوحة السيارة','03 / Zaman':'03 / الوقت','Sana uygun zamanı seç.':'اختر الوقت المناسب.','Tarih':'التاريخ','Saat':'الوقت','Saat seçin':'اختر الوقت','Bilgi':'معلومة','Bu bir randevu talebidir. Servis kapasitesi kontrol edildikten sonra kesin onay size iletilir.':'هذا طلب موعد. نرسل التأكيد النهائي بعد التحقق من سعة المركز.','04 / İletişim':'04 / التواصل','Sana nasıl ulaşalım?':'كيف نتواصل معك؟','Ad soyad':'الاسم الكامل','Adınız Soyadınız':'الاسم الكامل','Telefon':'الهاتف','E-posta':'البريد الإلكتروني','← Geri':'رجوع →','Devam Et →':'متابعة ←','Randevu Talebi Oluştur →':'إرسال طلب الموعد ←',
   "Google'da gerçek müşteri deneyimleri":'تجارب حقيقية على Google','Sözü araç':'نترك الكلمة','sahiplerine bırakalım.':'لأصحاب السيارات.','Sık sorulanlar':'الأسئلة الشائعة','Aklındaki':'إجابات','sorular.':'لأسئلتك.','Bize':'تواصل','ulaşın.':'معنا.','Yol Tarifi →':'الاتجاهات ←','Hemen Ara':'اتصل الآن','Mesaj Gönder →':'أرسل رسالة ←','Çalışma saatleri':'ساعات العمل','Pazartesi–Cumartesi':'الإثنين–السبت','SSS':'الأسئلة الشائعة','Yönetim':'الإدارة','Ara':'اتصال','Tamam':'تم','Takip kodu':'رمز المتابعة','Menüyü aç':'افتح القائمة','Açık temaya geç':'انتقل إلى الوضع الفاتح','Önceki yorum':'التقييم السابق','Sonraki yorum':'التقييم التالي','Sayfanın başına dön':'العودة إلى أعلى الصفحة','Mobil hızlı erişim':'وصول سريع'
 };
 Object.assign(AR_TEXT, {
@@ -188,7 +187,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initReviews();
   initFaq();
   initDialog();
-  configureCustomerNotifications();
   initPreferences();
   if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('/sw.js').catch(() => {});
 });
@@ -351,23 +349,6 @@ function selectService(service) {
   $('#randevu')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function configureCustomerNotifications() {
-  const input = $('#appointmentForm input[name="email"]');
-  if (!input) return;
-  input.required = true;
-  const label = $('span', input.closest('label'));
-  if (label) label.textContent = 'E-posta';
-
-  const whatsappConsent = $('#appointmentForm input[name="whatsapp_consent"]');
-  whatsappConsent?.closest('.consent')?.remove();
-
-  const tracking = $('#servis-takibi');
-  const trackingCopy = tracking?.querySelector('.story-copy > p');
-  const trackingMetric = tracking?.querySelector('.mini-metrics > div:last-child span');
-  if (trackingCopy) trackingCopy.textContent = 'Aracınızı bıraktığınız andan teslimata kadar önemli gelişmeleri e-posta üzerinden takip edin. Ek ihtiyaç çıkarsa önce size sorulur, onayınız olmadan işlem yapılmaz.';
-  if (trackingMetric) trackingMetric.textContent = 'E-posta bilgilendirme';
-}
-
 function initAppointmentForm() {
   const form = $('#appointmentForm');
   if (!form) return;
@@ -525,7 +506,6 @@ function initAppointmentForm() {
     if (data.brand === 'other') data.display_brand = data.custom_brand;
     data.services = formData.getAll('services');
     data.service = data.services.join(', ');
-    data.whatsapp_consent = Boolean(form.elements.whatsapp_consent?.checked);
     data.kvkk = form.elements.kvkk.checked;
     panel.classList.add('loading');
     submit.disabled = true;

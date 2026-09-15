@@ -63,7 +63,7 @@
           <article class="panel pending-panel"><div class="panel-head"><div><span class="panel-kicker">AKSİYON GEREKİYOR</span><h2>Yeni talepler</h2></div><span class="count-badge" id="pendingBadge">0</span></div><div class="request-list" id="pendingList"></div></article>
           <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">DAĞILIM</span><h2>Randevu durumları</h2></div></div><div class="status-analytics"><div class="donut" id="statusDonut"><div><strong id="donutTotal">0</strong><span>randevu</span></div></div><div class="legend" id="statusLegend"></div></div></article>
           <article class="panel services-panel"><div class="panel-head"><div><span class="panel-kicker">HİZMET YOĞUNLUĞU</span><h2>En çok talep edilenler</h2></div></div><div class="service-bars" id="serviceBars"></div></article>
-          <article class="panel customer-panel"><div class="panel-head"><div><span class="panel-kicker">MÜŞTERİ & ARAÇ</span><h2>Operasyon içgörüleri</h2></div></div><div class="customer-insights"><div><span>Tekil müşteri</span><strong id="uniqueCustomers">0</strong><small>telefon numarasına göre</small></div><div><span>Tekrar gelen</span><strong id="returningCustomers">0</strong><small>birden fazla kaydı olan</small></div><div><span>WhatsApp izni</span><strong id="whatsappOptIn">0%</strong><small>bildirim alabilecek müşteri</small></div><div><span>Ortalama süre</span><strong id="averageDuration">0 dk</strong><small>randevu başına plan</small></div></div></article>
+          <article class="panel customer-panel"><div class="panel-head"><div><span class="panel-kicker">MÜŞTERİ & ARAÇ</span><h2>Operasyon içgörüleri</h2></div></div><div class="customer-insights"><div><span>Tekil müşteri</span><strong id="uniqueCustomers">0</strong><small>telefon numarasına göre</small></div><div><span>Tekrar gelen</span><strong id="returningCustomers">0</strong><small>birden fazla kaydı olan</small></div><div><span>E-posta kayıtlı</span><strong id="emailCoverage">0%</strong><small>bildirim gönderilebilecek kayıt</small></div><div><span>Ortalama süre</span><strong id="averageDuration">0 dk</strong><small>randevu başına plan</small></div></div></article>
         </div>
       </section>
 
@@ -81,7 +81,7 @@
       </section>
 
       <section class="view" id="view-customers" data-view-panel="customers">
-        <div class="page-heading compact"><div><div class="eyebrow">MÜŞTERİ MERKEZİ</div><h1>Müşteriler ve araçlar</h1><p>Telefon numarasına göre geçmiş talepleri, araçları ve iletişim tercihlerini birlikte görün.</p></div></div>
+        <div class="page-heading compact"><div><div class="eyebrow">MÜŞTERİ MERKEZİ</div><h1>Müşteriler ve araçlar</h1><p>Telefon numarasına göre geçmiş talepleri, araçları ve iletişim bilgilerini birlikte görün.</p></div></div>
         <div class="filter-bar customer-filter panel"><label class="table-search"><span>⌕</span><input id="customerSearch" type="search" placeholder="Müşteri, telefon, plaka veya araç ara"></label><button class="text-button" id="clearCustomerSearch" type="button">Aramayı temizle</button></div>
         <div class="table-meta"><span id="customerResultCount">0 müşteri</span></div><div class="customer-directory" id="customerDirectory"></div>
       </section>
@@ -96,6 +96,6 @@
 
   <div class="drawer-layer" id="drawerLayer" hidden><button class="drawer-backdrop" id="drawerBackdrop" aria-label="Ayrıntıları kapat" type="button"></button><aside class="detail-drawer" id="detailDrawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle"><header><div><span class="eyebrow">RANDEVU AYRINTISI</span><h2 id="drawerTitle">—</h2></div><button class="icon-button" id="closeDrawer" aria-label="Kapat" type="button">×</button></header><div class="drawer-content" id="drawerContent"></div></aside></div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
-  <script src="js/admin.js?v=6" defer></script>
+  <script src="js/admin.js?v=7" defer></script>
 </body>
 </html>

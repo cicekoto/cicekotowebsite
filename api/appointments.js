@@ -45,7 +45,7 @@ module.exports = async function handler(req, res) {
     const phoneRate=await consumeRateLimit({supabaseUrl,serviceKey,bucket:'appointment-phone',subject:phone,limit:3,windowSeconds:86400});
     if(!applyRateLimit(res,phoneRate))return res.status(429).json({error:'Bu telefon numarası için günlük randevu deneme sınırına ulaşıldı.'});
     const reference = makeReference();
-    const record = { reference, status:'pending', service:services.join(', '), services, duration_minutes:durationMinutes, vehicle_brand:brand, vehicle_model:model, vehicle_year:year||null, plate:plate||null, requested_date:date, requested_time:time, customer_name:name, customer_phone:phone, customer_email:email||null, notes:clean(body.notes,600)||null, kvkk_consent:true, whatsapp_consent:body.whatsapp_consent===true, source:'website' };
+    const record = { reference, status:'pending', service:services.join(', '), services, duration_minutes:durationMinutes, vehicle_brand:brand, vehicle_model:model, vehicle_year:year||null, plate:plate||null, requested_date:date, requested_time:time, customer_name:name, customer_phone:phone, customer_email:email, notes:clean(body.notes,600)||null, kvkk_consent:true, whatsapp_consent:false, source:'website' };
     const insert = await fetch(`${supabaseUrl}/rest/v1/rpc/create_website_appointment`, { method:'POST', headers:supabaseHeaders(serviceKey, {'Content-Type':'application/json'}), body:JSON.stringify({ p_record:record }) });
     if (!insert.ok) {
       const failure = await insert.json().catch(() => ({}));

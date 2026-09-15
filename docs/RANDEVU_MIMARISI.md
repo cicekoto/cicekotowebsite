@@ -17,7 +17,7 @@ Randevu formu tarayıcıdan doğrudan Supabase'e bağlanmaz. İstek önce Vercel
 
 | Tablo | Amaç |
 | --- | --- |
-| `appointments` | Randevu, müşteri, araç, izin ve durum bilgileri |
+| `appointments` | Randevu, müşteri, araç, onay ve durum bilgileri |
 | `appointment_events` | Oluşturma, durum değişikliği, bildirim denemesi ve yönetici güncelleme kaydı |
 | `api_rate_limits` | IP ve telefon gibi öznelerin HMAC özetiyle kalıcı hız sınırı |
 
@@ -36,8 +36,8 @@ Randevu formu tarayıcıdan doğrudan Supabase'e bağlanmaz. İstek önce Vercel
 ### Bildirimler
 
 - CallMeBot yalnızca işletme sahibinin numarasına yeni talep uyarısı göndermek için kullanılır.
-- Müşteriye mesaj yalnızca WhatsApp izni verilmişse ve ilgili Meta WhatsApp Cloud API şablonu yapılandırılmışsa gönderilir.
-- Alındı, onaylandı, saat değişti ve iptal şablonları desteklenir.
+- Resend müşterinin zorunlu e-posta adresine talep alındı, onaylandı, saat değişti ve iptal edildi bildirimlerini gönderir.
+- Müşteriye otomatik WhatsApp mesajı gönderilmez; CallMeBot yalnızca yetkili servis personelini bilgilendirir.
 - Her bildirim denemesi `appointment_events` tablosuna başarılı/başarısız sonucu ile kaydedilir.
 
 ### Google yorumları
