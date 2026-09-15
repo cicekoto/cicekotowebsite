@@ -18,6 +18,11 @@ for (const [file, canonical] of [
 ]) {
   const { html, structured } = page(file);
   assert.equal((html.match(/<title>/g) || []).length, 1, `${file} must have one title`);
+  assert.match(html, /<title>[^<]*Çiçek Oto<\/title>/, `${file} title must use Çiçek Oto`);
+  assert.match(html, /<link rel="icon" href="\/img\/favicon-32\.png\?v=4" type="image\/png" sizes="32x32">/, `${file} missing 32px PNG favicon`);
+  assert.match(html, /<link rel="icon" href="\/img\/favicon-16\.png\?v=4" type="image\/png" sizes="16x16">/, `${file} missing 16px PNG favicon`);
+  assert.doesNotMatch(html, /favicon\.(?:svg|ico)/, `${file} must not reference legacy favicons`);
+  assert.match(html, /class="header-social"[^>]+href="https:\/\/www\.instagram\.com\/cicekoto\/"/, `${file} missing header Instagram link`);
   assert.match(html, new RegExp(`<link rel="canonical" href="${canonical.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}">`));
   for (const property of ['og:title', 'og:description', 'og:url', 'og:image', 'og:image:width', 'og:image:height', 'og:image:alt']) {
     assert.ok(html.includes(`property="${property}"`), `${file} missing ${property}`);
@@ -30,6 +35,14 @@ for (const [file, canonical] of [
   assert.ok(types.has('AutoRepair'), `${file} missing AutoRepair schema`);
   assert.ok(types.has('WebPage'), `${file} missing WebPage schema`);
   assert.ok(types.has('FAQPage'), `${file} missing FAQPage schema`);
+}
+
+for (const file of ['404.html', 'admin.html', 'kvkk.html', 'gizlilik.html', 'kullanim-kosullari.html']) {
+  const html = fs.readFileSync(file, 'utf8');
+  assert.match(html, /<title>[^<]*Çiçek Oto[^<]*<\/title>/, `${file} title must use Çiçek Oto`);
+  assert.match(html, /favicon-32\.png\?v=4/, `${file} missing 32px PNG favicon`);
+  assert.match(html, /favicon-16\.png\?v=4/, `${file} missing 16px PNG favicon`);
+  assert.doesNotMatch(html, /favicon\.(?:svg|ico)/, `${file} must not reference legacy favicons`);
 }
 
 const homeTypes = graphTypes(page('index.html').structured[0]);

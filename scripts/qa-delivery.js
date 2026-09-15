@@ -12,6 +12,12 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   await desktop.route('**/api/appointments?*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ available: ['09:00', '10:00'], duration_minutes: 60 }) }));
   await desktop.goto(`${baseUrl}/`, { waitUntil: 'domcontentloaded' });
   await desktop.waitForTimeout(700);
+  assert.match(await desktop.title(), /Çiçek Oto/);
+  assert.equal(await desktop.locator('link[rel="icon"][type="image/png"]').count(), 2);
+  const instagram = desktop.locator('.header-social');
+  await expectVisible(instagram);
+  assert.equal(await instagram.getAttribute('href'), 'https://www.instagram.com/cicekoto/');
+  assert.doesNotMatch(await desktop.locator('.hero-stats .stat:nth-child(2) strong').innerText(), /NaN/);
   assert.match(await desktop.locator('.google-rating').innerText(), /(1,9 bin\+ Google değerlendirmesi|\d+ Google yorumu)/);
   await desktop.getByLabel('Periyodik Bakım', { exact: true }).evaluate(input => {
     input.checked = true;
@@ -44,6 +50,8 @@ const chromePath = process.env.QA_CHROME_PATH || 'C:\\Program Files\\Google\\Chr
   mobile.on('pageerror', error => errors.push(error.message));
   await mobile.goto(`${baseUrl}/`, { waitUntil: 'domcontentloaded' });
   await mobile.waitForTimeout(1700);
+  await expectVisible(mobile.locator('.header-social'));
+  assert.doesNotMatch(await mobile.locator('.hero-stats .stat:nth-child(2) strong').innerText(), /NaN/);
   await mobile.locator('#menuToggle').evaluate(button => button.click());
   await mobile.waitForTimeout(300);
   assert.equal(await mobile.locator('body').evaluate(body => body.classList.contains('menu-open')), true);

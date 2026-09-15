@@ -1,12 +1,12 @@
-const CACHE = 'cicekoto-neon-v37';
+const CACHE = 'cicekoto-neon-v39';
 const ASSETS = [
   '/',
   '/index.html',
   '/css/fonts.css?v=1',
-  '/css/style.css?v=28',
-  '/js/main.js?v=30',
-  '/img/favicon.svg',
-  '/favicon.ico',
+  '/css/style.css?v=29',
+  '/js/main.js?v=31',
+  '/img/favicon-16.png',
+  '/img/favicon-32.png',
   '/img/apple-touch-icon.png',
   '/img/icon-192.png',
   '/img/icon-512.png',

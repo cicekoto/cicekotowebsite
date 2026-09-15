@@ -304,3 +304,13 @@ html[data-theme="light"] .service-slice.active,html[data-theme="light"] .service
   body.booking-in-view .mobile-dock{transform:translateY(calc(100% + 24px));opacity:0;pointer-events:none}
   .review-manual::before{right:18px;top:20px}
 }
+
+/* Header social shortcut */
+.header-social{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border:1px solid rgba(229,75,97,.38);border-radius:999px;color:#f6f8fb;background:linear-gradient(145deg,rgba(111,45,189,.2),rgba(217,47,104,.13) 58%,rgba(245,133,41,.12));transition:transform .25s,border-color .25s,background .25s,box-shadow .25s}
+.header-social svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.header-social svg circle:last-child{fill:currentColor;stroke:none}
+.header-social:hover{transform:translateY(-2px);border-color:rgba(245,133,41,.72);background:linear-gradient(135deg,#6f2dbd,#d92f68 56%,#f58529);box-shadow:0 10px 24px rgba(217,47,104,.24)}
+.header-social:focus-visible{outline:2px solid var(--brand-teal);outline-offset:3px}
+html[data-theme="light"] .header-social{color:#8a214c;background:linear-gradient(145deg,rgba(111,45,189,.08),rgba(217,47,104,.08));border-color:rgba(177,37,92,.28)}
+html[data-theme="light"] .header-social:hover{color:#fff}
+@media(max-width:620px){.header-social{width:36px;height:36px;flex-basis:36px}.header-social svg{width:17px;height:17px}}

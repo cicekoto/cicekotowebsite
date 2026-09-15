@@ -135,9 +135,9 @@ function translateDocument(language) {
   $$('blockquote[lang]').forEach(quote => quote.lang = language);
   document.documentElement.lang = language;
   document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-  document.title = language === 'ar' ? 'Çiçek Otomotiv | مركز صيانة سيارات متخصص · باشاك شهير' : language === 'en'
-    ? (document.body.dataset.titleEn || 'Çiçek Otomotiv | VAG Specialist Service · Başakşehir')
-    : (document.body.dataset.titleTr || 'Başakşehir VAG Özel Servis | Çiçek Otomotiv');
+  document.title = language === 'ar' ? 'Çiçek Oto | مركز صيانة سيارات متخصص · باشاك شهير' : language === 'en'
+    ? (document.body.dataset.titleEn || 'Çiçek Oto | VAG Specialist Service · Başakşehir')
+    : (document.body.dataset.titleTr || 'Başakşehir VAG Özel Servis | Çiçek Oto');
 }
 
 function initPreferences() {
@@ -308,8 +308,9 @@ function initReveal() {
 
 function animateCounter(element) {
   if (!element || element.dataset.animated) return;
-  element.dataset.animated = 'true';
   const target = Number(element.dataset.count);
+  if (!Number.isFinite(target)) return;
+  element.dataset.animated = 'true';
   const prefix = element.dataset.prefix || '';
   const suffix = element.dataset.suffix || '';
   const decimal = String(target).includes('.');
